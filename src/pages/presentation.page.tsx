@@ -6,7 +6,7 @@ import {useStore} from 'reto'
 import {PresentationStore} from '@/stores/presentation.store'
 import {markdownToHtml} from '@/utils/markdown-to-html'
 import * as mousetrap from 'mousetrap'
-
+import '@/themes/github.less'
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -239,18 +239,18 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       
       <Background mouseMoving={mouseMoving}>
         {previousHtml && (
-          <PreviousMarkdown transitRight={transit === 'previous'}>
-            <Content dangerouslySetInnerHTML={{__html: previousHtml}}/>
+          <PreviousMarkdown transitRight={transit === 'previous'} className='markdown'>
+            <Content dangerouslySetInnerHTML={{__html: previousHtml}} className='content'/>
           </PreviousMarkdown>
         )}
         {currentHtml && (
-          <CurrentMarkdown transitRight={transit === 'previous'} transitLeft={transit === 'next'}>
-            <Content dangerouslySetInnerHTML={{__html: currentHtml}} ref={currentSlideRef}/>
+          <CurrentMarkdown transitRight={transit === 'previous'} transitLeft={transit === 'next'} className='markdown'>
+            <Content dangerouslySetInnerHTML={{__html: currentHtml}} ref={currentSlideRef} className='content'/>
           </CurrentMarkdown>
         )}
         {nextHtml && (
-          <NextMarkdown transitLeft={transit === 'next'}>
-            <Content dangerouslySetInnerHTML={{__html: nextHtml}}/>
+          <NextMarkdown transitLeft={transit === 'next'} className='markdown'>
+            <Content dangerouslySetInnerHTML={{__html: nextHtml}} className='content'/>
           </NextMarkdown>
         )}
       </Background>
