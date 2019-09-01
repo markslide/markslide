@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useRef, useState} from 'react'
+import {FC, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {RouteComponentProps} from 'react-router'
 import * as React from 'react'
 import styled, {css, keyframes} from 'styled-components'
@@ -183,6 +183,12 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   const nextHtml = useMemo(() => markdownToHtml(slideTexts[currentPage + 1]), [currentPage])
   
   const currentSlideRef = useRef<HTMLDivElement>()
+  useLayoutEffect(() => {
+    console.log(currentSlideRef.current)
+    if (transit === null && currentSlideRef.current) {
+      currentSlideRef.current.scrollTop = 0
+    }
+  }, [transit])
   
   function nextPage() {
     if (transit) return
@@ -191,7 +197,6 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     setTimeout(()=>{
       setCurrentPage(currentPage + 1)
       setTransit(null)
-      currentSlideRef.current.scrollTop = 0
     },800 + 20)
   }
   
@@ -202,7 +207,6 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     setTimeout(()=>{
       setCurrentPage(currentPage - 1)
       setTransit(null)
-      currentSlideRef.current.scrollTop=0
     },800 + 20)
   }
   
@@ -244,8 +248,8 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
           </PreviousMarkdown>
         )}
         {currentHtml && (
-          <CurrentMarkdown transitRight={transit === 'previous'} transitLeft={transit === 'next'} className='markdown'>
-            <Content dangerouslySetInnerHTML={{__html: currentHtml}} ref={currentSlideRef} className='content'/>
+          <CurrentMarkdown transitRight={transit === 'previous'} transitLeft={transit === 'next'} className='markdown' ref={currentSlideRef}>
+            <Content dangerouslySetInnerHTML={{__html: currentHtml}} className='content'/>
           </CurrentMarkdown>
         )}
         {nextHtml && (
