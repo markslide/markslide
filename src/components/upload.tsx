@@ -50,7 +50,7 @@ interface Props {
 export const Upload: FC<Props> = (props) => {
 
   const editorRef = useRef()
-  const {slideTexts, setText} = useStore(PresentationStore)
+  const {text, setText} = useStore(PresentationStore)
 
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
@@ -88,7 +88,7 @@ export const Upload: FC<Props> = (props) => {
       </div>
       <Editor
         ref={editorRef}
-        value={slideTexts}
+        value={text}
         onChange={e=>setText(e.target.value)}
         style={{display: !props.contentEmpty?'initial':'none'}}
       />

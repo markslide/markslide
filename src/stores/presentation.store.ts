@@ -15,6 +15,7 @@ export function PresentationStore() {
   
   return {
     setText,
+    text,
     slideTexts,
   }
 }

@@ -1,6 +1,8 @@
 import {FC} from 'react'
 import * as React from 'react'
 import styled from 'styled-components'
+import {useStore} from "reto";
+import {PresentationStore} from "@/stores/presentation.store";
 
 const Container = styled.div`
   width: 100%;
@@ -9,8 +11,11 @@ const Container = styled.div`
 
 export const Preview: FC = () => {
 
+  const {slideTexts} = useStore(PresentationStore)
+
   return (
     <Container id='preview'>
+      {slideTexts}
     </Container>
   )
 }
