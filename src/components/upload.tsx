@@ -1,6 +1,8 @@
-import {FC, DragEvent} from 'react'
+import {FC, DragEvent, useRef} from 'react'
 import * as React from 'react'
 import styled from 'styled-components'
+import {useStore} from "reto";
+import {PresentationStore} from "@/stores/presentation.store";
 
 const Container = styled.div`
   display: block;
@@ -27,8 +29,8 @@ const Container = styled.div`
 `
 
 const Editor = styled.textarea`
-  width: 100%;
-  height: 99%;
+  width: calc(100% - 80px);
+  height: calc(99% - 80px);
   text-align: left;
   padding: 40px;
   // position: relative;
@@ -42,9 +44,14 @@ const Editor = styled.textarea`
 
 interface Props {
   onUpload: (text: string) => void
+  contentEmpty: boolean
 }
 
 export const Upload: FC<Props> = (props) => {
+
+  const editorRef = useRef()
+  const {slideTexts, setText} = useStore(PresentationStore)
+
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
     e.stopPropagation()
@@ -75,10 +82,16 @@ export const Upload: FC<Props> = (props) => {
       onDrop={handleDrop}
       onDropCapture={handleDrop}
     >
-      <div>
+      <div style={{display: props.contentEmpty?'initial':'none'}}>
         {/*<i class="fa fa-file-text"></i>*/}
         <p>Drag your file here</p>
       </div>
+      <Editor
+        ref={editorRef}
+        value={slideTexts}
+        onChange={e=>setText(e.target.value)}
+        style={{display: !props.contentEmpty?'initial':'none'}}
+      />
     </Container>
   )
 }

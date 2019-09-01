@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useMemo} from 'react'
 import * as React from 'react'
 import {Upload} from '@/components/upload'
 import {RouteComponentProps} from 'react-router'
@@ -18,12 +18,16 @@ const HrStyle = createGlobalStyle`
 
 export const UploadPage: FC<RouteComponentProps> = (props) => {
   const store = useStore(PresentationStore)
-  
+  const contentEmpty = useMemo(()=>{
+    return !store.slideTexts || store.slideTexts.length === 0
+  }, [store.slideTexts])
+
   return (
     <div style={{height: '100vh', display: 'flex', flexDirection: 'row'}}>
-      <Upload onUpload={(text) => {
-        store.setText(text)
-      }}/>
+      <Upload
+        onUpload={text => store.setText(text)}
+        contentEmpty={contentEmpty}
+      />
       <HrStyle/>
       <hr/>
       <Preview/>
