@@ -4,13 +4,11 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   display: block;
-  width:80vw;
-  margin:10vh 10vw;
-  height: 80vh;
-  background: #d9d9d9;
-  // border-radius: 10px;
+  width: 100%;
+  height: 100%;
   text-align: center;
   position: relative;
+  
   div{
     position: absolute;
     width:100%;
@@ -25,6 +23,20 @@ const Container = styled.div`
         font-size: 16px;
         color: #7b7b7b;
     }
+  }
+`
+
+const Editor = styled.textarea`
+  width: 100%;
+  height: 99%;
+  text-align: left;
+  padding: 40px;
+  // position: relative;
+  border: none;
+  resize: none;
+  
+  :focus {
+    outline: none;
   }
 `
 
