@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Container = styled.div`
   display: block;
   width:80vw;
-  // margin:10vh 10vw;
+  margin:10vh 10vw;
   height: 80vh;
   background: #d9d9d9;
   // border-radius: 10px;
