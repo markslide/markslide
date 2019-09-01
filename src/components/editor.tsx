@@ -33,7 +33,6 @@ const TextArea = styled.textarea`
   height: calc(99% - 80px);
   text-align: left;
   padding: 40px;
-  // position: relative;
   border: none;
   resize: none;
   
