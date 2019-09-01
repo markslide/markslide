@@ -1,10 +1,11 @@
-import {FC, useEffect, useMemo, useState} from 'react'
+import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {RouteComponentProps} from 'react-router'
 import * as React from 'react'
-import styled, {keyframes} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import {useStore} from 'reto'
 import {PresentationStore} from '@/stores/presentation.store'
 import {markdownToHtml} from '@/utils/markdown-to-html'
+import * as mousetrap from 'mousetrap'
 
 
 const moveFromRightKeyframes = keyframes`
@@ -63,17 +64,30 @@ const Markdown = styled.div`
   top:0;
   padding:10vh 10vw;
   user-select: none;
+  background: #fff;
 `
 
+const previousMixin = css`
+  animation: ${moveFromLeftKeyframes} .6s ease both;
+  animation-delay: .2s;
+`
 const PreviousMarkdown = styled(Markdown)<{
   transitRight: boolean
 }>`
   z-index: 6;
   left:-100vw;
   
-  ${props => props.transitRight && `animation: ${moveFromLeftKeyframes} .6s ease both; animation-delay: .2s;`}
+  ${props => props.transitRight && previousMixin}
 `
 
+const currentLeftMixin = css`
+  transform-origin: 0% 50%;
+  animation: ${rotateLeftSideFirstKeyframes} .8s both ease-in;
+`
+const currentRightMixin = css`
+  transform-origin: 0% 50%;
+  animation: ${rotateRightSideFirstKeyframes} .8s both ease-in;
+`
 const CurrentMarkdown = styled(Markdown)<{
   transitRight: boolean
   transitLeft: boolean
@@ -81,51 +95,55 @@ const CurrentMarkdown = styled(Markdown)<{
   z-index: 5;
   left:0;
  
-  ${props => props.transitRight && `transform-origin: 0% 50%; animation: ${rotateLeftSideFirstKeyframes} .8s both ease-in;`}
-  ${props => props.transitLeft && `transform-origin: 0% 50%; animation: ${rotateRightSideFirstKeyframes} .8s both ease-in;`}
+  ${props => props.transitRight && currentLeftMixin}
+  ${props => props.transitLeft && currentRightMixin}
 `
 
+const nextMixin = css`
+  animation: ${moveFromRightKeyframes} .6s ease both;
+  animation-delay: .2s;
+`
 const NextMarkdown = styled(Markdown)<{
   transitLeft: boolean
 }>`
   z-index: 7;
   left:100vw;
   
-  ${props => props.transitLeft && `animation: ${moveFromRightKeyframes} .6s ease both; animation-delay: .2s;`}
+  ${props => props.transitLeft && nextMixin}
 `
 
 const Content = styled.div`
-@media all{
-  font-size: 12px;
-}
-@media all and (min-width: 200px) {
-  font-size: 16px;
-}
-@media all and (min-width: 400px) {
-  font-size: 20px;
-}
-@media all and (min-width: 600px) {
-  font-size: 24px;
-}
-@media all and (min-width: 800px) {
-  font-size: 28px;
-}
-@media all and (min-width: 1000px) {
-  font-size: 32px;
-}
-@media all and (min-width: 1200px){
-  font-size: 36px;
-}
-
-& /deep/ table {
-  width: 100%;
-}
+  @media all{
+    font-size: 12px;
+  }
+  @media all and (min-width: 200px) {
+    font-size: 16px;
+  }
+  @media all and (min-width: 400px) {
+    font-size: 20px;
+  }
+  @media all and (min-width: 600px) {
+    font-size: 24px;
+  }
+  @media all and (min-width: 800px) {
+    font-size: 28px;
+  }
+  @media all and (min-width: 1000px) {
+    font-size: 32px;
+  }
+  @media all and (min-width: 1200px){
+    font-size: 36px;
+  }
+  
+  & /deep/ table {
+    width: 100%;
+  }
 `
 
 export const PresentationPage: FC<RouteComponentProps> = (props) => {
   const {slideTexts} = useStore(PresentationStore)
   
-  const [currentPage, setCurrentPage] = useState(-1)
+  const [currentPage, setCurrentPage] = useState(0)
   
   const [pausing ,setPausing] = useState(false)
   
@@ -162,7 +180,56 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   
   const previousHtml = useMemo(() => markdownToHtml(slideTexts[currentPage - 1]), [currentPage])
   const currentHtml = useMemo(() => markdownToHtml(slideTexts[currentPage]), [currentPage])
-  const nextHtml = useMemo(() => markdownToHtml(slideTexts[slideTexts.length - 1]), [currentPage])
+  const nextHtml = useMemo(() => markdownToHtml(slideTexts[currentPage + 1]), [currentPage])
+  
+  const currentSlideRef = useRef<HTMLDivElement>()
+  
+  function nextPage() {
+    if (transit) return
+    if (currentPage >= slideTexts.length - 1) return
+    setTransit('next')
+    setTimeout(()=>{
+      setCurrentPage(currentPage + 1)
+      setTransit(null)
+      currentSlideRef.current.scrollTop = 0
+    },800 + 20)
+  }
+  
+  function previousPage() {
+    if (transit) return
+    if (currentPage <= 0) return
+    setTransit('previous')
+    setTimeout(()=>{
+      setCurrentPage(currentPage - 1)
+      setTransit(null)
+      currentSlideRef.current.scrollTop=0
+    },800 + 20)
+  }
+  
+  useEffect(() => {
+    mousetrap.bind('space',()=>{
+      nextPage()
+      return false
+    })
+    mousetrap.bind('right',()=>{
+      nextPage()
+    })
+    mousetrap.bind('left',()=>{
+      previousPage()
+    })
+    mousetrap.bind('enter',()=>{
+      nextPage()
+    })
+    mousetrap.bind('return',()=>{
+      nextPage()
+    })
+    mousetrap.bind('esc',()=>{
+      // toggleFullScreen()
+    })
+    mousetrap.bind('p',()=>{
+      // togglePause()
+    })
+  })
   
   return (
     <Container>
@@ -178,7 +245,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
         )}
         {currentHtml && (
           <CurrentMarkdown transitRight={transit === 'previous'} transitLeft={transit === 'next'}>
-            <Content dangerouslySetInnerHTML={{__html: currentHtml}}/>
+            <Content dangerouslySetInnerHTML={{__html: currentHtml}} ref={currentSlideRef}/>
           </CurrentMarkdown>
         )}
         {nextHtml && (
