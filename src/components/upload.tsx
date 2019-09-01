@@ -64,6 +64,12 @@ export const Upload: FC<Props> = (props) => {
         const {result} = event.target
         if (typeof result === 'string') {
           props.onUpload(result)
+          if (editorRef && editorRef.current) {
+            // @ts-ignore
+            editorRef.current.focus()
+            // @ts-ignore
+            editorRef.current.setSelectionRange(0, 0)
+          }
         }
       }
       reader.onerror = (event) => {
@@ -89,6 +95,7 @@ export const Upload: FC<Props> = (props) => {
       <Editor
         ref={editorRef}
         value={text}
+        autoFocus={true}
         onChange={e=>setText(e.target.value)}
         style={{display: !props.contentEmpty?'initial':'none'}}
       />
