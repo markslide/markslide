@@ -28,7 +28,11 @@ const Container = styled.div`
   }
 `
 
-export const Upload: FC = () => {
+interface Props {
+  onUpload: (text: string) => void
+}
+
+export const Upload: FC<Props> = (props) => {
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
     e.stopPropagation()
@@ -38,6 +42,10 @@ export const Upload: FC = () => {
       reader.readAsText(files[0])
       reader.onload = (event) => {
         console.log(event.target.result)
+        const {result} = event.target
+        if (typeof result === 'string') {
+          props.onUpload(result)
+        }
       }
       reader.onerror = (event) => {
         console.warn('failed to read')
