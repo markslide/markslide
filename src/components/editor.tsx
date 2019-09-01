@@ -28,7 +28,7 @@ const Container = styled.div`
   }
 `
 
-const Editor = styled.textarea`
+const TextArea = styled.textarea`
   width: calc(100% - 80px);
   height: calc(99% - 80px);
   text-align: left;
@@ -47,7 +47,7 @@ interface Props {
   contentEmpty: boolean
 }
 
-export const Upload: FC<Props> = (props) => {
+export const Editor: FC<Props> = (props) => {
 
   const editorRef = useRef()
   const {text, setText} = useStore(PresentationStore)
@@ -92,7 +92,7 @@ export const Upload: FC<Props> = (props) => {
         {/*<i class="fa fa-file-text"></i>*/}
         <p>Drag your file here</p>
       </div>
-      <Editor
+      <TextArea
         ref={editorRef}
         value={text}
         autoFocus={true}

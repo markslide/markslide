@@ -1,6 +1,6 @@
 import {FC, useMemo} from 'react'
 import * as React from 'react'
-import {Upload} from '@/components/upload'
+import {Editor} from '@/components/editor'
 import {RouteComponentProps} from 'react-router'
 import {useStore} from 'reto'
 import {PresentationStore} from '@/stores/presentation.store'
@@ -24,7 +24,7 @@ export const UploadPage: FC<RouteComponentProps> = (props) => {
 
   return (
     <div style={{height: '100vh', display: 'flex', flexDirection: 'row'}}>
-      <Upload
+      <Editor
         onUpload={text => store.setText(text)}
         contentEmpty={contentEmpty}
       />
