@@ -230,9 +230,22 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       // togglePause()
     })
   })
+
+  const containerRef = useRef()
+  function GoInFullscreen(el: HTMLElement) {
+    el && el.requestFullscreen().then()
+  }
+  function onFullScreenChange () {
+    if (!!document.fullscreenElement === false) props.history.push('/upload')
+  }
+  useEffect(()=> {
+    GoInFullscreen(containerRef.current)
+    document.onfullscreenchange = onFullScreenChange;
+    }, []
+  )
   
   return (
-    <Container>
+    <Container ref={containerRef}>
       {pausing && (
         <PauseLayer/>
       )}
