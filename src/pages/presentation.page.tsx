@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useRef, useState} from 'react'
+import {FC, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {RouteComponentProps} from 'react-router'
 import * as React from 'react'
 import styled, {css, keyframes} from 'styled-components'
@@ -6,7 +6,7 @@ import {useStore} from 'reto'
 import {PresentationStore} from '@/stores/presentation.store'
 import {markdownToHtml} from '@/utils/markdown-to-html'
 import * as mousetrap from 'mousetrap'
-
+import '@/themes/github.less'
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -183,6 +183,12 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   const nextHtml = useMemo(() => markdownToHtml(slideTexts[currentPage + 1]), [currentPage])
 
   const currentSlideRef = useRef<HTMLDivElement>()
+useLayoutEffect(() => {
+    console.log(currentSlideRef.current)
+    if (transit === null && currentSlideRef.current) {
+      currentSlideRef.current.scrollTop = 0
+    }
+  }, [transit])
 
   function nextPage() {
     if (transit) return
@@ -191,7 +197,6 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     setTimeout(()=>{
       setCurrentPage(currentPage + 1)
       setTransit(null)
-      currentSlideRef.current.scrollTop = 0
     },800 + 20)
   }
 
@@ -202,7 +207,6 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     setTimeout(()=>{
       setCurrentPage(currentPage - 1)
       setTransit(null)
-      currentSlideRef.current.scrollTop=0
     },800 + 20)
   }
 
@@ -252,18 +256,18 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
 
       <Background mouseMoving={mouseMoving}>
         {previousHtml && (
-          <PreviousMarkdown transitRight={transit === 'previous'}>
-            <Content dangerouslySetInnerHTML={{__html: previousHtml}}/>
+          <PreviousMarkdown transitRight={transit === 'previous'} className='markdown'>
+            <Content dangerouslySetInnerHTML={{__html: previousHtml}} className='content'/>
           </PreviousMarkdown>
         )}
         {currentHtml && (
-          <CurrentMarkdown transitRight={transit === 'previous'} transitLeft={transit === 'next'}>
-            <Content dangerouslySetInnerHTML={{__html: currentHtml}} ref={currentSlideRef}/>
+          <CurrentMarkdown transitRight={transit === 'previous'} transitLeft={transit === 'next'} className='markdown' ref={currentSlideRef}>
+            <Content dangerouslySetInnerHTML={{__html: currentHtml}} className='content'/>
           </CurrentMarkdown>
         )}
         {nextHtml && (
-          <NextMarkdown transitLeft={transit === 'next'}>
-            <Content dangerouslySetInnerHTML={{__html: nextHtml}}/>
+          <NextMarkdown transitLeft={transit === 'next'} className='markdown'>
+            <Content dangerouslySetInnerHTML={{__html: nextHtml}} className='content'/>
           </NextMarkdown>
         )}
       </Background>
