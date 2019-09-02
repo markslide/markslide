@@ -19,6 +19,7 @@ export function PresentationStore() {
 
   return {
     updateText,
+    text,
     slideTexts,
   }
 }

@@ -1,16 +1,14 @@
-import {FC, DragEvent} from 'react'
+import {FC, DragEvent, useRef} from 'react'
 import * as React from 'react'
 import styled from 'styled-components'
+import {useStore} from "reto";
+import {PresentationStore} from "@/stores/presentation.store";
 
 const Container = styled.div`
-  display: block;
-  width:80vw;
-  margin:10vh 10vw;
-  height: 80vh;
-  background: #d9d9d9;
-  // border-radius: 10px;
+  height: 100%;
   text-align: center;
   position: relative;
+  
   div{
     position: absolute;
     width:100%;
@@ -28,11 +26,31 @@ const Container = styled.div`
   }
 `
 
+const TextArea = styled.textarea`
+  //width: calc(100% - 80px);
+  //height: calc(99% - 80px);
+  //text-align: left;
+  //padding: 40px;
+  padding: 0;
+  height: 100%;
+  border: none;
+  resize: none;
+  
+  :focus {
+    outline: none;
+  }
+`
+
 interface Props {
   onUpload: (text: string) => void
+  contentEmpty: boolean
 }
 
-export const Upload: FC<Props> = (props) => {
+export const Editor: FC<Props> = (props) => {
+
+  const editorRef = useRef()
+  const {text, updateText} = useStore(PresentationStore)
+
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
     e.stopPropagation()
@@ -45,6 +63,12 @@ export const Upload: FC<Props> = (props) => {
         const {result} = event.target
         if (typeof result === 'string') {
           props.onUpload(result)
+          if (editorRef && editorRef.current) {
+            // @ts-ignore
+            editorRef.current.focus()
+            // @ts-ignore
+            editorRef.current.setSelectionRange(0, 0)
+          }
         }
       }
       reader.onerror = (event) => {
@@ -63,10 +87,17 @@ export const Upload: FC<Props> = (props) => {
       onDrop={handleDrop}
       onDropCapture={handleDrop}
     >
-      <div>
+      <div style={{display: props.contentEmpty?'initial':'none'}}>
         {/*<i class="fa fa-file-text"></i>*/}
         <p>Drag your file here</p>
       </div>
+      <TextArea
+        ref={editorRef}
+        value={text}
+        autoFocus={true}
+        onChange={e=>updateText(e.target.value)}
+        style={{display: !props.contentEmpty?'initial':'none'}}
+      />
     </Container>
   )
 }
