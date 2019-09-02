@@ -135,7 +135,7 @@ const Content = styled.div`
     font-size: 36px;
   }
   
-  & /deep/ table {
+  table {
     width: 100%;
   }
 `
