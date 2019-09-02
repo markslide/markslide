@@ -1,12 +1,17 @@
 import {useMemo, useState} from 'react'
 
 export function PresentationStore() {
-  const [text, setText] = useState()
+  const [text, _setText] = useState(localStorage.getItem('mdContent'))
   
   const slideTexts = useMemo(() => {
     if (!text) return []
     return parseFileContent(text)
   }, [text])
+
+  const setText = function(v:string) {
+    _setText(v)
+    localStorage.setItem('mdContent', v)
+  }
   
   return {
     setText,
