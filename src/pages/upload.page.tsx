@@ -4,7 +4,7 @@ import {Editor} from '@/components/editor'
 import {RouteComponentProps} from 'react-router'
 import {useStore} from 'reto'
 import {PresentationStore} from '@/stores/presentation.store'
-import {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 import {Preview} from "@/components/preview";
 
 
@@ -16,13 +16,22 @@ const HrStyle = createGlobalStyle`
   }
 `
 
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  > * {
+    flex: auto;
+  }
+`
+
 export const UploadPage: FC<RouteComponentProps> = (props) => {
   const store = useStore(PresentationStore)
 const contentEmpty = useMemo(()=>{
     return !store.slideTexts || store.slideTexts.length === 0
   }, [store.slideTexts])
   return (
-    <div style={{height: '100vh', display: 'flex', flexDirection: 'row'}}>
+    <Container>
       <Editor
         onUpload={text => store.updateText(text)}
         contentEmpty={contentEmpty}
@@ -31,6 +40,6 @@ const contentEmpty = useMemo(()=>{
       <hr/>
       <Preview/>
       <button onClick={()=>props.history.push('/presentation')}>Show</button>
-    </div>
+    </Container>
   )
 }

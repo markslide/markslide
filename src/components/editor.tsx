@@ -5,8 +5,6 @@ import {useStore} from "reto";
 import {PresentationStore} from "@/stores/presentation.store";
 
 const Container = styled.div`
-  display: block;
-  width: 100%;
   height: 100%;
   text-align: center;
   position: relative;
@@ -29,10 +27,12 @@ const Container = styled.div`
 `
 
 const TextArea = styled.textarea`
-  width: calc(100% - 80px);
-  height: calc(99% - 80px);
-  text-align: left;
-  padding: 40px;
+  //width: calc(100% - 80px);
+  //height: calc(99% - 80px);
+  //text-align: left;
+  //padding: 40px;
+  padding: 0;
+  height: 100%;
   border: none;
   resize: none;
   

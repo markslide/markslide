@@ -5,10 +5,10 @@ import {useStore} from "reto";
 import {PresentationStore} from "@/stores/presentation.store";
 
 const Container = styled.div`
-  width: 100%;
   height: 100%;
   white-space: pre-wrap;
   overflow-y: scroll;
+  word-break: break-all;
 `
 
 export const Preview: FC = () => {
