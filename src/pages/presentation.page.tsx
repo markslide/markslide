@@ -231,7 +231,7 @@ useLayoutEffect(() => {
       exitFullscreen()
     })
     mousetrap.bind('f',()=>{
-      enterFullscreen()
+      toggleFullscreen()
     })
     mousetrap.bind('p',()=>{
       // togglePause()
@@ -243,6 +243,13 @@ useLayoutEffect(() => {
   }
   function exitFullscreen() {
     document.exitFullscreen()
+  }
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      exitFullscreen()
+    } else {
+      enterFullscreen()
+    }
   }
   useEffect(()=> {
     enterFullscreen()
