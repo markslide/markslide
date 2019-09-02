@@ -18,14 +18,13 @@ const HrStyle = createGlobalStyle`
 
 export const UploadPage: FC<RouteComponentProps> = (props) => {
   const store = useStore(PresentationStore)
-  const contentEmpty = useMemo(()=>{
+const contentEmpty = useMemo(()=>{
     return !store.slideTexts || store.slideTexts.length === 0
   }, [store.slideTexts])
-
   return (
     <div style={{height: '100vh', display: 'flex', flexDirection: 'row'}}>
       <Editor
-        onUpload={text => store.setText(text)}
+        onUpload={text => store.updateText(text)}
         contentEmpty={contentEmpty}
       />
       <HrStyle/>

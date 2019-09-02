@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
+    "@types/highlightjs": "^9.12.0",
     "@types/lodash": "^4.14.129",
     "@types/marked": "^0.6.5",
     "@types/mousetrap": "^1.6.3",
@@ -20,6 +21,7 @@
     "@types/react-dom": "16.8.x",
     "@types/react-router-dom": "^4.3.1",
     "@types/styled-components": "^4.1.4",
+    "highlightjs": "^9.12.0",
     "lodash": "^4.17.11",
     "marked": "^0.7.0",
     "mousetrap": "^1.6.3",
@@ -31,6 +33,7 @@
     "reto": "^0.3.0",
     "rxjs": "^6.3.3",
     "styled-components": "^4.1.2",
+    "use-action": "^1.0.2",
     "use-async-memo": "^1.2.0",
     "use-debounce": "^2.2.1"
   },
