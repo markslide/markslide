@@ -81,11 +81,11 @@ const PreviousMarkdown = styled(Markdown)<{
 `
 
 const currentLeftMixin = css`
-  transform-origin: 0% 50%;
+  transform-origin: 0 50%;
   animation: ${rotateLeftSideFirstKeyframes} .8s both ease-in;
 `
 const currentRightMixin = css`
-  transform-origin: 0% 50%;
+  transform-origin: 0 50%;
   animation: ${rotateRightSideFirstKeyframes} .8s both ease-in;
 `
 const CurrentMarkdown = styled(Markdown)<{
@@ -183,7 +183,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   const nextHtml = useMemo(() => markdownToHtml(slideTexts[currentPage + 1]), [currentPage])
 
   const currentSlideRef = useRef<HTMLDivElement>()
-useLayoutEffect(() => {
+  useLayoutEffect(() => {
     console.log(currentSlideRef.current)
     if (transit === null && currentSlideRef.current) {
       currentSlideRef.current.scrollTop = 0

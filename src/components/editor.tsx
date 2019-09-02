@@ -49,7 +49,7 @@ interface Props {
 export const Editor: FC<Props> = (props) => {
 
   const editorRef = useRef()
-  const {text, setText} = useStore(PresentationStore)
+  const {text, updateText} = useStore(PresentationStore)
 
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
@@ -95,7 +95,7 @@ export const Editor: FC<Props> = (props) => {
         ref={editorRef}
         value={text}
         autoFocus={true}
-        onChange={e=>setText(e.target.value)}
+        onChange={e=>updateText(e.target.value)}
         style={{display: !props.contentEmpty?'initial':'none'}}
       />
     </Container>
