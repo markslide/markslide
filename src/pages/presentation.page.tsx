@@ -142,11 +142,11 @@ const Content = styled.div`
 
 export const PresentationPage: FC<RouteComponentProps> = (props) => {
   const {slideTexts} = useStore(PresentationStore)
-  
+
   const [currentPage, setCurrentPage] = useState(0)
-  
+
   const [pausing ,setPausing] = useState(false)
-  
+
   const [mouseMoving, setMouseMoving] = useState(true)
   useEffect(() => {
     let count = 0
@@ -175,15 +175,15 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       clearInterval(interval)
     }
   }, [])
-  
+
   const [transit, setTransit] = useState<'previous'| 'next'>(null)
-  
+
   const previousHtml = useMemo(() => markdownToHtml(slideTexts[currentPage - 1]), [currentPage])
   const currentHtml = useMemo(() => markdownToHtml(slideTexts[currentPage]), [currentPage])
   const nextHtml = useMemo(() => markdownToHtml(slideTexts[currentPage + 1]), [currentPage])
-  
+
   const currentSlideRef = useRef<HTMLDivElement>()
-  
+
   function nextPage() {
     if (transit) return
     if (currentPage >= slideTexts.length - 1) return
@@ -194,7 +194,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       currentSlideRef.current.scrollTop = 0
     },800 + 20)
   }
-  
+
   function previousPage() {
     if (transit) return
     if (currentPage <= 0) return
@@ -205,7 +205,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       currentSlideRef.current.scrollTop=0
     },800 + 20)
   }
-  
+
   useEffect(() => {
     mousetrap.bind('space',()=>{
       nextPage()
@@ -224,32 +224,32 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       nextPage()
     })
     mousetrap.bind('esc',()=>{
-      // toggleFullScreen()
+      exitFullscreen()
+    })
+    mousetrap.bind('f',()=>{
+      enterFullscreen()
     })
     mousetrap.bind('p',()=>{
       // togglePause()
     })
   })
 
-  const containerRef = useRef()
-  function GoInFullscreen(el: HTMLElement) {
-    el && el.requestFullscreen().then()
+  function enterFullscreen() {
+    document.body.requestFullscreen()
   }
-  function onFullScreenChange () {
-    if (!!document.fullscreenElement === false) props.history.push('/upload')
+  function exitFullscreen() {
+    document.exitFullscreen()
   }
   useEffect(()=> {
-    GoInFullscreen(containerRef.current)
-    document.onfullscreenchange = onFullScreenChange;
-    }, []
-  )
-  
+    enterFullscreen()
+  }, [])
+
   return (
-    <Container ref={containerRef}>
+    <Container>
       {pausing && (
         <PauseLayer/>
       )}
-      
+
       <Background mouseMoving={mouseMoving}>
         {previousHtml && (
           <PreviousMarkdown transitRight={transit === 'previous'}>
