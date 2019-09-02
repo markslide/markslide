@@ -11,7 +11,7 @@ export default () => {
     plugins: [],
     devServer: {
       historyApiFallback: true,
-      contentBase: path.join(__dirname, '../www'),
+      contentBase: path.join(__dirname, '../dist'),
       hot: false,
       port: 8088,
       allowedHosts: [

@@ -17,7 +17,7 @@ const config: Configuration = {
 
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../www'),
+    path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
   },
 
