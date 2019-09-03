@@ -4,12 +4,12 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-  height: 30vw;
-  width: 40vw;
+  height: 27vw;
+  width: 36vw;
   margin: 24px auto;
   transition: all 0.2s ease;
   border: 2px solid rgba(0,0,0, 0);
-  box-sizing: border-box;
+  box-sizing: content-box;
   
   :hover {
     border: 2px solid rgba(0,0,0, 0.2);
@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const Scale = styled.div`
   transform-origin: left top;
-  transform: scale(0.4);
+  transform: scale(0.36);
   position: relative;
 `
 
