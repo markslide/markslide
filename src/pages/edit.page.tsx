@@ -2,7 +2,7 @@ import React, {FC} from 'react'
 import { RouteComponentProps } from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
-import {Preview} from '@/components/preview'
+import {Previewer} from '@/components/previewer'
 import {EditPageHeader} from '@/components/edit-page-header'
 
 const layoutBorder = `solid 1px #F3F3F3`
@@ -50,7 +50,7 @@ export const EditPage: FC<RouteComponentProps> = () => {
           <Editor onUpload={() => {}} contentEmpty={false}/>
         </Box>
         <Box>
-          <Preview/>
+          <Previewer/>
         </Box>
       </Main>
     </Container>

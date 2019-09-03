@@ -24,13 +24,17 @@ const rotateLeftSideFirstKeyframes = keyframes`
 
 const Markdown = styled.div.attrs((props) => ({
   className: `markdown ${props.className}`,
-}))`
-  width:80vw;
-  height: 80vh;
+}))<{
+  preview: boolean
+}>`
+  width: 100vw;
+  height: ${props => props.preview ? '75vw' : '100vh'};
   overflow-y: scroll;
   position: absolute;
-  top:0;
-  padding:10vh 10vw;
+  top: 0;
+  left: 0;
+  padding: 10vh 10vw;
+  box-sizing: border-box;
   user-select: none;
   background: #fff;
   &.previous {
@@ -103,12 +107,13 @@ interface Props {
   transit?: 'previous' | 'next'
   mode?: SlideMode
   markdown: string
+  preview?: boolean
 }
 
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
   return (
-    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit}`}>
+    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit}`} preview={props.preview}>
       <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>
   )
