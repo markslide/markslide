@@ -113,7 +113,7 @@ interface Props {
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
   return (
-    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit||'next'}`} preview={props.preview}>
+    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit}`} preview={props.preview}>
       <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>
   )
