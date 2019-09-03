@@ -1,16 +1,18 @@
-import {FC, DragEvent, useRef} from 'react'
+import {FC, DragEvent} from 'react'
 import * as React from 'react'
 import styled from 'styled-components'
-import {useStore} from "reto";
-import {PresentationStore} from "@/stores/presentation.store";
 
 const Container = styled.div`
+  display: block;
+  width: 100%;
   height: 100%;
-  overflow: hidden;
+  text-align: center;
+  position: relative;
+  
   div{
     position: absolute;
-    width: 100%;
-    top: 50%;
+    width:100%;
+    top:50%;
     transform: translateY(-50%);
     left:0;
     i{
@@ -24,14 +26,15 @@ const Container = styled.div`
   }
 `
 
-const TextArea = styled.textarea`
-  padding: 0;
+const Editor = styled.textarea`
+  width: 100%;
+  height: 99%;
+  text-align: left;
+  padding: 40px;
+  // position: relative;
   border: none;
   resize: none;
-  display: block;
-  height: 100%;
-  box-sizing: border-box;
-  width: 100%;
+  
   :focus {
     outline: none;
   }
@@ -39,14 +42,9 @@ const TextArea = styled.textarea`
 
 interface Props {
   onUpload: (text: string) => void
-  contentEmpty: boolean
 }
 
-export const Editor: FC<Props> = (props) => {
-
-  const editorRef = useRef()
-  const {text, updateText} = useStore(PresentationStore)
-
+export const Upload: FC<Props> = (props) => {
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
     e.stopPropagation()
@@ -59,12 +57,6 @@ export const Editor: FC<Props> = (props) => {
         const {result} = event.target
         if (typeof result === 'string') {
           props.onUpload(result)
-          if (editorRef && editorRef.current) {
-            // @ts-ignore
-            editorRef.current.focus()
-            // @ts-ignore
-            editorRef.current.setSelectionRange(0, 0)
-          }
         }
       }
       reader.onerror = (event) => {
@@ -83,17 +75,10 @@ export const Editor: FC<Props> = (props) => {
       onDrop={handleDrop}
       onDropCapture={handleDrop}
     >
-      <div style={{display: props.contentEmpty?'initial':'none'}}>
+      <div>
         {/*<i class="fa fa-file-text"></i>*/}
         <p>Drag your file here</p>
       </div>
-      <TextArea
-        ref={editorRef}
-        value={text}
-        autoFocus={true}
-        onChange={e=>updateText(e.target.value)}
-        style={{display: !props.contentEmpty?'initial':'none'}}
-      />
     </Container>
   )
 }

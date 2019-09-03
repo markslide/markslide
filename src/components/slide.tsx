@@ -109,7 +109,7 @@ export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
   return (
     <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit}`}>
-      <Content dangerouslySetInnerHTML={{__html: html}}></Content>
+      <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>
   )
 })
