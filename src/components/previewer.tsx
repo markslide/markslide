@@ -8,7 +8,7 @@ import {SlidePreview} from '@/components/slide-preview'
 const Container = styled.div`
   white-space: pre-wrap;
   word-break: break-all;
-  padding: 10px 0;
+  padding: 16px;
 `
 
 export const Previewer: FC = () => {

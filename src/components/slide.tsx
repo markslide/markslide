@@ -27,13 +27,13 @@ const Markdown = styled.div.attrs((props) => ({
 }))<{
   preview: boolean
 }>`
-  width: ${props => props.preview ? '83vw' : '100vh'};
-  height: ${props => props.preview ? '46vw' : '100vh'};
+  width: 100vw;
+  height: ${props => props.preview ? '75vw' : '100vh'};
   overflow-y: hidden;
   position: absolute;
   top: 0;
   left: 0;
-  padding: 5vw;
+  padding: 10vh 10vw;
   box-sizing: border-box;
   user-select: none;
   background: #fff;
