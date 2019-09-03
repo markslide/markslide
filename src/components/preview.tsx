@@ -7,6 +7,7 @@ import {PresentationStore} from "@/stores/presentation.store";
 const Container = styled.div`
   white-space: pre-wrap;
   word-break: break-all;
+  padding: 16px;
 `
 
 export const Preview: FC = () => {

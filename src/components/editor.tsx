@@ -25,13 +25,13 @@ const Container = styled.div`
 `
 
 const TextArea = styled.textarea`
-  padding: 0;
   border: none;
   resize: none;
   display: block;
   height: 100%;
   box-sizing: border-box;
   width: 100%;
+  padding: 16px;
   :focus {
     outline: none;
   }

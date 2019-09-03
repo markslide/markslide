@@ -10,7 +10,7 @@ export const AppRouter = memo(function AppRouter() {
     <Router>
       <Switch>
         <Route path='/' exact render={() => (
-          <Redirect to='/upload'/>
+          <Redirect to='/edit'/>
         )}/>
         <Route path='/upload' component={UploadPage} exact/>
         <Route path='/edit' component={EditPage}/>

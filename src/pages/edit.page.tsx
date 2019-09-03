@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
 import {Preview} from '@/components/preview'
+import {EditPageHeader} from '@/components/edit-page-header'
 
 const layoutBorder = `solid 1px #F3F3F3`
 
@@ -16,7 +17,6 @@ const Container = styled.div`
 const Header = styled.div`
   flex: none;
   border-bottom: ${layoutBorder};
-  padding: 24px 0;
 `
 
 const Main = styled.div`
@@ -43,7 +43,7 @@ export const EditPage: FC<RouteComponentProps> = () => {
   return (
     <Container>
       <Header>
-        This is header
+        <EditPageHeader/>
       </Header>
       <Main>
         <Box>
