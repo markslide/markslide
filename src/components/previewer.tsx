@@ -3,6 +3,8 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
 import {PresentationStore} from "@/stores/presentation.store";
+import {Slide} from '@/components/slide'
+import {SlidePreview} from '@/components/slide-preview'
 
 const Container = styled.div`
   white-space: pre-wrap;
@@ -10,14 +12,15 @@ const Container = styled.div`
   padding: 16px;
 `
 
-export const Preview: FC = () => {
+export const Previewer: FC = () => {
 
   const {slideTexts} = useStore(PresentationStore)
 
   return (
     <Container>
-      {slideTexts}
-      1
+      {slideTexts.map((text, index) => (
+        <SlidePreview markdown={text} key={index}/>
+      ))}
     </Container>
   )
 }
