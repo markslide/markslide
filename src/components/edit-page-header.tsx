@@ -8,6 +8,7 @@ import exportIcon from '@/assets/icon/export.svg'
 import previewIcon from '@/assets/icon/preview.svg'
 import shareIcon from '@/assets/icon/share.svg'
 import themeIcon from '@/assets/icon/theme.svg'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 
 const Container = styled.div`
@@ -47,7 +48,7 @@ const IconButton = styled.img`
   height: 24px;
 `
 
-export const EditPageHeader = memo<{}>(() => {
+export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
   return (
     <Container>
       <Logo/>
@@ -55,7 +56,7 @@ export const EditPageHeader = memo<{}>(() => {
       <IconButton src={previewIcon}/>
       <FixedSpace/>
       <IconButton src={themeIcon}/>
-      <IconButton src={playIcon}/>
+      <IconButton src={playIcon} onClick={() => {props.history.push('/presentation')}}/>
       <FixedSpace/>
       <IconButton src={exportIcon}/>
       <IconButton src={shareIcon}/>
@@ -63,3 +64,4 @@ export const EditPageHeader = memo<{}>(() => {
     </Container>
   )
 })
+)

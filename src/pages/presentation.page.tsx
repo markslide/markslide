@@ -128,6 +128,9 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     mousetrap.bind('p',()=>{
       // togglePause()
     })
+    return () => {
+      Mousetrap.reset()
+    }
   })
 
   function enterFullscreen() {
