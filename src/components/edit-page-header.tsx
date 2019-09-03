@@ -1,6 +1,14 @@
 import React, {memo} from 'react'
 import styled from 'styled-components'
 import {clickable} from '@/utils/clickable'
+import playIcon from '@/assets/icon/play.svg'
+import cancelIcon from '@/assets/icon/cancel.svg'
+import confirmIcon from '@/assets/icon/confirm.svg'
+import exportIcon from '@/assets/icon/export.svg'
+import previewIcon from '@/assets/icon/preview.svg'
+import shareIcon from '@/assets/icon/share.svg'
+import themeIcon from '@/assets/icon/theme.svg'
+
 
 const Container = styled.div`
   padding: 12px 60px;
@@ -36,7 +44,7 @@ const Logo = styled.img`
 
 const IconButton = styled.img`
   ${clickable};
-  height: 28px;
+  height: 24px;
 `
 
 export const EditPageHeader = memo<{}>(() => {
@@ -44,13 +52,13 @@ export const EditPageHeader = memo<{}>(() => {
     <Container>
       <Logo/>
       <FlexSpace/>
-      <IconButton src='https://randomuser.me/api/portraits/men/1.jpg'/>
+      <IconButton src={previewIcon}/>
       <FixedSpace/>
-      <IconButton src='https://randomuser.me/api/portraits/men/1.jpg'/>
-      <IconButton src='https://randomuser.me/api/portraits/men/1.jpg'/>
+      <IconButton src={themeIcon}/>
+      <IconButton src={playIcon}/>
       <FixedSpace/>
-      <IconButton src='https://randomuser.me/api/portraits/men/1.jpg'/>
-      <IconButton src='https://randomuser.me/api/portraits/men/1.jpg'/>
+      <IconButton src={exportIcon}/>
+      <IconButton src={shareIcon}/>
       <Logo/>
     </Container>
   )
