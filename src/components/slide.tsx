@@ -27,7 +27,7 @@ const Markdown = styled.div.attrs((props) => ({
 }))<{
   preview: boolean
 }>`
-  width: 83vw;
+  width: ${props => props.preview ? '83vw' : '100vh'};
   height: ${props => props.preview ? '46vw' : '100vh'};
   overflow-y: hidden;
   position: absolute;
