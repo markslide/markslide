@@ -3,7 +3,6 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
 import {PresentationStore} from "@/stores/presentation.store";
-import {Slide} from '@/components/slide'
 import {SlidePreview} from '@/components/slide-preview'
 
 const Container = styled.div`

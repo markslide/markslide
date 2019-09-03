@@ -29,7 +29,7 @@ const Markdown = styled.div.attrs((props) => ({
 }>`
   width: 100vw;
   height: ${props => props.preview ? '75vw' : '100vh'};
-  overflow-y: scroll;
+  overflow-y: hidden;
   position: absolute;
   top: 0;
   left: 0;

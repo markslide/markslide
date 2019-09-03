@@ -31,7 +31,12 @@ const TextArea = styled.textarea`
   height: 100%;
   box-sizing: border-box;
   width: 100%;
-  padding: 16px;
+  padding: 24px 3.5vw 24px 90px;
+  word-break: break-all;
+  font-size: 14px;
+  font-family: inherit;
+  color: inherit;
+  
   :focus {
     outline: none;
   }
@@ -67,7 +72,7 @@ export const Editor: FC<Props> = (props) => {
           }
         }
       }
-      reader.onerror = (event) => {
+      reader.onerror = () => {
         console.warn('failed to read')
       }
     }

@@ -7,6 +7,14 @@ const Container = styled.div`
   height: 30vw;
   width: 40vw;
   margin: 24px auto;
+  transition: all 0.2s ease;
+  border: 2px solid rgba(0,0,0, 0);
+  box-sizing: border-box;
+  
+  :hover {
+    border: 2px solid rgba(0,0,0, 0.2);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  }
 `
 
 const Scale = styled.div`
