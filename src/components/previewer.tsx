@@ -3,13 +3,12 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
 import {PresentationStore} from "@/stores/presentation.store";
-import {Slide} from '@/components/slide'
 import {SlidePreview} from '@/components/slide-preview'
 
 const Container = styled.div`
   white-space: pre-wrap;
   word-break: break-all;
-  padding: 16px;
+  padding: 10px 0;
 `
 
 export const Previewer: FC = () => {

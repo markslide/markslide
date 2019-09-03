@@ -2,8 +2,11 @@ import React, {memo} from 'react'
 import styled from 'styled-components'
 import {clickable} from '@/utils/clickable'
 import playIcon from '@/assets/icon/play.svg'
-import cancelIcon from '@/assets/icon/cancel.svg'
-import confirmIcon from '@/assets/icon/confirm.svg'
+// import cancelIcon from '@/assets/icon/cancel.svg'
+// import confirmIcon from '@/assets/icon/confirm.svg'
+import logo from '@/assets/icon/logo.svg'
+import searchIcon from '@/assets/icon/search.svg'
+import questionIcon from '@/assets/icon/question.svg'
 import exportIcon from '@/assets/icon/export.svg'
 import previewIcon from '@/assets/icon/preview.svg'
 import shareIcon from '@/assets/icon/share.svg'
@@ -11,13 +14,13 @@ import themeIcon from '@/assets/icon/theme.svg'
 
 
 const Container = styled.div`
-  padding: 12px 60px;
+  padding: 16px 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   > * {
     flex: none;
-    margin: 0 8px;
+    margin: 0 6px;
     :first-of-type {
       margin-left: 0;
     }
@@ -32,26 +35,66 @@ const FixedSpace = styled.div`
   width: 16px;
 `
 
-const FlexSpace = styled.div`
-  flex: auto
-`
+// const FlexSpace = styled.div`
+//   flex: auto
+// `
 
 const Logo = styled.img`
-  width: 100px;
-  height: 40px;
-  background: #f0fff4;
+  height: 26px;
+  margin-right: 16px;
 `
 
 const IconButton = styled.img`
   ${clickable};
-  height: 24px;
+  height: 21px;
+`
+
+const Version = styled.div`
+  width: 54px;
+  height: 22px;
+  border-radius: 4px;
+  line-height: 22px;
+  text-align: center;
+  background-color: #f7f7f7;
+  color: #b0b0b0;
+  font-size: 10px;
+`
+
+const UserInfo = styled.div`
+  height: 23px;
+  line-height: 23px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-left: 12px;
+  color: #17AE7E;
+`
+
+const SearchInput = styled.input`
+  font-size: 15px;
+  border: none;
+  flex: auto;
+  font-weight: normal;
+  font-family: inherit;
+  
+  ::placeholder {
+    color: #E5E5E5;
+  }
+  
+  :focus {
+    outline: none;
+  }
 `
 
 export const EditPageHeader = memo<{}>(() => {
   return (
     <Container>
-      <Logo/>
-      <FlexSpace/>
+      <Logo src={logo}/>
+      <Version>v 0.0.1</Version>
+      <FixedSpace/>
+      <IconButton src={searchIcon}/>
+      <SearchInput placeholder='Search every document...' spellCheck={false}/>
+      <FixedSpace/>
       <IconButton src={previewIcon}/>
       <FixedSpace/>
       <IconButton src={themeIcon}/>
@@ -59,7 +102,9 @@ export const EditPageHeader = memo<{}>(() => {
       <FixedSpace/>
       <IconButton src={exportIcon}/>
       <IconButton src={shareIcon}/>
-      <Logo/>
+      <FixedSpace/>
+      <IconButton src={questionIcon}/>
+      <UserInfo>gb hao</UserInfo>
     </Container>
   )
 })

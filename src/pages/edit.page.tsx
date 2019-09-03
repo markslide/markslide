@@ -33,7 +33,6 @@ const Main = styled.div`
 
 const Box = styled.div`
   flex: auto;
-  width: 50%;
   overflow-x: hidden;
   overflow-y: scroll;
   height: 100%;
@@ -46,10 +45,10 @@ export const EditPage: FC<RouteComponentProps> = () => {
         <EditPageHeader/>
       </Header>
       <Main>
-        <Box>
+        <Box style={{width: '60%'}}>
           <Editor onUpload={() => {}} contentEmpty={false}/>
         </Box>
-        <Box>
+        <Box style={{width: '40%'}}>
           <Previewer/>
         </Box>
       </Main>

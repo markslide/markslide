@@ -27,13 +27,13 @@ const Markdown = styled.div.attrs((props) => ({
 }))<{
   preview: boolean
 }>`
-  width: 100vw;
-  height: ${props => props.preview ? '75vw' : '100vh'};
-  overflow-y: scroll;
+  width: 83vw;
+  height: ${props => props.preview ? '46vw' : '100vh'};
+  overflow-y: hidden;
   position: absolute;
   top: 0;
   left: 0;
-  padding: 10vh 10vw;
+  padding: 5vw;
   box-sizing: border-box;
   user-select: none;
   background: #fff;
@@ -113,7 +113,7 @@ interface Props {
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
   return (
-    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit}`} preview={props.preview}>
+    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit||'next'}`} preview={props.preview}>
       <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>
   )
