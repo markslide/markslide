@@ -2,6 +2,7 @@ import React, {FC} from 'react'
 import { RouteComponentProps } from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
+import {Preview} from '@/components/preview'
 
 const layoutBorder = `solid 1px #F3F3F3`
 
@@ -21,6 +22,7 @@ const Header = styled.div`
 const Main = styled.div`
   flex: auto;
   display: flex;
+  height: 100%;
   > * {
     border-right: ${layoutBorder};
     &:last-of-type {
@@ -29,12 +31,12 @@ const Main = styled.div`
   }
 `
 
-const EditorBox = styled.div`
+const Box = styled.div`
   flex: auto;
-`
-
-const PreviewBox = styled.div`
-  flex: auto;
+  width: 50%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
 `
 
 export const EditPage: FC<RouteComponentProps> = () => {
@@ -44,12 +46,12 @@ export const EditPage: FC<RouteComponentProps> = () => {
         This is header
       </Header>
       <Main>
-        <EditorBox>
-          This is editor
-        </EditorBox>
-        <PreviewBox>
-          This is preview
-        </PreviewBox>
+        <Box>
+          <Editor onUpload={() => {}} contentEmpty={false}/>
+        </Box>
+        <Box>
+          <Preview/>
+        </Box>
       </Main>
     </Container>
   )

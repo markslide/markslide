@@ -6,13 +6,11 @@ import {PresentationStore} from "@/stores/presentation.store";
 
 const Container = styled.div`
   height: 100%;
-  text-align: center;
-  position: relative;
-  
+  overflow: hidden;
   div{
     position: absolute;
-    width:100%;
-    top:50%;
+    width: 100%;
+    top: 50%;
     transform: translateY(-50%);
     left:0;
     i{
@@ -27,15 +25,13 @@ const Container = styled.div`
 `
 
 const TextArea = styled.textarea`
-  //width: calc(100% - 80px);
-  //height: calc(99% - 80px);
-  //text-align: left;
-  //padding: 40px;
   padding: 0;
-  height: 100%;
   border: none;
   resize: none;
-  
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+  width: 100%;
   :focus {
     outline: none;
   }
