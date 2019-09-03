@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-  height: 19vw;
-  width: 34vw;
-  margin: 18px auto;
+  height: 30vw;
+  width: 40vw;
+  margin: 24px auto;
   transition: all 0.2s ease;
   border: 2px solid rgba(0,0,0, 0);
   box-sizing: border-box;
