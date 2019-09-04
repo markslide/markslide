@@ -134,13 +134,26 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   })
 
   function enterFullscreen() {
-    document.body.requestFullscreen()
+    const body = document.body as any
+    if (body.requestFullscreen) {
+      body.requestFullscreen()
+    } else if (body.webkitRequestFullscreen) {
+      body.webkitRequestFullscreen()
+    } else if (body.webkitRequestFullScreen) {
+      body.webkitRequestFullScreen()
+    }
   }
   function exitFullscreen() {
-    document.exitFullscreen()
+    const d = document as any
+    if (d.exitFullscreen) {
+      d.exitFullscreen()
+    } else if (d.webkitExitFullscreen) {
+      d.webkitExitFullscreen()
+    }
   }
   function toggleFullscreen() {
-    if (document.fullscreenElement) {
+    const d = document as any
+    if (d.fullscreenElement || d.webkitFullscreenElement) {
       exitFullscreen()
     } else {
       enterFullscreen()
