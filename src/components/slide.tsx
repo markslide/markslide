@@ -122,9 +122,8 @@ export const Slide = memo<Props>((props) => {
   const scrollBoxRef = useRef<HTMLDivElement>()
 
   useLayoutEffect(() => {
-    if (props.transit === null && scrollBoxRef.current) {
+    if (props.transit === null && scrollBoxRef.current && props.mode === SlideMode.current) {
       scrollBoxRef.current.scrollTop = 0
-      console.log(scrollBoxRef.current)
     }
   }, [props.transit])
 
