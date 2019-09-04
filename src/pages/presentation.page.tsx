@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {FC, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {RouteComponentProps} from 'react-router'
-import styled from 'styled-components'
+import styled, {createGlobalStyle} from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import * as mousetrap from 'mousetrap'
@@ -11,6 +11,11 @@ import {PauseLayer} from '@/components/pause-layer'
 import {useWindowSize} from '@/utils/use-window-size'
 import {Size} from '@/classes/size'
 
+const Style = createGlobalStyle`
+  body {
+    background: #000000;
+  }
+`
 
 const Container = styled.div<{
   scale: number
@@ -18,8 +23,12 @@ const Container = styled.div<{
 }>`
   width: ${props => props.filmSize.width}px;
   height: ${props => props.filmSize.height}px;
-  transform: scale(${props => props.scale});
-  transform-origin: left top;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) scale(${props => props.scale});
+  transform-origin: center center;
+  overflow: hidden;
 `
 
 const Background = styled.div<{
@@ -70,13 +79,6 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   }, [])
 
   const [transit, setTransit] = useState<'previous'| 'next'>(null)
-
-  const currentSlideRef = useRef<HTMLDivElement>()
-  useLayoutEffect(() => {
-    if (transit === null && currentSlideRef.current) {
-      currentSlideRef.current.scrollTop = 0
-    }
-  }, [transit])
 
   function nextPage() {
     if (transit) return
@@ -167,22 +169,29 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     windowSize.height / filmSize.height,
     windowSize.width / filmSize.width,
   ), [windowSize, filmSize])
-  console.log(scale)
 
   return (
-    <Container scale={scale} filmSize={filmSize}>
-      {pausing && (
-        <PauseLayer/>
-      )}
+    <>
+      <Style/>
+      <Container scale={scale} filmSize={filmSize}>
+        {pausing && (
+          <PauseLayer/>
+        )}
 
-      <Background mouseMoving={mouseMoving}>
-        {Object.keys(SlideMode).map((mode, index) => {
-          const text = slideTexts[currentPage + index - 1]
-          return text && (
-            <Slide transit={transit} markdown={text} mode={mode as SlideMode} key={mode}/>
-          )
-        })}
-      </Background>
-    </Container>
+        <Background mouseMoving={mouseMoving}>
+          {Object.keys(SlideMode).map((mode, index) => {
+            const text = slideTexts[currentPage + index - 1]
+            return text && (
+              <Slide
+                transit={transit}
+                markdown={text}
+                mode={mode as SlideMode}
+                key={mode}
+              />
+            )
+          })}
+        </Background>
+      </Container>
+    </>
   )
 }

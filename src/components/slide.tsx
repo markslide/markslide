@@ -1,5 +1,5 @@
 import styled, {keyframes} from 'styled-components'
-import React, {memo, useMemo} from 'react'
+import React, {memo, useLayoutEffect, useMemo, useRef} from 'react'
 import {markdownToHtml} from '@/utils/markdown-to-html'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
@@ -31,7 +31,8 @@ const Markdown = styled.div.attrs((props) => ({
   preview: boolean
   filmSize: Size
 }>`
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: ${props => props.preview ? 'hidden' : 'scroll'};
   position: absolute;
   top: 0;
   left: 0;
@@ -117,11 +118,22 @@ interface Props {
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
   const {filmSize} = useStore(SlideStore)
+
+  const scrollBoxRef = useRef<HTMLDivElement>()
+
+  useLayoutEffect(() => {
+    if (props.transit === null && scrollBoxRef.current) {
+      scrollBoxRef.current.scrollTop = 0
+      console.log(scrollBoxRef.current)
+    }
+  }, [props.transit])
+
   return (
     <Markdown
       className={(props.mode || '') + ' ' + `transit-${props.transit}`}
       preview={props.preview}
       filmSize={filmSize}
+      ref={scrollBoxRef}
     >
       <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>

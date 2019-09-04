@@ -9,11 +9,11 @@ export const proportionToFilmSize: {
   [key: number]: Size
 } = {
   [Proportion['16:9']]: {
-    width: 800,
-    height: 450
+    width: 1280,
+    height: 720
   },
   [Proportion['4:3']]: {
-    width: 800,
-    height: 600
+    width: 960,
+    height: 720
   },
 }
