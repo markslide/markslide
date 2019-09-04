@@ -3,6 +3,7 @@ import React, {memo, useMemo} from 'react'
 import {markdownToHtml} from '@/utils/markdown-to-html'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
+import {Size} from '@/classes/size'
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -28,18 +29,21 @@ const Markdown = styled.div.attrs((props) => ({
   className: `markdown ${props.className}`,
 }))<{
   preview: boolean
+  filmSize: Size
 }>`
   overflow-y: hidden;
   position: absolute;
   top: 0;
   left: 0;
-  padding: 10vh 10vw;
+  width: ${props => props.filmSize.width}px;
+  height: ${props => props.filmSize.height}px;
+  padding: 60px 80px;
   box-sizing: border-box;
   user-select: none;
   background: #fff;
   &.previous {
     z-index: 6;
-    left:-100vw;
+    left: -${props => props.filmSize.width}px;
     &.transit-previous {
       animation: ${moveFromLeftKeyframes} .6s ease both;
       animation-delay: .2s;
@@ -59,7 +63,7 @@ const Markdown = styled.div.attrs((props) => ({
   }
   &.next {
     z-index: 7;
-    left: 100vw;
+    left: ${props => props.filmSize.width}px;
     &.transit-next {
       animation: ${moveFromRightKeyframes} .6s ease both;
       animation-delay: .2s;
@@ -112,12 +116,12 @@ interface Props {
 
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
-  const slideStore = useStore(SlideStore)
+  const {filmSize} = useStore(SlideStore)
   return (
     <Markdown
       className={(props.mode || '') + ' ' + `transit-${props.transit}`}
       preview={props.preview}
-      style={{...slideStore.filmSize}}
+      filmSize={filmSize}
     >
       <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>

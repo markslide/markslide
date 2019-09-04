@@ -1,11 +1,7 @@
 import {useEffect, useState} from 'react'
+import {Size} from '@/classes/size'
 
-interface WindowSize {
-  width: number
-  height: number
-}
-
-type Subscriber = (size: WindowSize) => void
+type Subscriber = (size: Size) => void
 const subscribers = new Set<Subscriber>()
 
 let size = {
@@ -24,7 +20,7 @@ window.addEventListener('resize', () => {
 })
 
 export function useWindowSize() {
-  const [state, setState] = useState<WindowSize>(size)
+  const [state, setState] = useState<Size>(size)
 
   useEffect(() => {
     subscribers.add(setState)

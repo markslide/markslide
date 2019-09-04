@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useEffect, useLayoutEffect, useRef, useState} from 'react'
+import {FC, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {RouteComponentProps} from 'react-router'
 import styled from 'styled-components'
 import {useStore} from 'reto'
@@ -8,19 +8,25 @@ import * as mousetrap from 'mousetrap'
 import '@/themes/github.less'
 import {Slide, SlideMode} from '@/components/slide'
 import {PauseLayer} from '@/components/pause-layer'
-import {Proportion} from '@/classes/proportion'
+import {useWindowSize} from '@/utils/use-window-size'
+import {Size} from '@/classes/size'
 
 
-const Container = styled.div`
-  width:100vw;
-  height: 100vh;
+const Container = styled.div<{
+  scale: number
+  filmSize: Size
+}>`
+  width: ${props => props.filmSize.width}px;
+  height: ${props => props.filmSize.height}px;
+  transform: scale(${props => props.scale});
+  transform-origin: left top;
 `
 
 const Background = styled.div<{
   mouseMoving: boolean
 }>`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   cursor: ${props => props.mouseMoving ? 'default' : 'none'};
   user-select: none;
   background: #000000;
@@ -28,7 +34,7 @@ const Background = styled.div<{
 
 
 export const PresentationPage: FC<RouteComponentProps> = (props) => {
-  const {slideTexts} = useStore(SlideStore)
+  const {slideTexts, filmSize} = useStore(SlideStore)
 
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -156,8 +162,15 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     }
   }
 
+  const windowSize = useWindowSize()
+  const scale = useMemo(() => Math.min(
+    windowSize.height / filmSize.height,
+    windowSize.width / filmSize.width,
+  ), [windowSize, filmSize])
+  console.log(scale)
+
   return (
-    <Container>
+    <Container scale={scale} filmSize={filmSize}>
       {pausing && (
         <PauseLayer/>
       )}
