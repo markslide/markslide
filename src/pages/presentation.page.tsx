@@ -7,23 +7,12 @@ import {PresentationStore} from '@/stores/presentation.store'
 import * as mousetrap from 'mousetrap'
 import '@/themes/github.less'
 import {Slide, SlideMode} from '@/components/slide'
+import {PauseLayer} from '@/components/pause-layer'
 
 
 const Container = styled.div`
   width:100vw;
   height: 100vh;
-  animation: fade-in-delay 2s ease;
-  animation-iteration-count: 1;
-`
-
-const PauseLayer = styled.div`
-  position: fixed;
-  z-index: 20;
-  width:100vw;
-  height:100vh;
-  animation: fade-in 1s ease;
-  animation-iteration-count: 1;
-  background: #000000;
 `
 
 const Background = styled.div<{
@@ -84,6 +73,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
 
   function nextPage() {
     if (transit) return
+    if (pausing) return
     if (currentPage >= slideTexts.length - 1) return
     setTransit('next')
     setTimeout(()=>{
@@ -94,12 +84,17 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
 
   function previousPage() {
     if (transit) return
+    if (pausing) return
     if (currentPage <= 0) return
     setTransit('previous')
     setTimeout(()=>{
       setCurrentPage(currentPage - 1)
       setTransit(null)
     },800 + 20)
+  }
+
+  function togglePausing() {
+    setPausing(!pausing)
   }
 
   useEffect(() => {
@@ -126,7 +121,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       toggleFullscreen()
     })
     mousetrap.bind('p',()=>{
-      // togglePause()
+      togglePausing()
     })
     return () => {
       Mousetrap.reset()
