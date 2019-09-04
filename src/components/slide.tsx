@@ -1,6 +1,8 @@
 import styled, {keyframes} from 'styled-components'
 import React, {memo, useMemo} from 'react'
 import {markdownToHtml} from '@/utils/markdown-to-html'
+import {useStore} from 'reto'
+import {SlideStore} from '@/stores/slide.store'
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -27,8 +29,6 @@ const Markdown = styled.div.attrs((props) => ({
 }))<{
   preview: boolean
 }>`
-  width: 100vw;
-  height: ${props => props.preview ? '75vw' : '100vh'};
   overflow-y: hidden;
   position: absolute;
   top: 0;
@@ -112,8 +112,13 @@ interface Props {
 
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
+  const slideStore = useStore(SlideStore)
   return (
-    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit}`} preview={props.preview}>
+    <Markdown
+      className={(props.mode || '') + ' ' + `transit-${props.transit}`}
+      preview={props.preview}
+      style={{...slideStore.filmSize}}
+    >
       <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>
   )

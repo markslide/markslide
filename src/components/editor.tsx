@@ -2,7 +2,7 @@ import {FC, DragEvent, useRef} from 'react'
 import * as React from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
-import {PresentationStore} from "@/stores/presentation.store";
+import {SlideStore} from "@/stores/slide.store";
 
 const Container = styled.div`
   height: 100%;
@@ -50,7 +50,7 @@ interface Props {
 export const Editor: FC<Props> = (props) => {
 
   const editorRef = useRef()
-  const {text, updateText} = useStore(PresentationStore)
+  const {text, updateText} = useStore(SlideStore)
 
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()

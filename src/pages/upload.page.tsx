@@ -3,10 +3,10 @@ import * as React from 'react'
 import {Upload} from '@/components/upload'
 import {RouteComponentProps} from 'react-router'
 import {useStore} from 'reto'
-import {PresentationStore} from '@/stores/presentation.store'
+import {SlideStore} from '@/stores/slide.store'
 
 export const UploadPage: FC<RouteComponentProps> = (props) => {
-  const store = useStore(PresentationStore)
+  const store = useStore(SlideStore)
 
   return (
     <div>

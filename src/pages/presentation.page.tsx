@@ -1,13 +1,14 @@
+import * as React from 'react'
 import {FC, useEffect, useLayoutEffect, useRef, useState} from 'react'
 import {RouteComponentProps} from 'react-router'
-import * as React from 'react'
 import styled from 'styled-components'
 import {useStore} from 'reto'
-import {PresentationStore} from '@/stores/presentation.store'
+import {SlideStore} from '@/stores/slide.store'
 import * as mousetrap from 'mousetrap'
 import '@/themes/github.less'
 import {Slide, SlideMode} from '@/components/slide'
 import {PauseLayer} from '@/components/pause-layer'
+import {Proportion} from '@/classes/proportion'
 
 
 const Container = styled.div`
@@ -18,7 +19,7 @@ const Container = styled.div`
 const Background = styled.div<{
   mouseMoving: boolean
 }>`
-  width:100vw;
+  width: 100vw;
   height: 100vh;
   cursor: ${props => props.mouseMoving ? 'default' : 'none'};
   user-select: none;
@@ -27,7 +28,7 @@ const Background = styled.div<{
 
 
 export const PresentationPage: FC<RouteComponentProps> = (props) => {
-  const {slideTexts} = useStore(PresentationStore)
+  const {slideTexts} = useStore(SlideStore)
 
   const [currentPage, setCurrentPage] = useState(0)
 
