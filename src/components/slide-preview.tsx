@@ -1,5 +1,5 @@
 import {Slide} from '@/components/slide'
-import React, {FC} from 'react'
+import React, {FC, memo} from 'react'
 import styled from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
@@ -30,7 +30,7 @@ interface Props {
   scale: number
 }
 
-export const SlidePreview: FC<Props> = (props) => {
+export const SlidePreview = memo<Props>((props) => {
   const {filmSize} = useStore(SlideStore)
   return (
     <Container
@@ -44,4 +44,4 @@ export const SlidePreview: FC<Props> = (props) => {
       </Scale>
     </Container>
   )
-}
+})
