@@ -10,6 +10,7 @@ import previewIcon from '@/assets/icon/preview.svg'
 import shareIcon from '@/assets/icon/share.svg'
 import themeIcon from '@/assets/icon/theme.svg'
 import {RouteComponentProps, withRouter} from 'react-router'
+import {hoverShrink} from "@/utils/hover-animation";
 
 
 const Container = styled.div`
@@ -45,31 +46,23 @@ const Logo = styled.img`
 
 const IconButton = styled.img`
   ${clickable};
+  ${hoverShrink};
   height: 21px;
-  transition: transform 0.15s ease-in-out;
-  
-  :hover {
-    transform: scale(0.95);
-  }
 `
 
 const TextButton = styled.div`
   ${clickable};
-  transition: transform 0.15s ease-in-out;
-  
-  :hover {
-    transform: scale(0.95);
-  }
-  
-  &.user-info {
-    height: 23px;
-    line-height: 23px;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-left: 12px;
-    color: #17AE7E;
-  }
+  ${hoverShrink};
+`
+
+const UserInfoButton = styled(TextButton)`
+  height: 23px;
+  line-height: 23px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-left: 12px;
+  color: #17AE7E;
 `
 
 const Version = styled.div`
@@ -119,7 +112,7 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <IconButton src={shareIcon}/>
       <FixedSpace/>
       <IconButton src={questionIcon}/>
-      <TextButton className='user-info'>gb hao</TextButton>
+      <UserInfoButton>gb hao</UserInfoButton>
     </Container>
   )
 })

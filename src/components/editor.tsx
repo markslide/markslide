@@ -4,28 +4,28 @@ import styled from 'styled-components'
 import {useStore} from "reto";
 import {SlideStore} from "@/stores/slide.store";
 import SimpleMDE from "@/components/md-editor";
-import "@/assets/css/easymde.min.css";
+import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
-import {EditorStyle} from './editor-inject-style'
+import {EditorStyle} from './editor-style'
 
 const Container = styled.div`
   height: 100%;
   overflow: hidden;
-  
-  #upload-placeholder {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    left:0;
-    i{
-        color: #FFFFFF;
-        font-size: 60px;
-    }
-    p{
-        font-size: 16px;
-        color: #7b7b7b;
-    }
+`
+
+const UploadPlaceHolder = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  left:0;
+  i{
+      color: #FFFFFF;
+      font-size: 60px;
+  }
+  p{
+      font-size: 16px;
+      color: #7b7b7b;
   }
 `
 
@@ -68,10 +68,10 @@ export const Editor: FC<Props> = (props) => {
       onDrop={handleDrop}
       onDropCapture={handleDrop}
     >
-      <div id="upload-placeholder" style={{display: props.contentEmpty ? 'initial' : 'none'}}>
+      <UploadPlaceHolder style={{display: props.contentEmpty ? 'initial' : 'none'}}>
         {/*<i class="fa fa-file-text"></i>*/}
         <p>Drag your file here</p>
-      </div>
+      </UploadPlaceHolder>
 
       <EditorStyle/>
       <SimpleMDE
