@@ -1,6 +1,6 @@
-import {createGlobalStyle} from "styled-components";
+import {css} from 'styled-components'
 
-export const EditorStyle = createGlobalStyle`
+export const editorStyle = css`
   .CodeMirror {
     height: 100% !important;
     pre {

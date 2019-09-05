@@ -6,14 +6,15 @@ import {SlideStore} from "@/stores/slide.store";
 import SimpleMDE from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
-import {EditorStyle} from '@/components/editor-style'
+import {editorStyle} from '@/utils/editor-style'
 import "@/assets/css/github.min.css"
-import "@/assets/js/highlight.min.js"
+import "highlightjs/highlight.pack.min"
 
 
 const Container = styled.div`
   height: 100%;
   overflow: hidden;
+  ${editorStyle};
 `
 
 const UploadPlaceHolder = styled.div`
@@ -76,7 +77,6 @@ export const Editor: FC<Props> = (props) => {
         <p>Drag your file here</p>
       </UploadPlaceHolder>
 
-      <EditorStyle/>
       <SimpleMDE
         id='editor'
         // label="Markdown Editor"
