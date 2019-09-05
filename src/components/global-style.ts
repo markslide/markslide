@@ -13,9 +13,13 @@ export const GlobalStyle = createGlobalStyle`
   }
   // << Prevent over-scrolling, DO NOT DELETE
 
+  * :focus {
+    outline: none;
+  }
+
   body {
     margin: 0;
-    color: #5F5F5F;
+    color: #3F4F4F;
     overflow-x: hidden;
     font-family: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN Normal", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
   }

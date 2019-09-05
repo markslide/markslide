@@ -1,44 +1,35 @@
-import {FC, DragEvent, useRef} from 'react'
 import * as React from 'react'
+import {DragEvent, FC} from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
 import {SlideStore} from "@/stores/slide.store";
+import SimpleMDE from "@/components/md-editor";
+import "easymde/dist/easymde.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css"
+import {editorStyle} from '@/utils/editor-style'
+import "@/assets/css/github.min.css"
+import "highlightjs/highlight.pack.min"
+
 
 const Container = styled.div`
   height: 100%;
   overflow: hidden;
-  div{
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    left:0;
-    i{
-        color: #FFFFFF;
-        font-size: 60px;
-    }
-    p{
-        font-size: 16px;
-        color: #7b7b7b;
-    }
-  }
+  ${editorStyle};
 `
 
-const TextArea = styled.textarea`
-  border: none;
-  resize: none;
-  display: block;
-  height: 100%;
-  box-sizing: border-box;
+const UploadPlaceHolder = styled.div`
+  position: absolute;
   width: 100%;
-  padding: 24px 3.5vw 24px 90px;
-  word-break: break-all;
-  font-size: 14px;
-  font-family: inherit;
-  color: inherit;
-  
-  :focus {
-    outline: none;
+  top: 50%;
+  transform: translateY(-50%);
+  left:0;
+  i{
+      color: #FFFFFF;
+      font-size: 60px;
+  }
+  p{
+      font-size: 16px;
+      color: #7b7b7b;
   }
 `
 
@@ -49,7 +40,6 @@ interface Props {
 
 export const Editor: FC<Props> = (props) => {
 
-  const editorRef = useRef()
   const {text, updateText} = useStore(SlideStore)
 
   function handleDrop(e: DragEvent<HTMLDivElement>) {
@@ -64,12 +54,6 @@ export const Editor: FC<Props> = (props) => {
         const {result} = event.target
         if (typeof result === 'string') {
           props.onUpload(result)
-          if (editorRef && editorRef.current) {
-            // @ts-ignore
-            editorRef.current.focus()
-            // @ts-ignore
-            editorRef.current.setSelectionRange(0, 0)
-          }
         }
       }
       reader.onerror = () => {
@@ -88,17 +72,32 @@ export const Editor: FC<Props> = (props) => {
       onDrop={handleDrop}
       onDropCapture={handleDrop}
     >
-      <div style={{display: props.contentEmpty?'initial':'none'}}>
+      <UploadPlaceHolder style={{display: props.contentEmpty ? 'initial' : 'none'}}>
         {/*<i class="fa fa-file-text"></i>*/}
         <p>Drag your file here</p>
-      </div>
-      <TextArea
-        ref={editorRef}
+      </UploadPlaceHolder>
+
+      <SimpleMDE
+        id='editor'
+        // label="Markdown Editor"
+        options={{
+          autofocus: true,
+          spellChecker: false,
+          autoDownloadFontAwesome: false,
+          hideIcons: ["guide", "preview", "heading", "fullscreen", "side-by-side"],
+          showIcons: ["heading-1", "heading-2", "heading-3", "horizontal-rule", "code"],
+          status: ["lines", "words"],
+
+          // TODO: Why code hl isn't working?
+          renderingConfig: {
+            codeSyntaxHighlighting: true
+          }
+
+        }}
         value={text}
-        autoFocus={true}
-        onChange={e=>updateText(e.target.value)}
-        style={{display: !props.contentEmpty?'initial':'none'}}
+        onChange={updateText}
       />
+      {/*  style={{display: !props.contentEmpty?'initial':'none'}}*/}
     </Container>
   )
 }
