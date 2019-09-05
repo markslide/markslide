@@ -7,6 +7,9 @@ import SimpleMDE from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import {EditorStyle} from '@/components/editor-style'
+import "@/assets/css/github.min.css"
+import "@/assets/js/highlight.min.js"
+
 
 const Container = styled.div`
   height: 100%;
@@ -83,7 +86,13 @@ export const Editor: FC<Props> = (props) => {
           autoDownloadFontAwesome: false,
           hideIcons: ["guide", "preview", "heading", "fullscreen", "side-by-side"],
           showIcons: ["heading-1", "heading-2", "heading-3", "horizontal-rule", "code"],
-          status: ["lines", "words"]
+          status: ["lines", "words"],
+
+          // TODO: Why code hl isn't working?
+          renderingConfig: {
+            codeSyntaxHighlighting: true
+          }
+
         }}
         value={text}
         onChange={updateText}
