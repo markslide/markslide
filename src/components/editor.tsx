@@ -2,7 +2,7 @@ import * as React from 'react'
 import {DragEvent, FC} from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
-import {PresentationStore} from "@/stores/presentation.store";
+import {SlideStore} from "@/stores/slide.store";
 import SimpleMDE from "@/components/md-editor";
 import "@/assets/css/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
@@ -36,7 +36,7 @@ interface Props {
 
 export const Editor: FC<Props> = (props) => {
 
-  const {text, updateText} = useStore(PresentationStore)
+  const {text, updateText} = useStore(SlideStore)
 
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
