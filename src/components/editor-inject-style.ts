@@ -18,7 +18,7 @@ export const EditorStyle = createGlobalStyle`
     border-radius: 0 !important;
   }
   .CodeMirror-line {
-    padding: 0 30px 0 46px !important;
+    padding: 0 30px 0 60px !important;
   }
   .CodeMirror-code {
     pre:nth-child(1) {
@@ -37,7 +37,7 @@ export const EditorStyle = createGlobalStyle`
     border: none !important;
     border-radius: 0 !important;
     border-bottom: 1px solid #F3F3F3 !important;
-    padding: 0 10px 0 30px !important;
+    padding: 0 10px 0 46px !important;
     button {
       border: none !important;
       &.active{
