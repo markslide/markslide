@@ -1,36 +1,41 @@
-import {FC, useEffect, useLayoutEffect, useRef, useState} from 'react'
-import {RouteComponentProps} from 'react-router'
 import * as React from 'react'
-import styled from 'styled-components'
+import {FC, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
+import {RouteComponentProps} from 'react-router'
+import styled, {createGlobalStyle} from 'styled-components'
 import {useStore} from 'reto'
-import {PresentationStore} from '@/stores/presentation.store'
+import {SlideStore} from '@/stores/slide.store'
 import * as mousetrap from 'mousetrap'
 import '@/themes/github.less'
 import {Slide, SlideMode} from '@/components/slide'
+import {PauseLayer} from '@/components/pause-layer'
+import {useWindowSize} from '@/utils/use-window-size'
+import {Size} from '@/classes/size'
 
-
-const Container = styled.div`
-  width:100vw;
-  height: 100vh;
-  animation: fade-in-delay 2s ease;
-  animation-iteration-count: 1;
+const Style = createGlobalStyle`
+  body {
+    background: #000000;
+  }
 `
 
-const PauseLayer = styled.div`
+const Container = styled.div<{
+  scale: number
+  filmSize: Size
+}>`
+  width: ${props => props.filmSize.width}px;
+  height: ${props => props.filmSize.height}px;
   position: fixed;
-  z-index: 20;
-  width:100vw;
-  height:100vh;
-  animation: fade-in 1s ease;
-  animation-iteration-count: 1;
-  background: #000000;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) scale(${props => props.scale});
+  transform-origin: center center;
+  overflow: hidden;
 `
 
 const Background = styled.div<{
   mouseMoving: boolean
 }>`
-  width:100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   cursor: ${props => props.mouseMoving ? 'default' : 'none'};
   user-select: none;
   background: #000000;
@@ -38,7 +43,7 @@ const Background = styled.div<{
 
 
 export const PresentationPage: FC<RouteComponentProps> = (props) => {
-  const {slideTexts} = useStore(PresentationStore)
+  const {slideTexts, filmSize} = useStore(SlideStore)
 
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -75,15 +80,9 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
 
   const [transit, setTransit] = useState<'previous'| 'next'>(null)
 
-  const currentSlideRef = useRef<HTMLDivElement>()
-  useLayoutEffect(() => {
-    if (transit === null && currentSlideRef.current) {
-      currentSlideRef.current.scrollTop = 0
-    }
-  }, [transit])
-
   function nextPage() {
     if (transit) return
+    if (pausing) return
     if (currentPage >= slideTexts.length - 1) return
     setTransit('next')
     setTimeout(()=>{
@@ -94,12 +93,17 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
 
   function previousPage() {
     if (transit) return
+    if (pausing) return
     if (currentPage <= 0) return
     setTransit('previous')
     setTimeout(()=>{
       setCurrentPage(currentPage - 1)
       setTransit(null)
     },800 + 20)
+  }
+
+  function togglePausing() {
+    setPausing(!pausing)
   }
 
   useEffect(() => {
@@ -126,7 +130,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
       toggleFullscreen()
     })
     mousetrap.bind('p',()=>{
-      // togglePause()
+      togglePausing()
     })
     return () => {
       Mousetrap.reset()
@@ -160,20 +164,34 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
     }
   }
 
-  return (
-    <Container>
-      {pausing && (
-        <PauseLayer/>
-      )}
+  const windowSize = useWindowSize()
+  const scale = useMemo(() => Math.min(
+    windowSize.height / filmSize.height,
+    windowSize.width / filmSize.width,
+  ), [windowSize, filmSize])
 
-      <Background mouseMoving={mouseMoving}>
-        {Object.keys(SlideMode).map((mode, index) => {
-          const text = slideTexts[currentPage + index - 1]
-          return text && (
-            <Slide transit={transit} markdown={text} mode={mode as SlideMode} key={mode}/>
-          )
-        })}
-      </Background>
-    </Container>
+  return (
+    <>
+      <Style/>
+      <Container scale={scale} filmSize={filmSize}>
+        {pausing && (
+          <PauseLayer/>
+        )}
+
+        <Background mouseMoving={mouseMoving}>
+          {Object.keys(SlideMode).map((mode, index) => {
+            const text = slideTexts[currentPage + index - 1]
+            return text && (
+              <Slide
+                transit={transit}
+                markdown={text}
+                mode={mode as SlideMode}
+                key={mode}
+              />
+            )
+          })}
+        </Background>
+      </Container>
+    </>
   )
 }

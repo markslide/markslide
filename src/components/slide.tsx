@@ -1,6 +1,9 @@
 import styled, {keyframes} from 'styled-components'
-import React, {memo, useMemo} from 'react'
+import React, {memo, useLayoutEffect, useMemo, useRef} from 'react'
 import {markdownToHtml} from '@/utils/markdown-to-html'
+import {useStore} from 'reto'
+import {SlideStore} from '@/stores/slide.store'
+import {Size} from '@/classes/size'
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -26,20 +29,22 @@ const Markdown = styled.div.attrs((props) => ({
   className: `markdown ${props.className}`,
 }))<{
   preview: boolean
+  filmSize: Size
 }>`
-  width: 100vw;
-  height: ${props => props.preview ? '75vw' : '100vh'};
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: ${props => props.preview ? 'hidden' : 'scroll'};
   position: absolute;
   top: 0;
   left: 0;
-  padding: 10vh 10vw;
+  width: ${props => props.filmSize.width}px;
+  height: ${props => props.filmSize.height}px;
+  padding: 60px 80px;
   box-sizing: border-box;
   user-select: none;
   background: #fff;
   &.previous {
     z-index: 6;
-    left:-100vw;
+    left: -${props => props.filmSize.width}px;
     &.transit-previous {
       animation: ${moveFromLeftKeyframes} .6s ease both;
       animation-delay: .2s;
@@ -59,7 +64,7 @@ const Markdown = styled.div.attrs((props) => ({
   }
   &.next {
     z-index: 7;
-    left: 100vw;
+    left: ${props => props.filmSize.width}px;
     &.transit-next {
       animation: ${moveFromRightKeyframes} .6s ease both;
       animation-delay: .2s;
@@ -112,8 +117,23 @@ interface Props {
 
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
+  const {filmSize} = useStore(SlideStore)
+
+  const scrollBoxRef = useRef<HTMLDivElement>()
+
+  useLayoutEffect(() => {
+    if (props.transit === null && scrollBoxRef.current && props.mode === SlideMode.current) {
+      scrollBoxRef.current.scrollTop = 0
+    }
+  }, [props.transit])
+
   return (
-    <Markdown className={(props.mode || '') + ' ' + `transit-${props.transit}`} preview={props.preview}>
+    <Markdown
+      className={(props.mode || '') + ' ' + `transit-${props.transit}`}
+      preview={props.preview}
+      filmSize={filmSize}
+      ref={scrollBoxRef}
+    >
       <Content dangerouslySetInnerHTML={{__html: html}}/>
     </Markdown>
   )

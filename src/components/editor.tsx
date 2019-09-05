@@ -8,7 +8,6 @@ import "@/assets/css/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import {EditorStyle} from './editor-inject-style'
 
-
 const Container = styled.div`
   height: 100%;
   overflow: hidden;
@@ -37,7 +36,6 @@ interface Props {
 
 export const Editor: FC<Props> = (props) => {
 
-  // const editorRef = useRef()
   const {text, updateText} = useStore(PresentationStore)
 
   function handleDrop(e: DragEvent<HTMLDivElement>) {
