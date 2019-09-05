@@ -46,13 +46,13 @@ const config: Configuration = {
           /__test__/
         ]
       },
-      // {
-      //   test: /\.css$/,
-      //   use: [
-      //     'style-loader',
-      //     'css-loader'
-      //   ]
-      // },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
       {
         test: /\.less$/,
         use: [
@@ -62,6 +62,12 @@ const config: Configuration = {
             loader: 'less-loader',
           }
         ]
+      },
+      {
+        test: /\.(ttf|eot|woff|woff2)$/,
+        use: [
+          'file-loader'
+        ],
       },
       {
         test: /\.(png|svg|jpg|gif|jpeg)$/,
