@@ -13,7 +13,7 @@ import {RouteComponentProps, withRouter} from 'react-router'
 
 
 const Container = styled.div`
-  padding: 16px 40px;
+  padding: 16px 53px;
   display: flex;
   align-items: center;
   justify-content: space-between;
