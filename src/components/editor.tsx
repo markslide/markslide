@@ -6,7 +6,7 @@ import {SlideStore} from "@/stores/slide.store";
 import SimpleMDE from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
-import {EditorStyle} from './editor-style'
+import {EditorStyle} from '@/components/editor-style'
 
 const Container = styled.div`
   height: 100%;
