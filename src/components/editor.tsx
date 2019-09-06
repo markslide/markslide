@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {DragEvent, FC} from 'react'
 import styled from 'styled-components'
-import {useStore} from "reto";
+import {useStore} from 'reto'
 import {SlideStore} from "@/stores/slide.store";
 import SimpleMDE from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
