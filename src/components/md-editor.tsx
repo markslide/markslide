@@ -42,7 +42,7 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
   const editorWrapperRef = useRef()
   const [simpleMde, setSimpleMde] = useState(null)
   const [preElements, setPreElements] = useState()
-  const [HlLines, setHlLines] = useState<number[]>()
+  const highlightLinesRef = useRef<number[]>([])
 
   const getElements = useCallback(() => {
     let editorEl = editorWrapperRef.current
@@ -122,8 +122,7 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
     deHighlightAllLines()
 
     console.log(lines)
-    setHlLines(lines)
-    console.log(HlLines)
+    highlightLinesRef.current = lines
 
     for (let line of lines) {
       highlightLine(line)
@@ -148,7 +147,7 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
         let cursor = simpleMde!.codemirror.getDoc().getCursor()
         let line = cursor.line
         let ch = cursor.ch
-        simpleMde!.codemirror.getDoc().setCursor({line: line, ch: ch + 1})
+        // simpleMde!.codemirror.getDoc().setCursor({line: line, ch: ch + 1})
 
         highlightLines([line, line + 1])
         // for (let pre of preElements) {
@@ -156,7 +155,7 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
         // }
       })
       simpleMde.codemirror.on("scroll", () => {
-        highlightLines(HlLines)
+        highlightLines(highlightLinesRef.current)
       })
 
       // Handle custom events
