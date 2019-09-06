@@ -39,14 +39,13 @@ export interface SimpleMDEEditorProps {
 export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
 
   const {id, label, value, options, getInstance, getLineAndCursor, events, onChange, ...rest} = props
-  const editorWrapperRef = useRef()
+  const editorWrapperRef = useRef<HTMLDivElement>()
   const [simpleMde, setSimpleMde] = useState(null)
   const [preElements, setPreElements] = useState()
   const highlightLinesRef = useRef<number[]>([])
 
   const getElements = useCallback(() => {
     let editorEl = editorWrapperRef.current
-    // @ts-ignore
     let toolbarEl = editorEl && editorEl.getElementsByClassName("editor-toolbar")[0]
     return [editorEl, toolbarEl]
   }, [editorWrapperRef])
