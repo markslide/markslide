@@ -1,7 +1,11 @@
 import {createGlobalStyle} from "styled-components";
 
 export const EditorStyle = createGlobalStyle`
-  .CodeMirror {
+  #editor-wrapper{
+    position: relative;
+    height: 100%;
+    
+    .CodeMirror {
     height: 100% !important;
     pre {
       color: #3F4F4F !important;
@@ -30,8 +34,12 @@ export const EditorStyle = createGlobalStyle`
     padding-bottom: 0 !important;
   }
   .CodeMirror-line-hl {
-    background-color: #17AE7E20 !important;
+    background-color: #17AE7E10 !important;
     border-right: 3px solid #17AE7E !important;
+    
+    //.cm-formatting-header {
+    //  color: #00000066 !important;
+    //}
   }
   .editor-toolbar {
     border: none !important;
@@ -56,22 +64,20 @@ export const EditorStyle = createGlobalStyle`
   .CodeMirror-line::selection, .CodeMirror-line>span::selection, .CodeMirror-line>span>span::selection {
     background: #17AE7E20 !important;
   }
-  #editor-wrapper{
-    position: relative;
-    height: 100%;
-  }
   
   .cm-formatting-header {
-    color: #eee;
-    &.cm-formatting-header-1 {
+    color: #00000010;
+    
+    &.cm-formatting-header-1:nth-child(1) {
       margin-left: -30px;
     }
-    &.cm-formatting-header-2 {
+    &.cm-formatting-header-2:nth-child(1) {
       margin-left: -40px;
     }
-    &.cm-formatting-header-3 {
+    &.cm-formatting-header-3:nth-child(1) {
       margin-left: -45px;
     }
+  }
   }
   
 `

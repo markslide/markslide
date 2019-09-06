@@ -3,7 +3,7 @@ import {DragEvent, FC} from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
 import {SlideStore} from "@/stores/slide.store";
-import SimpleMDE from "@/components/md-editor";
+import {SimpleMDEEditor} from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import {EditorStyle} from '@/components/editor-style'
@@ -77,7 +77,7 @@ export const Editor: FC<Props> = (props) => {
       </UploadPlaceHolder>
 
       <EditorStyle/>
-      <SimpleMDE
+      <SimpleMDEEditor
         id='editor'
         // label="Markdown Editor"
         options={{
@@ -96,6 +96,7 @@ export const Editor: FC<Props> = (props) => {
         }}
         value={text}
         onChange={updateText}
+        // getLineAndCursor={console.log}
       />
       {/*  style={{display: !props.contentEmpty?'initial':'none'}}*/}
     </Container>
