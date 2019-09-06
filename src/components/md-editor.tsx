@@ -91,11 +91,8 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
     let [editorEl, toolbarEl] = getElements()
 
     if (editorEl && toolbarEl) {
-      // @ts-ignore
       editorEl.removeEventListener("keyup", eventWrapper)
-      // @ts-ignore
       editorEl.removeEventListener("paste", eventWrapper)
-      // @ts-ignore
       toolbarEl.removeEventListener("click", eventWrapper)
     }
   }
@@ -132,11 +129,8 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
     let [editorEl, toolbarEl] = getElements()
 
     if (editorEl && toolbarEl && simpleMde) {
-      // @ts-ignore
       editorEl.addEventListener("keyup", eventWrapper)
-      // @ts-ignore
       editorEl.addEventListener("paste", eventWrapper)
-      // @ts-ignore
       toolbarEl.addEventListener("click", eventWrapper)
       simpleMde.codemirror.on("cursorActivity", getCursor)
       simpleMde.codemirror.on("change", updateLines)
