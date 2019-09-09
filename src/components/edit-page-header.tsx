@@ -98,7 +98,7 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
   return (
     <Container>
       <Logo src={logo}/>
-      <Version>v 0.0.1</Version>
+      <Version>v {PACKAGE_VERSION}</Version>
       <FixedSpace/>
       <IconButton src={searchIcon}/>
       <SearchInput placeholder='Search every document...' spellCheck={false}/>
@@ -115,5 +115,4 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <UserInfoButton>gb hao</UserInfoButton>
     </Container>
   )
-})
-)
+}))
