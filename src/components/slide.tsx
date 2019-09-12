@@ -4,6 +4,7 @@ import {markdownToHtml} from '@/utils/markdown-to-html'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import {Size} from '@/classes/size'
+import {getMarkdownClassNames} from '@/utils/get-markdown-class-names'
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -117,6 +118,7 @@ interface Props {
 
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
+  const classNames = useMemo(() => getMarkdownClassNames(props.markdown), [props.markdown])
   const {filmSize} = useStore(SlideStore)
 
   const scrollBoxRef = useRef<HTMLDivElement>()
@@ -129,7 +131,7 @@ export const Slide = memo<Props>((props) => {
 
   return (
     <Markdown
-      className={(props.mode || '') + ' ' + `transit-${props.transit}`}
+      className={(props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
       preview={props.preview}
       filmSize={filmSize}
       ref={scrollBoxRef}
