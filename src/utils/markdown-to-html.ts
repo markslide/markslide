@@ -3,7 +3,7 @@ import * as highlight from 'highlightjs'
 
 const m = marked.setOptions({
   highlight: function (code, lang) {
-    if (lang) {
+    if (lang && highlight.getLanguage(lang)) {
       return highlight.highlight(lang, code).value
     }
     return highlight.highlightAuto(code).value
