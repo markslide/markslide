@@ -19,6 +19,10 @@ export const editorStyle = css`
   }
   .CodeMirror-line {
     padding: 0 30px 0 60px !important;
+    .cm-comment {
+      font-family: Monaco, Consolas, monospace;
+      background: transparent;
+    }
   }
   .CodeMirror-code {
     pre:nth-child(1) {
