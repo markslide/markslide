@@ -19,6 +19,7 @@ const Color = styled.div`
   position: relative;
   box-shadow: #1b1f2322 2px 2px 10px;
   margin-bottom: 20px;
+  border: 2px solid ${props => props.theme.open?'#17AE7E':'transparent'};
   
   :hover {
     box-shadow: #1b1f2344 2px 2px 10px;
@@ -33,7 +34,6 @@ const Color = styled.div`
     width: 100%;
     font-size: 12px;
     line-height: 12px;
-    //top: 130%;
     padding-top: 130%;
   }
 `
