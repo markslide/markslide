@@ -4,6 +4,7 @@ import {UploadPage} from '@/pages/upload.page'
 import {HashRouter as Router} from 'react-router-dom'
 import {PresentationPage} from '@/pages/presentation.page'
 import {EditPage} from '@/pages/edit.page'
+import {ThemeSelect} from "@/pages/theme-select.page";
 
 export const AppRouter = memo(function AppRouter() {
   return (
@@ -15,6 +16,7 @@ export const AppRouter = memo(function AppRouter() {
         <Route path='/upload' component={UploadPage} exact/>
         <Route path='/edit' component={EditPage}/>
         <Route path='/presentation' component={PresentationPage} exact/>
+        <Route path='/theme' component={ThemeSelect} exact/>
       </Switch>
     </Router>
   )

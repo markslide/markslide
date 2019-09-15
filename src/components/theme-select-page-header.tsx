@@ -6,12 +6,11 @@ import logo from '@/assets/icon/logo.svg'
 import searchIcon from '@/assets/icon/search.svg'
 import questionIcon from '@/assets/icon/question.svg'
 import exportIcon from '@/assets/icon/export.svg'
-import previewIcon from '@/assets/icon/preview.svg'
+import confirmIcon from '@/assets/icon/confirm.svg'
 import shareIcon from '@/assets/icon/share.svg'
-import themeIcon from '@/assets/icon/theme.svg'
+import cancelIcon from '@/assets/icon/cancel.svg'
 import {RouteComponentProps, withRouter} from 'react-router'
 import {hoverShrink} from "@/utils/hover-animation";
-
 
 const Container = styled.div`
   padding: 16px 53px;
@@ -94,7 +93,18 @@ const SearchInput = styled.input`
   }
 `
 
-export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
+export const ThemeEditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
+
+  function confirmThemeChange() {
+    // Confirm change
+    props.history.push('/edit')
+  }
+
+  function cancelThemeChange() {
+    // Cancel change
+    props.history.push('/edit')
+  }
+
   return (
     <Container>
       <Logo src={logo}/>
@@ -103,10 +113,8 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <IconButton src={searchIcon}/>
       <SearchInput placeholder='Search every document...' spellCheck={false}/>
       <FixedSpace/>
-      <IconButton src={previewIcon}/>
-      <FixedSpace/>
-      <IconButton src={themeIcon}  onClick={() => {props.history.push('/theme')}}/>
-      <IconButton src={playIcon} onClick={() => {props.history.push('/presentation')}}/>
+      <IconButton src={cancelIcon} onClick={cancelThemeChange}/>
+      <IconButton src={confirmIcon} onClick={confirmThemeChange}/>
       <FixedSpace/>
       <IconButton src={exportIcon}/>
       <IconButton src={shareIcon}/>
