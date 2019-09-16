@@ -1,5 +1,5 @@
 import {FC, default as React, useState} from "react";
-import styled, {createGlobalStyle} from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {ChromePicker} from "react-color";
 
 
@@ -38,9 +38,8 @@ const Color = styled.div`
   }
 `
 
-const AnimationStyle = createGlobalStyle`
-  @keyframes scale-in-top {
-    0% {
+const scaleInTop = keyframes`
+  0% {
       opacity: 0;
       transform: scale(0);
       transform-origin: 50% 0;
@@ -50,9 +49,10 @@ const AnimationStyle = createGlobalStyle`
       transform: scale(1);
       transform-origin: 50% 0;
     }
-  }
-  @keyframes scale-out-top {
-    0% {
+`
+
+const scaleOutTop = keyframes`
+  0% {
       opacity: 1;
       transform: scale(1);
       transform-origin: 50% 0;
@@ -65,7 +65,6 @@ const AnimationStyle = createGlobalStyle`
       transform: scale(0);
       transform-origin: 50% 0;
     }
-  }
 `
 
 const PickerContainer = styled.div`
@@ -75,11 +74,11 @@ const PickerContainer = styled.div`
   margin-top: 10px;
   
   &.open{
-    animation: scale-in-top 0.3s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+    animation: ${scaleInTop} 0.3s cubic-bezier(0.175, 0.885, 0.320, 1.275);
     animation-fill-mode: forwards;
   }
   &.close{
-    animation: scale-out-top 0.2s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+    animation: ${scaleOutTop} 0.2s cubic-bezier(0.175, 0.885, 0.320, 1.275);
     animation-fill-mode: forwards;
   }
   &.closed{
@@ -107,7 +106,6 @@ export const ColorPicker: FC<Props> = (props) => {
 
   return (
     <Container>
-      <AnimationStyle/>
       <Color color={color} theme={{
         title: props.title,
         open: props.isOpen
