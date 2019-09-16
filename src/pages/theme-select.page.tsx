@@ -1,10 +1,11 @@
-import React, {FC} from 'react'
-import { RouteComponentProps } from 'react-router'
+import React from 'react'
+import {RouteComponentProps} from 'react-router'
 import styled, {css} from 'styled-components'
 import {withProvider} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
 import {ThemeEditPageHeader} from "@/components/theme-select-page-header";
 import {ColorScheme} from "@/components/color-scheme";
+import {SlidesRatioPicker} from "@/components/slides-ratio-select";
 
 const layoutBorder = `solid 1px #F3F3F3`
 
@@ -78,6 +79,12 @@ export const ThemeSelect = withProvider<RouteComponentProps>({
             <PaddingBox>
               <Title>Color</Title>
               <ColorScheme/>
+            </PaddingBox>
+          </Box>
+          <Box role={'row'}>
+            <PaddingBox>
+              <Title>Ratio</Title>
+              <SlidesRatioPicker/>
             </PaddingBox>
           </Box>
           <Box role={'row'}>

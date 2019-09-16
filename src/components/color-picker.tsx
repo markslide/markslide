@@ -1,4 +1,4 @@
-import {FC, default as React, useState} from "react";
+import {default as React, FC, useState} from "react";
 import styled, {keyframes} from "styled-components";
 import {ChromePicker} from "react-color";
 
@@ -17,10 +17,10 @@ const Color = styled.div`
   height: 28px;
   background-color: ${props => props.color};
   position: relative;
-  box-shadow: #1b1f2322 2px 2px 10px;
   margin-bottom: 20px;
   border: 2px solid ${props => props.theme.open?'#17AE7E':'transparent'};
   
+  box-shadow: #1b1f2322 2px 2px 10px;
   :hover {
     box-shadow: #1b1f2344 2px 2px 10px;
   }
