@@ -21,6 +21,7 @@ const RatioButton = styled.button`
   border: solid 2px transparent;
   
   box-shadow: #1b1f2322 2px 2px 10px;
+  transition: box-shadow 0.2s;
   :hover {
     box-shadow: #1b1f2344 2px 2px 10px;
   }

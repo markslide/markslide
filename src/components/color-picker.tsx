@@ -21,6 +21,7 @@ const Color = styled.div`
   border: 2px solid ${props => props.theme.open?'#17AE7E':'transparent'};
   
   box-shadow: #1b1f2322 2px 2px 10px;
+  transition: box-shadow 0.2s;
   :hover {
     box-shadow: #1b1f2344 2px 2px 10px;
   }
