@@ -1,11 +1,22 @@
 import {Slide} from '@/components/slide'
 import React, {FC, memo} from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 
+const hoverCss = css<{
+  selected: boolean
+}>`
+  cursor: pointer;
+  :hover {
+    border: 2px solid ${props => props.selected ? '#17AE7E' : 'rgba(0, 0, 0, 0.2)'};
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  }
+`
+
 const Container = styled.div<{
   selected: boolean
+  hoverEffect: boolean
 }>`
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
   margin: 24px auto;
@@ -13,10 +24,7 @@ const Container = styled.div<{
   border: 2px solid ${props => props.selected ? '#17AE7E' : 'transparent'};
   box-sizing: content-box;
   
-  :hover {
-    border: 2px solid ${props => props.selected ? '#17AE7E' : 'rgba(0,0,0, 0.2)'};
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  }
+  ${props => props.hoverEffect && hoverCss};
 `
 
 const Scale = styled.div<{
@@ -44,6 +52,7 @@ export const SlidePreview = memo<Props>((props) => {
       }}
       selected={props.selected}
       onClick={props.onClick}
+      hoverEffect={!!props.onClick}
     >
       <Scale scale={props.scale}>
         <Slide markdown={props.markdown} preview={true}/>
