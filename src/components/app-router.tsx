@@ -15,7 +15,7 @@ export const AppRouter = memo(function AppRouter() {
         )}/>
         <Route path='/upload' component={UploadPage} exact/>
         <Route path='/edit' component={EditPage}/>
-        <Route path='/presentation' component={PresentationPage} exact/>
+        <Route path='/presentation/:page' component={PresentationPage} exact/>
         <Route path='/theme' component={ThemeSelect} exact/>
       </Switch>
     </Router>

@@ -36,7 +36,7 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <IconButton src={previewIcon}/>
       <FixedSpace/>
       <IconButton src={themeIcon}  onClick={() => {props.history.push('/theme')}}/>
-      <IconButton src={playIcon} onClick={() => {props.history.push('/presentation')}}/>
+      <IconButton src={playIcon} onClick={() => {props.history.push('/presentation/0')}}/>
       <FixedSpace/>
       <IconButton src={exportIcon}/>
       <IconButton src={shareIcon}/>

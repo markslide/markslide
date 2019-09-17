@@ -41,11 +41,17 @@ const Background = styled.div<{
   background: #000000;
 `
 
+type Props = RouteComponentProps<{
+  page: string
+}>
 
-export const PresentationPage: FC<RouteComponentProps> = (props) => {
+export const PresentationPage: FC<Props> = (props) => {
   const {slideTexts, filmSize} = useStore(SlideStore)
 
-  const [currentPage, setCurrentPage] = useState(0)
+  const page = parseInt(props.match.params.page)
+  function changePage(val: number) {
+    props.history.replace(`./${val}`)
+  }
 
   const [pausing ,setPausing] = useState(false)
 
@@ -83,10 +89,10 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   function nextPage() {
     if (transit) return
     if (pausing) return
-    if (currentPage >= slideTexts.length - 1) return
+    if (page >= slideTexts.length - 1) return
     setTransit('next')
     setTimeout(()=>{
-      setCurrentPage(currentPage + 1)
+      changePage(page + 1)
       setTransit(null)
     },800 + 20)
   }
@@ -94,10 +100,10 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
   function previousPage() {
     if (transit) return
     if (pausing) return
-    if (currentPage <= 0) return
+    if (page <= 0) return
     setTransit('previous')
     setTimeout(()=>{
-      setCurrentPage(currentPage - 1)
+      changePage(page - 1)
       setTransit(null)
     },800 + 20)
   }
@@ -180,7 +186,7 @@ export const PresentationPage: FC<RouteComponentProps> = (props) => {
 
         <Background mouseMoving={mouseMoving}>
           {Object.keys(SlideMode).map((mode, index) => {
-            const text = slideTexts[currentPage + index - 1]
+            const text = slideTexts[page + index - 1]
             return text && (
               <Slide
                 transit={transit}
