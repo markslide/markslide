@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps, Route } from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
 import {Previewer} from '@/components/previewer'

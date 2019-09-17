@@ -5,8 +5,8 @@ import {withProvider} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
 import {ThemeEditPageHeader} from "@/components/theme-select-page-header";
 import {ColorScheme} from "@/components/color-scheme";
-
-const layoutBorder = `solid 1px #F3F3F3`
+import {layoutBorder} from '@/utils/style-consts'
+import {Box} from '@/components/box'
 
 const Container = styled.div`
   height: 100vh;
@@ -30,23 +30,6 @@ const Title = styled.div`
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 20px;
-`
-
-const Box = styled.div`
-  flex: auto;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  height: auto;
-  
-  ${props => (props.role == 'col' || !props.role) ? 
-  css`
-    + div {
-    border-left: ${layoutBorder};
-  `:
-  css`
-    + div {
-    border-top: ${layoutBorder};
-  `}
 `
 
 const PaddingBox = styled.div`
