@@ -5,7 +5,6 @@ export const Box = styled.div`
   flex: auto;
   overflow-x: hidden;
   overflow-y: scroll;
-  height: auto;
   
   ${props => (props.role == 'col' || !props.role) ?
   css`

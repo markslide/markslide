@@ -49,10 +49,10 @@ export const EditPage = withProvider<RouteComponentProps>({
         <EditPageHeader/>
       </Header>
       <Main>
-        <Box style={{width: '60%'}}>
+        <Box>
           <Editor onUpload={() => {}} contentEmpty={false}/>
         </Box>
-        <Box style={{width: '40%'}}>
+        <Box style={{width: '600px', flex: 'none'}}>
           <Previewer/>
         </Box>
       </Main>

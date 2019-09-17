@@ -45,7 +45,7 @@ export const SlidePreview = memo<Props>((props) => {
       selected={props.selected}
       onClick={props.onClick}
     >
-      <Scale scale={0.1875}>
+      <Scale scale={props.scale}>
         <Slide markdown={props.markdown} preview={true}/>
       </Scale>
     </Container>
