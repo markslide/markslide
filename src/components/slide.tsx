@@ -76,27 +76,27 @@ const Markdown = styled.div.attrs((props) => ({
 const Content = styled.div.attrs(() => ({
   className: 'content'
 }))`
-  @media all{
-    font-size: 12px;
-  }
-  @media all and (min-width: 200px) {
-    font-size: 16px;
-  }
-  @media all and (min-width: 400px) {
-    font-size: 20px;
-  }
-  @media all and (min-width: 600px) {
-    font-size: 24px;
-  }
-  @media all and (min-width: 800px) {
-    font-size: 28px;
-  }
-  @media all and (min-width: 1000px) {
-    font-size: 32px;
-  }
-  @media all and (min-width: 1200px){
-    font-size: 36px;
-  }
+  //@media all{
+  //  font-size: 12px;
+  //}
+  //@media all and (min-width: 200px) {
+  //  font-size: 16px;
+  //}
+  //@media all and (min-width: 400px) {
+  //  font-size: 20px;
+  //}
+  //@media all and (min-width: 600px) {
+  //  font-size: 24px;
+  //}
+  //@media all and (min-width: 800px) {
+  //  font-size: 28px;
+  //}
+  //@media all and (min-width: 1000px) {
+  //  font-size: 32px;
+  //}
+  //@media all and (min-width: 1200px){
+  //  font-size: 36px;
+  //}
   
   table {
     width: 100%;
