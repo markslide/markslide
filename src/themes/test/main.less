@@ -1,4 +1,4 @@
-@main-color: #14cc4b;
+@primary-color: #14cc4b;
 //@secondary-color: #00ff00;
 @text-color: #24292e;
 @code-color: #bbbbbb33;
@@ -21,7 +21,7 @@
     top: 65%;
     width: 50%;
     height: 30%;
-    background-color: @main-color;
+    background-color: @primary-color;
   }
 }
 
@@ -85,7 +85,7 @@
     position: fixed;
     height: 22px;
     top: 220px;
-    background-color: @main-color;
+    background-color: @primary-color;
     padding: 15px;
     z-index: 1;
   }
@@ -171,7 +171,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       @svg: data-uri('../background/cover-img.svg');
-      .recolored-svg(@svg, @main-color);
+      .recolored-svg(@svg, @primary-color);
       background-size: cover;
       filter: none;
     }
@@ -188,7 +188,7 @@
   &.page{
     background-size: cover;
     @svg: data-uri('../background/page-img.svg');
-    .recolored-svg(@svg, @main-color);
+    .recolored-svg(@svg, @primary-color);
     //background-image: url(../background/page-img.svg);
 
     p {
