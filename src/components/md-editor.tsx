@@ -138,7 +138,15 @@ export default class SimpleMDEEditor extends React.PureComponent<SimpleMDEEditor
       this.editorToolbarEl &&
       this.editorToolbarEl.addEventListener("click", this.eventWrapper);
 
-      this.simpleMde.codemirror.on("cursorActivity", this.getCursor);
+      // Uncomment this block to experience
+      // this.simpleMde.codemirror.on("cursorActivity", ()=>{
+      //   let line = this.simpleMde!.codemirror.getDoc().getCursor().line
+      //   this.highlightLines(line+40, line+45)
+      // });
+
+      // this.simpleMde.codemirror.on("scroll", ()=>{
+      //   console.log('OK')
+      // });
 
       const {events} = this.props;
 
@@ -155,6 +163,73 @@ export default class SimpleMDEEditor extends React.PureComponent<SimpleMDEEditor
       });
     }
   };
+
+  deHighlightAll = () => {
+    let lineCount = this.simpleMde!.codemirror.getDoc().lineCount()
+
+    for (let lineNumber = 0; lineNumber < lineCount; lineNumber += 20) {
+      let lines = document.getElementsByClassName('CodeMirror-code')[0].getElementsByTagName('pre')
+      for (let currentLine = 0; currentLine < lines.length; currentLine++) {
+        this.deHighlightLine(lines[currentLine])
+      }
+    }
+  }
+
+  deHighlightLine = (element: HTMLElement) => {
+    element.className = element.className.replace(/CodeMirror-line-hl/gi, '').replace(/\s+/gi, ' ')
+  }
+
+  highlightLine = (element: HTMLElement) => {
+    element.className += ' CodeMirror-line-hl'
+  }
+
+  highlightLines = (start: number, end: number) => {
+    function perform(that: any) {
+      let cursorPos = that.simpleMde!.codemirror.cursorCoords();
+      let lineElement = document.elementFromPoint(cursorPos.left, cursorPos.top)
+      // console.log(lineElement)
+      let lines = document.getElementsByClassName('CodeMirror-code')[0].getElementsByTagName('pre')
+      let found = false
+      let offset = 1
+      for (let currentLine = 0; currentLine < lines.length; currentLine++) {
+        if (found) {
+          if (offset < end - start) {
+            that.highlightLine(lines[currentLine])
+            offset++
+          } else
+            break
+        } else {
+          if (lineElement === lines[currentLine]) {
+            found = true
+            that.highlightLine(lines[currentLine])
+          } else {
+            let preElement = lines[currentLine]
+            let firstLayerSpan = preElement.getElementsByTagName('span')[0]
+            if ((lineElement === firstLayerSpan) || (lineElement === firstLayerSpan.getElementsByTagName('span')[0])) {
+              found = true
+              that.highlightLine(lines[currentLine])
+            }
+          }
+        }
+      }
+    }
+
+    this.deHighlightAll()
+
+    // DO NOT delete the following line!
+    this.simpleMde!.codemirror.getDoc().setCursor(start + 100, 0)
+    this.simpleMde!.codemirror.getDoc().setCursor(start, 0)
+
+    function sleep(time: number) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
+
+    sleep(100).then(() => {
+      perform(this)
+      this.simpleMde!.codemirror.getDoc().setCursor(start, 0)
+    });
+
+  }
 
   getCursor = () => {
     // https://codemirror.net/doc/manual.html#api_selection
