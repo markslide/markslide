@@ -8,6 +8,8 @@ import shareIcon from '@/assets/icon/share.svg'
 import themeIcon from '@/assets/icon/theme.svg'
 import {RouteComponentProps, withRouter} from 'react-router'
 import {FixedSpace, IconButton, PageHeader} from '@/components/page-header'
+import {useStore} from 'reto'
+import {EditPageStore} from '@/stores/edit-page.store'
 
 const SearchInput = styled.input`
   font-size: 15px;
@@ -28,6 +30,7 @@ const SearchInput = styled.input`
 `
 
 export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
+  const editPageStore = useStore(EditPageStore)
   return (
     <PageHeader>
       <IconButton src={searchIcon}/>
@@ -38,7 +41,8 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <IconButton src={themeIcon}  onClick={() => {props.history.push('/theme')}}/>
       <IconButton src={playIcon} onClick={() => {props.history.push('/presentation/0')}}/>
       <FixedSpace/>
-      <IconButton src={exportIcon}/>
+      <IconButton src={exportIcon} onClick={() => {
+        console.log(editPageStore.slideElementsRef.current)}}/>
       <IconButton src={shareIcon}/>
     </PageHeader>
   )

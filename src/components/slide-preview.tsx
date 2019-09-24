@@ -3,6 +3,7 @@ import React, {FC, memo} from 'react'
 import styled, {css} from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
+import {EditPageStore} from '@/stores/edit-page.store'
 
 const hoverCss = css<{
   selected: boolean
@@ -40,10 +41,18 @@ interface Props {
   scale: number
   selected?: boolean
   onClick?: () => void
+  refIndex?: number
 }
 
 export const SlidePreview = memo<Props>((props) => {
   const {filmSize} = useStore(SlideStore)
+  const editPageStore = useStore(EditPageStore)
+
+  function setRef(element: HTMLDivElement) {
+    if (props.refIndex === undefined) return
+    editPageStore.slideElementsRef.current[props.refIndex] = element
+  }
+
   return (
     <Container
       style={{
@@ -54,7 +63,7 @@ export const SlidePreview = memo<Props>((props) => {
       onClick={props.onClick}
       hoverEffect={!!props.onClick}
     >
-      <Scale scale={props.scale}>
+      <Scale scale={props.scale} ref={setRef}>
         <Slide markdown={props.markdown} preview={true}/>
       </Scale>
     </Container>

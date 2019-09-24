@@ -50,6 +50,7 @@ export const Previewer: FC = () => {
             <SlidePreview
               markdown={text}
               key={index}
+              refIndex={index}
               scale={0.2}
               selected={editorStore.selectedPreview === index}
               onClick={() => {

@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react'
+import {useMemo, useRef, useState} from 'react'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 
@@ -6,6 +6,8 @@ export function EditPageStore() {
   const slideStore = useStore(SlideStore)
 
   const [selectedPreview, setSelectedPreview] = useState<number>(0)
+
+  const slideElementsRef = useRef<HTMLDivElement[]>([])
 
   const highlightLines = useMemo(() => {
     const lines: number[] = []
@@ -28,5 +30,6 @@ export function EditPageStore() {
     selectedPreview,
     setSelectedPreview,
     highlightLines,
+    slideElementsRef,
   }
 }
