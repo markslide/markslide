@@ -8,13 +8,6 @@ install:
   - yarn install
 script:
   - yarn build
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: ./dist
-  on:
-    branch: master
 cache:
   yarn: true
   directories:
