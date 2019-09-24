@@ -37,10 +37,12 @@ export const Previewer: FC = () => {
   return (
     <Container>
       <Box role='row' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <SlidePreview
-          markdown={slideTexts[editorStore.selectedPreview]}
-          scale={0.5}
-        />
+        {slideTexts[editorStore.selectedPreview] && (
+          <SlidePreview
+            markdown={slideTexts[editorStore.selectedPreview]}
+            scale={0.5}
+          />
+        )}
       </Box>
       <Box role='row' style={{height: '200px', flex: 'none'}}>
         <PreviewList>
