@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="27px" viewBox="0 0 27 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>icon/theme</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/theme" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2" transform="translate(2.000000, 2.000000)">
+            <g id="Group">
+                <path d="M22.0416667,-3.55271368e-15 C22.56875,-3.55271368e-15 23,0.43125 23,0.958333333 L23,22.0416667 C23,22.56875 22.56875,23 22.0416667,23 L0.958333333,23 C0.43125,23 -8.52651283e-14,22.56875 -8.52651283e-14,22.0416667 L-8.52651283e-14,0.958333333 C-8.52651283e-14,0.43125 0.43125,-3.55271368e-15 0.958333333,-3.55271368e-15 L22.0416667,-3.55271368e-15 Z M21.0833333,1.91666667 L1.91666667,1.91666667 L1.91666667,5.75 L21.0833333,5.75 L21.0833333,1.91666667 Z M1.91666667,7.66666667 L1.91666667,21.0833333 L5.75,21.0833333 L5.75,7.66666667 L1.91666667,7.66666667 Z M7.66666667,21.0833333 L21.0833333,21.0833333 L21.0833333,7.66666667 L7.66666667,7.66666667 L7.66666667,21.0833333 Z" id="Combined-Shape" fill="#5F6379" fill-rule="nonzero"></path>
+                <path d="M1.84,6.808 L21.16,6.808" id="Line-4" stroke="#17AE7E" stroke-width="2"></path>
+                <path d="M6.808,6.44 L6.808,21.16" id="Line-4-Copy" stroke="#17AE7E" stroke-width="2"></path>
+            </g>
+        </g>
+    </g>
+</svg>
