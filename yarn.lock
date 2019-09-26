@@ -6155,6 +6155,11 @@ use-async-memo@^1.2.0:
   resolved "https://registry.npm.taobao.org/use-async-memo/download/use-async-memo-1.2.0.tgz#df6fc503bfd66bfea6b29a79207658d4e6b875cf"
   integrity sha1-32/FA7/Wa/6mspp5IHZY1Oa4dc8=
 
+use-creation@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/use-creation/download/use-creation-1.0.1.tgz#7910d291f829cedb1cdd855cc52d249eca40f133"
+  integrity sha1-eRDSkfgpztsc3YVcxS0knspA8TM=
+
 use-debounce@^2.2.1:
   version "2.2.1"
   resolved "https://registry.npm.taobao.org/use-debounce/download/use-debounce-2.2.1.tgz#0b50e98486a17084c2ba063467ea4cd06071fa3d"

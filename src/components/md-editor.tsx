@@ -1,7 +1,9 @@
-import * as React from "react";
-import {FC, FormEvent, useCallback, useEffect, useRef, useState} from "react";
-import * as SimpleMDE from "easymde";
-import {DOMEvent, Editor, KeyMap} from "codemirror";
+import * as React from 'react'
+import {FC, FormEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import SimpleMDE from 'easymde'
+import {DOMEvent, Editor, KeyMap} from 'codemirror'
+import {useStore} from 'reto'
+import {EditPageStore} from '@/stores/edit-page.store'
 
 
 type CodemirrorEvents =
@@ -37,31 +39,36 @@ export interface SimpleMDEEditorProps {
 }
 
 export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
+  const editPageStore = useStore(EditPageStore)
 
   const {id, label, value, options, getInstance, getLineAndCursor, events, onChange, ...rest} = props
   const editorWrapperRef = useRef<HTMLDivElement>()
-  const [simpleMde, setSimpleMde] = useState(null)
-  const [preElements, setPreElements] = useState()
-  const highlightLinesRef = useRef<number[]>([])
+  const simpleMdeRef = useRef<SimpleMDE>()
+  const textareaRef = useRef<HTMLTextAreaElement>()
+  const preElementsRef = useRef<HTMLCollectionOf<HTMLPreElement>>()
 
-  const getElements = useCallback(() => {
+  const editorElements = useMemo(() => {
     let editorEl = editorWrapperRef.current
     let toolbarEl = editorEl && editorEl.getElementsByClassName("editor-toolbar")[0]
     return [editorEl, toolbarEl]
-  }, [editorWrapperRef])
-
-  useEffect(() => {
-    createEditor()
-  }, [])
+  }, [editorWrapperRef.current])
 
   function updateLines() {
     let lines = document.getElementsByClassName('CodeMirror-code')
     if (lines.length) {
-      // console.log('len', preElements.length)
-      setPreElements(lines[0].getElementsByTagName('pre'))
-      // console.log('len', preElements.length)
+      // console.log('len', preElementsRef.current.length)
+      preElementsRef.current = lines[0].getElementsByTagName('pre')
+      // console.log('len', preElementsRef.current.length)
     }
   }
+
+  useEffect(() => {
+    simpleMdeRef.current = new SimpleMDE({
+      element: textareaRef.current,
+      initialValue: value,
+      ...options,
+    })
+  }, [])
 
   useEffect(() => {
     addEvents()
@@ -71,24 +78,14 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
     updateLines()
 
     return removeEvents
-  }, [typeof window, props, ...getElements()])
-
-  function createEditor() {
-    const SimpleMDE = require("easymde")
-    const initialOptions = {
-      element: document.getElementById(id),
-      initialValue: value
-    }
-    const allOptions = Object.assign({}, initialOptions, options);
-    setSimpleMde(new SimpleMDE(allOptions))
-  }
+  }, [props, ...editorElements])
 
   function eventWrapper() {
-    onChange(simpleMde!.value())
+    onChange(simpleMdeRef.current!.value())
   }
 
   function removeEvents() {
-    let [editorEl, toolbarEl] = getElements()
+    let [editorEl, toolbarEl] = editorElements
 
     if (editorEl && toolbarEl) {
       editorEl.removeEventListener("keyup", eventWrapper)
@@ -97,66 +94,58 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
     }
   }
 
-  function deHighlightAllLines() {
-    function deHighlightLine(lineEl: HTMLElement) {
+  function doHighlight() {
+    const lines = editPageStore.highlightLines
+
+    //dehighlight all lines
+    const preElements = preElementsRef.current
+    for (let i = 0; i < preElements.length; i++) {
+      const lineEl = preElements[i]
       lineEl.className = lineEl.className.replace('CodeMirror-line-hl', '')
     }
 
-    // console.log(preElements)
-    for (let lineEl of preElements) {
-      deHighlightLine(lineEl)
-    }
-  }
-
-  function highlightLines(lines: number[]) {
-    function highlightLine(line: number) {
+    for (let line of lines) {
       let lineEl = preElements[line];
       if (lineEl) lineEl.className += ' CodeMirror-line-hl'
     }
-
-    if (!lines) return
-    deHighlightAllLines()
-
-    console.log(lines)
-    highlightLinesRef.current = lines
-
-    for (let line of lines) {
-      highlightLine(line)
-    }
   }
 
-  function addEvents() {
-    let [editorEl, toolbarEl] = getElements()
+  useEffect(() => {
+    let cursor = simpleMdeRef.current.codemirror.getDoc().getCursor()
+    simpleMdeRef.current!.codemirror.getDoc().setCursor({
+      line: editPageStore.highlightLines[0] || 0,
+      ch: cursor.ch + 1,
+    })
+  }, [editPageStore.selectedPreview])
 
-    if (editorEl && toolbarEl && simpleMde) {
+  useEffect(() => {
+    doHighlight()
+    simpleMdeRef.current.codemirror.focus()
+  }, [editPageStore.highlightLines])
+
+  function addEvents() {
+    let [editorEl, toolbarEl] = editorElements
+
+    if (editorEl && toolbarEl && simpleMdeRef.current) {
       editorEl.addEventListener("keyup", eventWrapper)
       editorEl.addEventListener("paste", eventWrapper)
       toolbarEl.addEventListener("click", eventWrapper)
-      simpleMde.codemirror.on("cursorActivity", getCursor)
-      simpleMde.codemirror.on("change", updateLines)
-      simpleMde.codemirror.on("scroll", updateLines)
-      simpleMde.codemirror.on("cursorActivity", function () {
-
-        let cursor = simpleMde!.codemirror.getDoc().getCursor()
-        let line = cursor.line
-        let ch = cursor.ch
-        // simpleMde!.codemirror.getDoc().setCursor({line: line, ch: ch + 1})
-
-        highlightLines([line, line + 1])
-        // for (let pre of preElements) {
-        //   console.log(pre.innerHTML)
-        // }
+      simpleMdeRef.current.codemirror.on("cursorActivity", getCursor)
+      simpleMdeRef.current.codemirror.on("change", updateLines)
+      simpleMdeRef.current.codemirror.on("scroll", updateLines)
+      simpleMdeRef.current.codemirror.on("cursorActivity", () => {
+        //TODO setSelectedPreview 根据cursor的行号更新selectedPreview，保持编辑器和预览器状态一致
       })
-      simpleMde.codemirror.on("scroll", () => {
-        highlightLines(highlightLinesRef.current)
+      simpleMdeRef.current.codemirror.on("scroll", () => {
+        doHighlight()
       })
 
       // Handle custom events
       events &&
       Object.entries(events).forEach(([eventName, callback]) => {
         if (eventName && callback) {
-          simpleMde &&
-          simpleMde.codemirror.on(
+          simpleMdeRef.current &&
+          simpleMdeRef.current.codemirror.on(
             eventName as DOMEvent,
             callback as any
           );
@@ -167,30 +156,41 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
 
   function getCursor() {
     // https://codemirror.net/doc/manual.html#api_selection
-    if (getLineAndCursor && simpleMde) {
+    if (getLineAndCursor && simpleMdeRef.current) {
       getLineAndCursor(
-        simpleMde!.codemirror.getDoc().getCursor()
+        simpleMdeRef.current!.codemirror.getDoc().getCursor()
       );
     }
   }
 
   function getMdeInstance() {
     if (props.getInstance) {
-      props.getInstance(simpleMde!);
+      props.getInstance(simpleMdeRef.current!);
     }
   }
 
   function addExtraKeys() {
     // https://codemirror.net/doc/manual.html#option_extraKeys
     if (props.extraKeys) {
-      simpleMde!.codemirror.setOption("extraKeys", this.props.extraKeys);
+      simpleMdeRef.current!.codemirror.setOption("extraKeys", this.props.extraKeys);
     }
   }
 
   return (
     <div id={`${id}-wrapper`} {...rest} ref={editorWrapperRef}>
       {label && <label htmlFor={id}> {label} </label>}
-      <textarea id={id}/>
+      <textarea id={id} ref={textareaRef}/>
     </div>
   )
+}
+
+function useHighlightLines() {
+  const [start, setStart] = useState(0)
+  const [end, setEnd] = useState(0)
+  function update(start: number, end: number) {
+    setStart(start)
+    setEnd(end)
+  }
+
+  return update
 }
