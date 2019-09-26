@@ -1,9 +1,11 @@
 import React, {FC} from 'react'
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps, Route } from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
 import {Previewer} from '@/components/previewer'
 import {EditPageHeader} from '@/components/edit-page-header'
+import {withProvider} from 'reto'
+import {EditPageStore} from '@/stores/edit-page.store'
 
 const layoutBorder = `solid 1px #F3F3F3`
 
@@ -38,20 +40,22 @@ const Box = styled.div`
   height: 100%;
 `
 
-export const EditPage: FC<RouteComponentProps> = () => {
+export const EditPage = withProvider<RouteComponentProps>({
+  of: EditPageStore
+})(() => {
   return (
     <Container>
       <Header>
         <EditPageHeader/>
       </Header>
       <Main>
-        <Box style={{width: '60%'}}>
+        <Box>
           <Editor onUpload={() => {}} contentEmpty={false}/>
         </Box>
-        <Box style={{width: '40%'}}>
+        <Box style={{width: '600px', flex: 'none'}}>
           <Previewer/>
         </Box>
       </Main>
     </Container>
   )
-}
+})

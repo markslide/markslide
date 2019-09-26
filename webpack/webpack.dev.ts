@@ -13,7 +13,7 @@ export default () => {
       historyApiFallback: true,
       contentBase: path.join(__dirname, '../dist'),
       hot: false,
-      port: 8088,
+      port: 8078,
       allowedHosts: [
         'localhost',
         '127.0.0.1',

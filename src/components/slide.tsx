@@ -4,6 +4,7 @@ import {markdownToHtml} from '@/utils/markdown-to-html'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import {Size} from '@/classes/size'
+import {getMarkdownClassNames} from '@/utils/get-markdown-class-names'
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -75,27 +76,27 @@ const Markdown = styled.div.attrs((props) => ({
 const Content = styled.div.attrs(() => ({
   className: 'content'
 }))`
-  @media all{
-    font-size: 12px;
-  }
-  @media all and (min-width: 200px) {
-    font-size: 16px;
-  }
-  @media all and (min-width: 400px) {
-    font-size: 20px;
-  }
-  @media all and (min-width: 600px) {
-    font-size: 24px;
-  }
-  @media all and (min-width: 800px) {
-    font-size: 28px;
-  }
-  @media all and (min-width: 1000px) {
-    font-size: 32px;
-  }
-  @media all and (min-width: 1200px){
-    font-size: 36px;
-  }
+  //@media all{
+  //  font-size: 12px;
+  //}
+  //@media all and (min-width: 200px) {
+  //  font-size: 16px;
+  //}
+  //@media all and (min-width: 400px) {
+  //  font-size: 20px;
+  //}
+  //@media all and (min-width: 600px) {
+  //  font-size: 24px;
+  //}
+  //@media all and (min-width: 800px) {
+  //  font-size: 28px;
+  //}
+  //@media all and (min-width: 1000px) {
+  //  font-size: 32px;
+  //}
+  //@media all and (min-width: 1200px){
+  //  font-size: 36px;
+  //}
   
   table {
     width: 100%;
@@ -117,6 +118,7 @@ interface Props {
 
 export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
+  const classNames = useMemo(() => getMarkdownClassNames(props.markdown), [props.markdown])
   const {filmSize} = useStore(SlideStore)
 
   const scrollBoxRef = useRef<HTMLDivElement>()
@@ -129,7 +131,7 @@ export const Slide = memo<Props>((props) => {
 
   return (
     <Markdown
-      className={(props.mode || '') + ' ' + `transit-${props.transit}`}
+      className={(props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
       preview={props.preview}
       filmSize={filmSize}
       ref={scrollBoxRef}
