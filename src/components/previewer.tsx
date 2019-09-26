@@ -17,17 +17,20 @@ const Container = styled.div`
 
 const PreviewList = styled.div`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
   height: 100%;
+  padding-right: 30px;
   > * {
     flex: none;
-    margin-right:30px;
-    :first-of-type {
-      margin-left: 30px;
-    }
   }
+`
+
+const PreviewSpace = styled.div`
+  width: 30px;
+  height: 10px;
 `
 
 export const Previewer: FC = () => {
@@ -46,17 +49,21 @@ export const Previewer: FC = () => {
       </Box>
       <Box role='row' style={{height: '200px', flex: 'none'}}>
         <PreviewList>
+          <PreviewSpace/>
           {slideTexts.map((text, index) => (
-            <SlidePreview
-              markdown={text}
-              key={index}
-              refIndex={index}
-              scale={0.2}
-              selected={editorStore.selectedPreview === index}
-              onClick={() => {
-                editorStore.setSelectedPreview(index)
-              }}
-            />
+            <>
+              <SlidePreview
+                markdown={text}
+                key={index}
+                refIndex={index}
+                scale={0.2}
+                selected={editorStore.selectedPreview === index}
+                onClick={() => {
+                  editorStore.setSelectedPreview(index)
+                }}
+              />
+              <PreviewSpace/>
+            </>
           ))}
         </PreviewList>
       </Box>
