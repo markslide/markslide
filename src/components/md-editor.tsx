@@ -1,17 +1,13 @@
 import * as React from "react";
+import {FC, FormEvent, useCallback, useEffect, useRef, useState} from "react";
 import * as SimpleMDE from "easymde";
 import {DOMEvent, Editor, KeyMap} from "codemirror";
 
-const noop = () => {
-};
-let _id = 0;
-
-const generateId = () => `simplemde-editor-${++_id}`;
 
 type CodemirrorEvents =
   | "change"
   | "changes"
-  | "beforeChange"
+  // | "beforeChange"
   | "cursorActivity"
   | "beforeSelectionChange"
   | "viewportChange"
@@ -29,174 +25,172 @@ type SimpleMdeToCodemirror = {
 export interface SimpleMDEEditorProps {
   id?: string;
   label?: string;
-  onChange: (value: string) => void | any;
+  onChange: (v: string | FormEvent) => void;
   value?: string;
   className?: string;
   extraKeys?: KeyMap;
   options?: SimpleMDE.Options;
   events?: SimpleMdeToCodemirror;
-  getMdeInstance?: (instance: SimpleMDE) => void | any;
+  highlightLines?: number[];
+  getInstance?: (instance: SimpleMDE) => void | any;
   getLineAndCursor?: (position: CodeMirror.Position) => void | any;
 }
 
-type SimpleMDEEditorState = {
-  value: string;
-};
+export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
 
-export default class SimpleMDEEditor extends React.PureComponent<SimpleMDEEditorProps,
-  SimpleMDEEditorState> {
-  private elementWrapperRef: HTMLDivElement | null;
-  private setElementWrapperRef: (element: HTMLDivElement) => void;
-  private keyChange = false;
+  const {id, label, value, options, getInstance, getLineAndCursor, events, onChange, ...rest} = props
+  const editorWrapperRef = useRef<HTMLDivElement>()
+  const [simpleMde, setSimpleMde] = useState(null)
+  const [preElements, setPreElements] = useState()
+  const highlightLinesRef = useRef<number[]>([])
 
-  static defaultProps = {
-    events: {},
-    onChange: noop,
-    options: {}
-  };
+  const getElements = useCallback(() => {
+    let editorEl = editorWrapperRef.current
+    let toolbarEl = editorEl && editorEl.getElementsByClassName("editor-toolbar")[0]
+    return [editorEl, toolbarEl]
+  }, [editorWrapperRef])
 
-  state = {
-    value: this.props.value || ""
-  };
+  useEffect(() => {
+    createEditor()
+  }, [])
 
-  id = this.props.id ? this.props.id : generateId();
-  simpleMde: SimpleMDE | null = null;
-  editorEl: HTMLDivElement | null = null;
-  editorToolbarEl: Element | null = null;
-
-  constructor(props: SimpleMDEEditorProps) {
-    super(props);
-    this.elementWrapperRef = null;
-    this.setElementWrapperRef = (element: HTMLDivElement) => {
-      this.elementWrapperRef = element;
-    };
-  }
-
-  componentDidMount() {
-    if (typeof window !== undefined) {
-      this.createEditor();
-      this.addEvents();
-      this.addExtraKeys();
-      this.getCursor();
-      this.getMdeInstance();
+  function updateLines() {
+    let lines = document.getElementsByClassName('CodeMirror-code')
+    if (lines.length) {
+      // console.log('len', preElements.length)
+      setPreElements(lines[0].getElementsByTagName('pre'))
+      // console.log('len', preElements.length)
     }
   }
 
-  componentDidUpdate(prevProps: SimpleMDEEditorProps) {
-    if (
-      !this.keyChange &&
-      this.props.value !== this.state.value && // This is somehow fixes moving cursor for controlled case
-      this.props.value !== prevProps.value // This one fixes no value change for uncontrolled input. If it's uncontrolled prevProps will be the same
-    ) {
-      this.simpleMde!.value(this.props.value || "");
-    }
-    this.keyChange = false;
-  }
+  useEffect(() => {
+    addEvents()
+    addExtraKeys()
+    getCursor()
+    getMdeInstance()
+    updateLines()
 
-  componentWillUnmount() {
-    if (this.editorEl !== null && this.editorEl !== undefined) {
-      this.removeEvents();
-    }
-  }
+    return removeEvents
+  }, [typeof window, props, ...getElements()])
 
-  createEditor = () => {
-    const SimpleMDE = require("easymde");
+  function createEditor() {
+    const SimpleMDE = require("easymde")
     const initialOptions = {
-      element: document.getElementById(this.id),
-      initialValue: this.props.value
-    };
-
-    const allOptions = Object.assign({}, initialOptions, this.props.options);
-    this.simpleMde = new SimpleMDE(allOptions);
-  };
-
-  eventWrapper = () => {
-    this.keyChange = true;
-    this.setState({
-      value: this.simpleMde!.value()
-    });
-    this.props.onChange(this.simpleMde!.value());
-  };
-
-  removeEvents = () => {
-    if (this.editorEl && this.editorToolbarEl) {
-      this.editorEl.removeEventListener("keyup", this.eventWrapper);
-      this.editorEl.removeEventListener("paste", this.eventWrapper);
-      this.editorToolbarEl.removeEventListener("click", this.eventWrapper);
+      element: document.getElementById(id),
+      initialValue: value
     }
-  };
+    const allOptions = Object.assign({}, initialOptions, options);
+    setSimpleMde(new SimpleMDE(allOptions))
+  }
 
-  addEvents = () => {
-    if (this.elementWrapperRef && this.simpleMde) {
-      this.editorEl = this.elementWrapperRef;
-      this.editorToolbarEl = this.elementWrapperRef.getElementsByClassName(
-        "editor-toolbar"
-      )[0];
+  function eventWrapper() {
+    onChange(simpleMde!.value())
+  }
 
-      this.editorEl.addEventListener("keyup", this.eventWrapper);
-      this.editorEl.addEventListener("paste", this.eventWrapper);
-      this.editorToolbarEl &&
-      this.editorToolbarEl.addEventListener("click", this.eventWrapper);
+  function removeEvents() {
+    let [editorEl, toolbarEl] = getElements()
 
-      this.simpleMde.codemirror.on("cursorActivity", this.getCursor);
+    if (editorEl && toolbarEl) {
+      editorEl.removeEventListener("keyup", eventWrapper)
+      editorEl.removeEventListener("paste", eventWrapper)
+      toolbarEl.removeEventListener("click", eventWrapper)
+    }
+  }
 
-      const {events} = this.props;
+  function deHighlightAllLines() {
+    function deHighlightLine(lineEl: HTMLElement) {
+      lineEl.className = lineEl.className.replace('CodeMirror-line-hl', '')
+    }
+
+    // console.log(preElements)
+    for (let lineEl of preElements) {
+      deHighlightLine(lineEl)
+    }
+  }
+
+  function highlightLines(lines: number[]) {
+    function highlightLine(line: number) {
+      let lineEl = preElements[line];
+      if (lineEl) lineEl.className += ' CodeMirror-line-hl'
+    }
+
+    if (!lines) return
+    deHighlightAllLines()
+
+    console.log(lines)
+    highlightLinesRef.current = lines
+
+    for (let line of lines) {
+      highlightLine(line)
+    }
+  }
+
+  function addEvents() {
+    let [editorEl, toolbarEl] = getElements()
+
+    if (editorEl && toolbarEl && simpleMde) {
+      editorEl.addEventListener("keyup", eventWrapper)
+      editorEl.addEventListener("paste", eventWrapper)
+      toolbarEl.addEventListener("click", eventWrapper)
+      simpleMde.codemirror.on("cursorActivity", getCursor)
+      simpleMde.codemirror.on("change", updateLines)
+      simpleMde.codemirror.on("scroll", updateLines)
+      simpleMde.codemirror.on("cursorActivity", function () {
+
+        let cursor = simpleMde!.codemirror.getDoc().getCursor()
+        let line = cursor.line
+        let ch = cursor.ch
+        // simpleMde!.codemirror.getDoc().setCursor({line: line, ch: ch + 1})
+
+        highlightLines([line, line + 1])
+        // for (let pre of preElements) {
+        //   console.log(pre.innerHTML)
+        // }
+      })
+      simpleMde.codemirror.on("scroll", () => {
+        highlightLines(highlightLinesRef.current)
+      })
 
       // Handle custom events
       events &&
       Object.entries(events).forEach(([eventName, callback]) => {
         if (eventName && callback) {
-          this.simpleMde &&
-          this.simpleMde.codemirror.on(
+          simpleMde &&
+          simpleMde.codemirror.on(
             eventName as DOMEvent,
             callback as any
           );
         }
       });
     }
-  };
+  }
 
-  getCursor = () => {
+  function getCursor() {
     // https://codemirror.net/doc/manual.html#api_selection
-    if (this.props.getLineAndCursor) {
-      this.props.getLineAndCursor(
-        this.simpleMde!.codemirror.getDoc().getCursor()
+    if (getLineAndCursor && simpleMde) {
+      getLineAndCursor(
+        simpleMde!.codemirror.getDoc().getCursor()
       );
     }
-  };
-
-  getMdeInstance = () => {
-    if (this.props.getMdeInstance) {
-      this.props.getMdeInstance(this.simpleMde!);
-    }
-  };
-
-  addExtraKeys = () => {
-    // https://codemirror.net/doc/manual.html#option_extraKeys
-    if (this.props.extraKeys) {
-      this.simpleMde!.codemirror.setOption("extraKeys", this.props.extraKeys);
-    }
-  };
-
-  render() {
-    const {
-      events,
-      value,
-      options,
-      children,
-      extraKeys,
-      getLineAndCursor,
-      getMdeInstance,
-      label,
-      onChange,
-      id,
-      ...rest
-    } = this.props;
-    return (
-      <div id={`${this.id}-wrapper`} {...rest} ref={this.setElementWrapperRef}>
-        {label && <label htmlFor={this.id}> {label} </label>}
-        <textarea id={this.id}/>
-      </div>
-    );
   }
+
+  function getMdeInstance() {
+    if (props.getInstance) {
+      props.getInstance(simpleMde!);
+    }
+  }
+
+  function addExtraKeys() {
+    // https://codemirror.net/doc/manual.html#option_extraKeys
+    if (props.extraKeys) {
+      simpleMde!.codemirror.setOption("extraKeys", this.props.extraKeys);
+    }
+  }
+
+  return (
+    <div id={`${id}-wrapper`} {...rest} ref={editorWrapperRef}>
+      {label && <label htmlFor={id}> {label} </label>}
+      <textarea id={id}/>
+    </div>
+  )
 }
