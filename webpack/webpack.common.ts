@@ -1,6 +1,7 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import {Configuration} from 'webpack'
+import {Configuration, DefinePlugin} from 'webpack'
 import path from 'path'
+import packageInfo from '../package.json'
 
 const config: Configuration = {
   entry: {
@@ -12,6 +13,9 @@ const config: Configuration = {
       template: './src/entries/template.html',
       filename: 'index.html',
       chunks: ['index']
+    }),
+    new DefinePlugin({
+      PACKAGE_VERSION: JSON.stringify(packageInfo.version),
     }),
   ],
 

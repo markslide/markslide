@@ -6,5 +6,9 @@
       "use": "@now/static-build",
       "config": { "distDir": "dist" }
     }
-  ]
+  ],
+  "github": {
+    "silent": true,
+    "autoAlias": false
+  }
 }

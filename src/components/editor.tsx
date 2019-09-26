@@ -1,19 +1,20 @@
 import * as React from 'react'
 import {DragEvent, FC} from 'react'
 import styled from 'styled-components'
-import {useStore} from "reto";
+import {useStore} from 'reto'
 import {SlideStore} from "@/stores/slide.store";
 import {SimpleMDEEditor} from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
-import {EditorStyle} from '@/components/editor-style'
+import {editorStyle} from '@/utils/editor-style'
 import "@/assets/css/github.min.css"
-import "@/assets/js/highlight.min.js"
+import "highlightjs/highlight.pack.min"
 
 
 const Container = styled.div`
   height: 100%;
   overflow: hidden;
+  ${editorStyle};
 `
 
 const UploadPlaceHolder = styled.div`
@@ -76,7 +77,6 @@ export const Editor: FC<Props> = (props) => {
         <p>Drag your file here</p>
       </UploadPlaceHolder>
 
-      <EditorStyle/>
       <SimpleMDEEditor
         id='editor'
         // label="Markdown Editor"

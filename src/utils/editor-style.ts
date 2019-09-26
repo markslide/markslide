@@ -1,6 +1,6 @@
-import {createGlobalStyle} from "styled-components";
+import {css} from 'styled-components'
 
-export const EditorStyle = createGlobalStyle`
+export const editorStyle = css`
   #editor-wrapper{
     position: relative;
     height: 100%;
@@ -23,6 +23,10 @@ export const EditorStyle = createGlobalStyle`
   }
   .CodeMirror-line {
     padding: 0 30px 0 60px !important;
+    .cm-comment {
+      font-family: Monaco, Consolas, monospace;
+      background: transparent;
+    }
   }
   .CodeMirror-code {
     pre:nth-child(1) {
