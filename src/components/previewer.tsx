@@ -51,10 +51,9 @@ export const Previewer: FC = () => {
         <PreviewList>
           <PreviewSpace/>
           {slideTexts.map((text, index) => (
-            <>
+            <React.Fragment key={index}>
               <SlidePreview
                 markdown={text}
-                key={index}
                 refIndex={index}
                 scale={0.2}
                 selected={editorStore.selectedPreview === index}
@@ -63,7 +62,7 @@ export const Previewer: FC = () => {
                 }}
               />
               <PreviewSpace/>
-            </>
+            </React.Fragment>
           ))}
         </PreviewList>
       </Box>

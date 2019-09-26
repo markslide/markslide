@@ -9,23 +9,24 @@ const hoverCss = css<{
   selected: boolean
 }>`
   cursor: pointer;
+  transition: box-shadow 0.2s ease;
   :hover {
-    border: 2px solid ${props => props.selected ? '#17AE7E' : 'rgba(0, 0, 0, 0.2)'};
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   }
+  
+  border: 2px solid ${props => props.selected ? '#17AE7E' : 'rgba(0, 0, 0, 0.15)'};
 `
 
 const Container = styled.div<{
   selected: boolean
-  hoverEffect: boolean
+  interactive: boolean
 }>`
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
   margin: 24px auto;
   transition: all 0.2s ease;
-  border: 2px solid ${props => props.selected ? '#17AE7E' : 'transparent'};
   box-sizing: content-box;
   
-  ${props => props.hoverEffect && hoverCss};
+  ${props => props.interactive && hoverCss};
 `
 
 const Scale = styled.div<{
@@ -53,6 +54,8 @@ export const SlidePreview = memo<Props>((props) => {
     editPageStore.slideElementsRef.current[props.refIndex] = element
   }
 
+  const interactive = !!props.onClick
+
   return (
     <Container
       style={{
@@ -61,7 +64,7 @@ export const SlidePreview = memo<Props>((props) => {
       }}
       selected={props.selected}
       onClick={props.onClick}
-      hoverEffect={!!props.onClick}
+      interactive={interactive}
     >
       <Scale scale={props.scale} ref={setRef}>
         <Slide markdown={props.markdown} preview={true}/>
