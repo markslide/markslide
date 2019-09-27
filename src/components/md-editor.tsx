@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, FormEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {FC, FormEvent, useEffect, useMemo, useRef} from 'react'
 import SimpleMDE from 'easymde'
 import {DOMEvent, Editor, KeyMap} from 'codemirror'
 import {useStore} from 'reto'
@@ -97,7 +97,7 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
   function doHighlight() {
     const lines = editPageStore.highlightLines
 
-    //dehighlight all lines
+    //deHighlight all lines
     const preElements = preElementsRef.current
     for (let i = 0; i < preElements.length; i++) {
       const lineEl = preElements[i]
@@ -134,7 +134,9 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
       simpleMdeRef.current.codemirror.on("change", updateLines)
       simpleMdeRef.current.codemirror.on("scroll", updateLines)
       simpleMdeRef.current.codemirror.on("cursorActivity", () => {
-        //TODO setSelectedPreview 根据cursor的行号更新selectedPreview，保持编辑器和预览器状态一致
+        // *. TODO setSelectedPreview 根据cursor的行号更新selectedPreview，保持编辑器和预览器状态一致
+        let line = simpleMdeRef.current!.codemirror.getDoc().getCursor().line;
+        editPageStore.setSelectedPreview(line)
       })
       simpleMdeRef.current.codemirror.on("scroll", () => {
         doHighlight()
@@ -182,15 +184,4 @@ export const SimpleMDEEditor: FC<SimpleMDEEditorProps> = (props) => {
       <textarea id={id} ref={textareaRef}/>
     </div>
   )
-}
-
-function useHighlightLines() {
-  const [start, setStart] = useState(0)
-  const [end, setEnd] = useState(0)
-  function update(start: number, end: number) {
-    setStart(start)
-    setEnd(end)
-  }
-
-  return update
 }
