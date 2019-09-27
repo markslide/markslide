@@ -3,7 +3,7 @@ import {DragEvent, FC} from 'react'
 import styled from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from "@/stores/slide.store";
-import {SimpleMDEEditor} from "@/components/md-editor";
+import {MDEditor} from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import {editorStyle} from '@/utils/editor-style'
@@ -77,7 +77,7 @@ export const Editor: FC<Props> = (props) => {
         <p>Drag your file here</p>
       </UploadPlaceHolder>
 
-      <SimpleMDEEditor
+      <MDEditor
         id='editor'
         // label="Markdown Editor"
         options={{

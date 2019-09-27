@@ -11,7 +11,7 @@ export interface Props {
   options?: SimpleMDE.Options;
 }
 
-export const SimpleMDEEditor: FC<Props> = (props) => {
+export const MDEditor: FC<Props> = (props) => {
   const editPageStore = useStore(EditPageStore)
 
   const {id, value, options} = props
