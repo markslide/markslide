@@ -8,13 +8,11 @@ export interface Props {
   id: string;
   value?: string;
   onChange: (v: string) => void;
-  options?: SimpleMDE.Options;
 }
 
 export const MDEditor: FC<Props> = (props) => {
   const editPageStore = useStore(EditPageStore)
 
-  const {id, value, options} = props
   const editorWrapperRef = useRef<HTMLDivElement>()
   const simpleMdeRef = useRef<SimpleMDE>()
   const textareaRef = useRef<HTMLTextAreaElement>()
@@ -22,8 +20,16 @@ export const MDEditor: FC<Props> = (props) => {
   useEffect(() => {
     simpleMdeRef.current = new SimpleMDE({
       element: textareaRef.current,
-      initialValue: value,
-      ...options,
+      initialValue: props.value,
+      autofocus: true,
+      spellChecker: false,
+      autoDownloadFontAwesome: false,
+      hideIcons: ["guide", "preview", "heading", "fullscreen", "side-by-side"],
+      showIcons: ["heading-1", "heading-2", "heading-3", "horizontal-rule", "code"],
+      status: ["lines", "words"],
+      renderingConfig: {
+        codeSyntaxHighlighting: true // TODO: Why code hl isn't working?
+      },
     })
     bindEvents()
     console.log(simpleMdeRef.current)
@@ -48,8 +54,8 @@ export const MDEditor: FC<Props> = (props) => {
   }
 
   return (
-    <div id={`${id}-wrapper`} ref={editorWrapperRef}>
-      <textarea id={id} ref={textareaRef}/>
+    <div id={`${props.id}-wrapper`} ref={editorWrapperRef}>
+      <textarea id={props.id} ref={textareaRef}/>
     </div>
   )
 }

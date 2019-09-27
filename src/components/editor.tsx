@@ -79,26 +79,9 @@ export const Editor: FC<Props> = (props) => {
 
       <MDEditor
         id='editor'
-        // label="Markdown Editor"
-        options={{
-          autofocus: true,
-          spellChecker: false,
-          autoDownloadFontAwesome: false,
-          hideIcons: ["guide", "preview", "heading", "fullscreen", "side-by-side"],
-          showIcons: ["heading-1", "heading-2", "heading-3", "horizontal-rule", "code"],
-          status: ["lines", "words"],
-
-          // TODO: Why code hl isn't working?
-          renderingConfig: {
-            codeSyntaxHighlighting: true
-          }
-
-        }}
         value={text}
         onChange={updateText}
-        // getLineAndCursor={console.log}
       />
-      {/*  style={{display: !props.contentEmpty?'initial':'none'}}*/}
     </Container>
   )
 }
