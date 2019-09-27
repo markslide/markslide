@@ -3,7 +3,7 @@ import {DragEvent, FC} from 'react'
 import styled from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from "@/stores/slide.store";
-import {SimpleMDEEditor} from "@/components/md-editor";
+import {MDEditor} from "@/components/md-editor";
 import "easymde/dist/easymde.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import {editorStyle} from '@/utils/editor-style'
@@ -77,28 +77,11 @@ export const Editor: FC<Props> = (props) => {
         <p>Drag your file here</p>
       </UploadPlaceHolder>
 
-      <SimpleMDEEditor
+      <MDEditor
         id='editor'
-        // label="Markdown Editor"
-        options={{
-          autofocus: true,
-          spellChecker: false,
-          autoDownloadFontAwesome: false,
-          hideIcons: ["guide", "preview", "heading", "fullscreen", "side-by-side"],
-          showIcons: ["heading-1", "heading-2", "heading-3", "horizontal-rule", "code"],
-          status: ["lines", "words"],
-
-          // TODO: Why code hl isn't working?
-          renderingConfig: {
-            codeSyntaxHighlighting: true
-          }
-
-        }}
         value={text}
         onChange={updateText}
-        // getLineAndCursor={console.log}
       />
-      {/*  style={{display: !props.contentEmpty?'initial':'none'}}*/}
     </Container>
   )
 }
