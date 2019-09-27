@@ -3,14 +3,12 @@ import {useAction} from 'use-action'
 import {Proportion, proportionToFilmSize} from '@/classes/proportion'
 
 export function SlideStore() {
-  const [text, setText] = useState()
+  const [text, setText] = useState(() => (
+    localStorage.getItem('mdContent')
+  ))
   const [proportion, setProportion] = useState<Proportion>(Proportion['4:3'])
 
   const filmSize = proportionToFilmSize[proportion]
-
-  useAction(() => {
-    setText(localStorage.getItem('mdContent'))
-  }, [])
 
   const slideTexts = useMemo(() => {
     if (!text) return []
