@@ -47,7 +47,7 @@ const Markdown = styled.div<{
   white-space: pre-wrap;
   word-break: break-all;
   &.previous {
-    z-index: 1;
+    z-index: 6;
     left: -${props => props.filmSize.width}px;
     &.transit-previous {
       animation: ${moveFromLeftKeyframes} .6s ease both;
@@ -55,7 +55,7 @@ const Markdown = styled.div<{
     }
   }
   &.current {
-    z-index: 2;
+    z-index: 5;
     left:0;
     &.transit-previous {
       transform-origin: 0 50%;
@@ -67,7 +67,7 @@ const Markdown = styled.div<{
     }
   }
   &.next {
-    z-index: 3;
+    z-index: 7;
     left: ${props => props.filmSize.width}px;
     &.transit-next {
       animation: ${moveFromRightKeyframes} .6s ease both;

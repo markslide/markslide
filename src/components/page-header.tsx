@@ -34,12 +34,14 @@ export const FlexSpace = styled.div`
 const Logo = styled.img`
   height: 26px;
   margin-right: 16px;
+  user-select: none;
 `
 
 export const IconButton = styled.img`
   ${clickable};
   ${hoverShrink};
   height: 21px;
+  user-select: none;
 `
 
 export const TextButton = styled.div`
@@ -58,6 +60,7 @@ const UserInfoButton = styled(TextButton)`
 `
 
 const Version = styled.div`
+  ${clickable};
   padding: 3px 8px;
   border-radius: 4px;
   line-height: 22px;
@@ -70,16 +73,24 @@ const Version = styled.div`
 interface Props {}
 
 export const PageHeader = memo<Props>((props) => {
+  function viewReleases() {
+    window.open('https://github.com/markslide/markslide/releases', '_blank')
+  }
+  
+  function viewHelp() {
+    window.open('https://github.com/markslide/markslide', '_blank')
+  }
+  
   return (
     <Container>
       <Logo src={logo}/>
-      <Version>v {PACKAGE_VERSION}</Version>
+      <Version onClick={viewReleases}>v {PACKAGE_VERSION}</Version>
       <FixedSpace/>
       {props.children || (
         <FlexSpace/>
       )}
       <FixedSpace/>
-      <IconButton src={questionIcon}/>
+      <IconButton src={questionIcon} onClick={viewHelp}/>
       <UserInfoButton>gb hao</UserInfoButton>
     </Container>
   )
