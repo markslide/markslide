@@ -5,6 +5,9 @@ import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import {Size} from '@/classes/size'
 import {getMarkdownClassNames} from '@/utils/get-markdown-class-names'
+import {ThemeStore} from '@/stores/theme.store'
+import '@/themes/citrine/main.less'
+
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -26,9 +29,7 @@ const rotateLeftSideFirstKeyframes = keyframes`
   100% { transform: scale(0.8) translateZ(-200px); opacity:0; }
 `
 
-const Markdown = styled.div.attrs((props) => ({
-  className: `markdown ${props.className}`,
-}))<{
+const Markdown = styled.div<{
   preview: boolean
   filmSize: Size
 }>`
@@ -120,18 +121,19 @@ export const Slide = memo<Props>((props) => {
   const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
   const classNames = useMemo(() => getMarkdownClassNames(props.markdown), [props.markdown])
   const {filmSize} = useStore(SlideStore)
-
+  const themeStore = useStore(ThemeStore)
+  
   const scrollBoxRef = useRef<HTMLDivElement>()
-
+  
   useLayoutEffect(() => {
     if (props.transit === null && scrollBoxRef.current && props.mode === SlideMode.current) {
       scrollBoxRef.current.scrollTop = 0
     }
   }, [props.transit])
-
+  
   return (
     <Markdown
-      className={(props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
+      className={'markdown' + ' ' + `theme-${themeStore.theme}` + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
       preview={props.preview}
       filmSize={filmSize}
       ref={scrollBoxRef}

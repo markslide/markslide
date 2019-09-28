@@ -11,6 +11,7 @@ import {FixedSpace, IconButton, PageHeader} from '@/components/page-header'
 import {useStore} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
 
+
 const SearchInput = styled.input`
   font-size: 15px;
   border: none;

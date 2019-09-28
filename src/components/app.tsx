@@ -4,13 +4,16 @@ import {AppRouter} from '@/components/app-router'
 import {Provider} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import {GlobalStyle} from '@/components/global-style'
+import {ThemeStore} from '@/stores/theme.store'
 
 export const App: FC = () => {
   return (
     <>
       <GlobalStyle/>
       <Provider of={SlideStore}>
-        <AppRouter/>
+        <Provider of={ThemeStore}>
+          <AppRouter/>
+        </Provider>
       </Provider>
     </>
   )

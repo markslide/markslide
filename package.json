@@ -65,6 +65,7 @@
     "less-loader": "^5.0.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.0",
+    "to-string-loader": "^1.1.5",
     "ts-node": "^8.3.0",
     "tsconfig-paths": "^3.8.0",
     "typescript": "^3.5.3",

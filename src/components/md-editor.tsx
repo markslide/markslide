@@ -32,7 +32,6 @@ export const MDEditor: FC<Props> = (props) => {
       },
     })
     bindEvents()
-    console.log(simpleMdeRef.current)
   }, [])
 
   useEffect(() => {
