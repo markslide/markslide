@@ -44,8 +44,10 @@ const Markdown = styled.div<{
   box-sizing: border-box;
   user-select: none;
   background: #fff;
+  white-space: pre-wrap;
+  word-break: break-all;
   &.previous {
-    z-index: 6;
+    z-index: 1;
     left: -${props => props.filmSize.width}px;
     &.transit-previous {
       animation: ${moveFromLeftKeyframes} .6s ease both;
@@ -53,7 +55,7 @@ const Markdown = styled.div<{
     }
   }
   &.current {
-    z-index: 5;
+    z-index: 2;
     left:0;
     &.transit-previous {
       transform-origin: 0 50%;
@@ -65,7 +67,7 @@ const Markdown = styled.div<{
     }
   }
   &.next {
-    z-index: 7;
+    z-index: 3;
     left: ${props => props.filmSize.width}px;
     &.transit-next {
       animation: ${moveFromRightKeyframes} .6s ease both;
@@ -133,7 +135,7 @@ export const Slide = memo<Props>((props) => {
   
   return (
     <Markdown
-      className={'markdown' + ' ' + `theme-${themeStore.theme}` + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
+      className={'markdown' + ' ' + `theme-${themeStore.theme}` + ' ' + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
       preview={props.preview}
       filmSize={filmSize}
       ref={scrollBoxRef}

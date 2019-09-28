@@ -8,8 +8,6 @@ import {EditPageStore} from '@/stores/edit-page.store'
 import {Box} from '@/components/box'
 
 const Container = styled.div`
-  white-space: pre-wrap;
-  word-break: break-all;
   height: 100%;
   display: flex;
   flex-direction: column;
