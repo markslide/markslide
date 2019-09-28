@@ -58,8 +58,7 @@ const UserInfoButton = styled(TextButton)`
 `
 
 const Version = styled.div`
-  width: 54px;
-  height: 22px;
+  padding: 3px 8px;
   border-radius: 4px;
   line-height: 22px;
   text-align: center;
