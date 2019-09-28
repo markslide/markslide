@@ -1,10 +1,10 @@
 import {useMemo, useState} from 'react'
-import {useAction} from 'use-action'
 import {Proportion, proportionToFilmSize} from '@/classes/proportion'
+import {defaultSlideText} from '@/utils/default-slide-text'
 
 export function SlideStore() {
   const [text, setText] = useState(() => (
-    localStorage.getItem('mdContent')
+    localStorage.getItem('mdContent') || defaultSlideText
   ))
   const [proportion, setProportion] = useState<Proportion>(Proportion['4:3'])
 
@@ -49,7 +49,7 @@ function parseFileContent(text: string) {
     }
     //handle headings
     if (lines[k].match(/^ *##?#? /)) {
-      if (temp != '') {
+      if (temp.trim() != '') {
         slideTexts.push(temp)
       }
       temp=lines[k]
