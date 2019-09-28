@@ -1,8 +1,9 @@
 export function getMarkdownClassNames(markdown: string) {
+  const trimmed = markdown.trim()
   const classNames: string[] = []
-  if (markdown.match(/^# /)) {
+  if (trimmed.match(/^# /)) {
     classNames.push('cover')
-  } else if (markdown.match(/^## /)) {
+  } else if (trimmed.match(/^## /)) {
     classNames.push('section')
   } else {
     classNames.push('page')

@@ -32,30 +32,32 @@ export function SlideStore() {
 
 function parseFileContent(text: string) {
   let lines = text.split('\n')
-  let inCodeBlock:boolean = false
-  let temp:string = ''
+  let inCodeBlock: boolean = false
+  let temp: string = ''
   const slideTexts: string[] = []
   for (let k in  lines) {
     lines[k]+='\n'
     //handle code blocks
     if (lines[k].match(/^ *```/)) {
-      inCodeBlock=!inCodeBlock
-      temp+=lines[k]
+      inCodeBlock = !inCodeBlock
+      temp += lines[k]
       continue
     }
     if (inCodeBlock){
-      temp+=lines[k]
+      temp += lines[k]
       continue
     }
     //handle headings
     if (lines[k].match(/^ *##?#? /)) {
       if (temp.trim() != '') {
         slideTexts.push(temp)
+        temp = lines[k]
+      } else {
+        temp += lines[k]
       }
-      temp=lines[k]
       continue
     }
-    temp+=lines[k]
+    temp += lines[k]
   }
   if (temp != '') {
     slideTexts.push(temp)
