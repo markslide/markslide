@@ -24,6 +24,7 @@ export const MDEditor: FC<Props> = (props) => {
       autofocus: true,
       spellChecker: false,
       autoDownloadFontAwesome: false,
+      // toolbar: ["heading-1", "heading-2", "heading-3", "horizontal-rule", "code"],
       hideIcons: ["guide", "preview", "heading", "fullscreen", "side-by-side"],
       showIcons: ["heading-1", "heading-2", "heading-3", "horizontal-rule", "code"],
       status: ["lines", "words"],
