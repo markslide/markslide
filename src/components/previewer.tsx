@@ -6,6 +6,7 @@ import {SlideStore} from "@/stores/slide.store";
 import {SlidePreview} from '@/components/slide-preview'
 import {EditPageStore} from '@/stores/edit-page.store'
 import {Box} from '@/components/box'
+import {customScrollbar} from '@/utils/custom-scrollbar'
 
 const Container = styled.div`
   height: 100%;
@@ -21,6 +22,7 @@ const PreviewList = styled.div`
   overflow-y: hidden;
   height: 100%;
   padding-right: 30px;
+  ${customScrollbar};
   > * {
     flex: none;
   }

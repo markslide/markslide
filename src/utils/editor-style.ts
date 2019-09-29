@@ -59,7 +59,7 @@ export const editorStyle = css`
       button {
         border: none !important;
         &.active{
-          background-color: #f6f6f6 !important;
+          background-color: #f0f0f0 !important;
         }
       }
     }

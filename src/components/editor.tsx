@@ -13,7 +13,6 @@ import "highlightjs/highlight.pack.min"
 
 const Container = styled.div`
   height: 100%;
-  //overflow: hidden;
   ${editorStyle};
 `
 
