@@ -3,6 +3,7 @@ import confirmIcon from '@/assets/icon/confirm.svg'
 import cancelIcon from '@/assets/icon/cancel.svg'
 import {RouteComponentProps, withRouter} from 'react-router'
 import {FlexSpace, IconButton, PageHeader} from '@/components/page-header'
+import {useStore} from 'reto'
 
 export const ThemeEditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
 

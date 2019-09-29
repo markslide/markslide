@@ -1,18 +1,18 @@
 import {Size} from '@/classes/size'
 
-export enum Proportion {
+export enum Ratio {
   '16:9',
   '4:3',
 }
 
-export const proportionToFilmSize: {
+export const ratioToFilmSize: {
   [key: number]: Size
 } = {
-  [Proportion['16:9']]: {
+  [Ratio['16:9']]: {
     width: 1280,
     height: 720
   },
-  [Proportion['4:3']]: {
+  [Ratio['4:3']]: {
     width: 960,
     height: 720
   },
