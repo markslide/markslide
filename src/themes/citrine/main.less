@@ -212,6 +212,16 @@
       .recolored-svg(@svg, @primary-color);
     }
 
+    p::before {
+      position: fixed;
+      content: '';
+      width: 1000vw;
+      height: 14px;
+      top: 0;
+      left: 0;
+      background-color: @primary-color;
+    }
+
   }
 
   &.page{
