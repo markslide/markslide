@@ -11,7 +11,7 @@ export const UploadPage: FC<RouteComponentProps> = (props) => {
   return (
     <div>
       <Upload onUpload={(text) => {
-        store.updateText(text)
+        store.setText(text)
         props.history.push('/presentation')
       }}/>
     </div>

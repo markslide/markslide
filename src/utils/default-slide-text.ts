@@ -1,4 +1,4 @@
-export const defaultSlideText = `
+export const defaultSlideText: string = `
 # MarkSlide
 
 欢迎使用MarkSlide

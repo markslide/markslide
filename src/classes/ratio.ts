@@ -1,12 +1,12 @@
 import {Size} from '@/classes/size'
 
 export enum Ratio {
-  '16:9',
-  '4:3',
+  '16:9' = '16:9',
+  '4:3' = '4:3',
 }
 
 export const ratioToFilmSize: {
-  [key: number]: Size
+  [key: string]: Size
 } = {
   [Ratio['16:9']]: {
     width: 1280,

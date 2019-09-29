@@ -1,12 +1,13 @@
 import {useMemo, useState} from 'react'
 import {Ratio, ratioToFilmSize} from '@/classes/ratio'
 import {defaultSlideText} from '@/utils/default-slide-text'
+import {useStorageState} from '@/utils/use-storage-state'
 
 export function SlideStore() {
-  const [text, setText] = useState(() => (
-    localStorage.getItem('mdContent') || defaultSlideText
-  ))
-  const [ratio, setRatio] = useState<Ratio>(Ratio['4:3'])
+  const [text, setText] = useStorageState('mdContent', defaultSlideText)
+  const [ratio, setRatio] = useStorageState<Ratio>('ratio', Ratio['4:3'])
+
+  console.log(ratio)
 
   const filmSize = ratioToFilmSize[ratio]
 
@@ -15,13 +16,8 @@ export function SlideStore() {
     return parseFileContent(text)
   }, [text])
 
-  function updateText(v: string) {
-    setText(v)
-    localStorage.setItem('mdContent', v)
-  }
-
   return {
-    updateText,
+    setText,
     text,
     slideTexts,
     ratio,

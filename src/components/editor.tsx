@@ -39,7 +39,7 @@ interface Props {
 
 export const Editor: FC<Props> = (props) => {
 
-  const {text, updateText} = useStore(SlideStore)
+  const {text, setText} = useStore(SlideStore)
 
   function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
@@ -79,7 +79,7 @@ export const Editor: FC<Props> = (props) => {
       <MDEditor
         id='editor'
         value={text}
-        onChange={updateText}
+        onChange={setText}
       />
     </Container>
   )
