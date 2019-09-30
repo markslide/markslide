@@ -46,9 +46,9 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <FixedSpace/>
       <IconButton src={themeIcon}  onClick={() => {props.history.push('/theme')}}/>
       <IconButton src={playIcon} onClick={() => {props.history.push('/presentation/0')}}/>
-      <FixedSpace/>
+      {/*<FixedSpace/>*/}
       {/*<IconButton src={exportIcon} onClick={() => {console.log(editPageStore.slideElementsRef.current)}}/>*/}
-      <IconButton src={shareIcon}/>
+      {/*<IconButton src={shareIcon}/>*/}
     </PageHeader>
   )
 }))

@@ -16,6 +16,7 @@ const PageNumber = styled.div`
   opacity: 0;
   color: #ffffff;
   transition: opacity ease 0.2s;
+  user-select: none;
 `
 
 const hoverCss = css<{
