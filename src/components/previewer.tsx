@@ -44,6 +44,7 @@ export const Previewer: FC = () => {
           <SlidePreview
             markdown={slideTexts[editorStore.selectedPreview]}
             scale={0.5}
+            pageIndex={editorStore.selectedPreview}
           />
         )}
       </Box>
@@ -55,6 +56,7 @@ export const Previewer: FC = () => {
               <SlidePreview
                 markdown={text}
                 refIndex={index}
+                pageIndex={index}
                 scale={0.2}
                 selected={editorStore.selectedPreview === index}
                 onClick={() => {

@@ -61,6 +61,7 @@ interface Props {
   selected?: boolean
   onClick?: () => void
   refIndex?: number
+  pageIndex: number
 }
 
 export const SlidePreview = memo<Props>((props) => {
@@ -85,10 +86,10 @@ export const SlidePreview = memo<Props>((props) => {
       interactive={interactive}
     >
       <Scale scale={props.scale} ref={setRef}>
-        <Slide markdown={props.markdown} preview={true}/>
+        <Slide markdown={props.markdown} preview={true} pageIndex={props.pageIndex}/>
       </Scale>
       <PageNumber>
-        {props.refIndex + 1}
+        {props.pageIndex + 1}
       </PageNumber>
     </Container>
   )

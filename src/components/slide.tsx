@@ -117,6 +117,7 @@ interface Props {
   mode?: SlideMode
   markdown: string
   preview?: boolean
+  pageIndex: number
 }
 
 export const Slide = memo<Props>((props) => {
@@ -124,15 +125,15 @@ export const Slide = memo<Props>((props) => {
   const classNames = useMemo(() => getMarkdownClassNames(props.markdown), [props.markdown])
   const {filmSize} = useStore(SlideStore)
   const themeStore = useStore(ThemeStore)
-  
+
   const scrollBoxRef = useRef<HTMLDivElement>()
-  
+
   useLayoutEffect(() => {
     if (props.transit === null && scrollBoxRef.current && props.mode === SlideMode.current) {
       scrollBoxRef.current.scrollTop = 0
     }
   }, [props.transit])
-  
+
   return (
     <Markdown
       className={'markdown' + ' ' + `theme-${themeStore.theme}` + ' ' + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
@@ -141,6 +142,9 @@ export const Slide = memo<Props>((props) => {
       ref={scrollBoxRef}
     >
       <Content dangerouslySetInnerHTML={{__html: html}}/>
+      <div className='page-number'>
+        {props.pageIndex + 1}
+      </div>
     </Markdown>
   )
 })
