@@ -21,6 +21,7 @@ const Container = styled.div<{
   selected: boolean
   interactive: boolean
 }>`
+  overflow: hidden;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
   margin: 24px 0;
   transition: all 0.2s ease;
