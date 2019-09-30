@@ -7,7 +7,7 @@ import previewIcon from '@/assets/icon/preview.svg'
 import shareIcon from '@/assets/icon/share.svg'
 import themeIcon from '@/assets/icon/theme.svg'
 import {RouteComponentProps, withRouter} from 'react-router'
-import {FixedSpace, IconButton, PageHeader} from '@/components/page-header'
+import {FixedSpace, FlexSpace, IconButton, PageHeader} from '@/components/page-header'
 import {useStore} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
 
@@ -34,9 +34,10 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
   const editPageStore = useStore(EditPageStore)
   return (
     <PageHeader>
-      <IconButton src={searchIcon}/>
-      <SearchInput placeholder='Search every document...' spellCheck={false}/>
-      <FixedSpace/>
+      {/*<IconButton src={searchIcon}/>*/}
+      {/*<SearchInput placeholder='Search every document...' spellCheck={false}/>*/}
+      {/*<FixedSpace/>*/}
+      <FlexSpace/>
       <IconButton src={previewIcon}/>
       <FixedSpace/>
       <IconButton src={themeIcon}  onClick={() => {props.history.push('/theme')}}/>
