@@ -178,11 +178,10 @@ export const PresentationPage: FC<Props> = (props) => {
   return (
     <>
       <Style/>
+      {pausing && (
+        <PauseLayer/>
+      )}
       <Container scale={scale} filmSize={filmSize}>
-        {pausing && (
-          <PauseLayer/>
-        )}
-
         <Background mouseMoving={mouseMoving}>
           {Object.keys(SlideMode).map((mode, index) => {
             const pageIndex = page + index - 1

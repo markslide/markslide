@@ -6,8 +6,6 @@ import {SlideStore} from '@/stores/slide.store'
 import {Size} from '@/classes/size'
 import {getMarkdownClassNames} from '@/utils/get-markdown-class-names'
 import {ThemeStore} from '@/stores/theme.store'
-import '@/themes/citrine/color-3.less'
-
 
 const moveFromRightKeyframes = keyframes`
   to { transform: translateX(-100%); }
@@ -29,7 +27,7 @@ const rotateLeftSideFirstKeyframes = keyframes`
   100% { transform: scale(0.8) translateZ(-200px); opacity:0; }
 `
 
-const Markdown = styled.div<{
+const Container = styled.div<{
   preview: boolean
   filmSize: Size
 }>`
@@ -135,8 +133,8 @@ export const Slide = memo<Props>((props) => {
   }, [props.transit])
 
   return (
-    <Markdown
-      className={'markdown' + ' ' + `theme-${themeStore.theme}` + ' ' + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
+    <Container
+      className={'slide' + ' ' + `theme-${themeStore.theme}` + ' ' + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
       preview={props.preview}
       filmSize={filmSize}
       ref={scrollBoxRef}
@@ -145,6 +143,6 @@ export const Slide = memo<Props>((props) => {
       <div className='page-number'>
         {props.pageIndex + 1}
       </div>
-    </Markdown>
+    </Container>
   )
 })
