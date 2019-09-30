@@ -6,7 +6,7 @@ import {SlideStore} from '@/stores/slide.store'
 import {Size} from '@/classes/size'
 import {getMarkdownClassNames} from '@/utils/get-markdown-class-names'
 import {ThemeStore} from '@/stores/theme.store'
-import '@/themes/citrine/main.less'
+import '@/themes/citrine/color-3.less'
 
 
 const moveFromRightKeyframes = keyframes`

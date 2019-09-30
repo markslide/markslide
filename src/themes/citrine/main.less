@@ -1,10 +1,8 @@
-@primary-color: #14cc4b;
-//@secondary-color: #00ff00;
+@import "../background";
+
 @text-color: #24292e;
 @code-color: #bbbbbb33;
 @shadow: #dddddd66 2px 2px 10px;
-
-@import "../background";
 
 .header-back-line() {
   position: relative;
@@ -43,7 +41,7 @@
   h1 {
     position: absolute;
     font-size: 80px;
-    top: 250px;
+    top: 230px;
     z-index: 1;
 
     .align-left();
@@ -64,7 +62,10 @@
 
 .h2() {
   h2 {
-    font-size: 65px;
+    position: relative;
+    font-size: 60px;
+    top: 240px;
+
     .header-back-line();
   }
 }
@@ -92,14 +93,6 @@
   }
 }
 
-.subtitle() {
-  p {
-    position: absolute;
-    top: 350px;
-    left: 6px;
-    z-index: 2;
-  }
-}
 
 .code() {
   pre {
@@ -151,7 +144,7 @@
 
     &::after {
       content: "";
-      background-image: url(../_dev/bgi.png);
+      //background-image: url(../_dev/bgi.png);
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
@@ -178,10 +171,56 @@
 
     .logo();
     .h1();
-    .subtitle();
+
+    p {
+      position: absolute;
+      top: 350px;
+      z-index: 2;
+    }
+
+    h1, p {
+      left: 80px;
+    }
   }
 
   &.section{
+
+    .h2();
+
+    background-color: fadeout(@primary-color, 95%);
+
+
+    p {
+      position: relative;
+      top: 260px;
+    }
+
+    p, h2 {
+      left: 80px;
+    }
+
+    h2::before {
+      position: absolute;
+      content: '';
+      width: 280px;
+      height: 280px;
+      top: -50%;
+      left: 380px;
+
+      background-size: cover;
+      @svg: data-uri('dotted-circle.svg');
+      .recolored-svg(@svg, @primary-color);
+    }
+
+    p::before {
+      position: fixed;
+      content: '';
+      width: 1000vw;
+      height: 14px;
+      top: 0;
+      left: 0;
+      background-color: @primary-color;
+    }
 
   }
 
