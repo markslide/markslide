@@ -87,6 +87,9 @@ export const editorStyle = css`
       &.cm-formatting-header-3:nth-child(1) {
         margin-left: -45px;
       }
+      &.cm-formatting-header-4:nth-child(1) {
+        margin-left: -49px;
+      }
     }
   }
 `
