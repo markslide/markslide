@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouteComponentProps} from 'react-router'
+import {RouteComponentProps} from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
 import {Previewer} from '@/components/previewer'
@@ -38,6 +38,28 @@ const Box = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
   height: 100%;
+  transition: width 0.4s ease-in-out;
+  
+  #editor-wrapper {
+    .CodeMirror, 
+    .editor-toolbar {
+      transition: padding 0.4s ease-in-out;
+    }
+  }
+  
+  &.closed {
+    width: 0 !important;
+    
+    #editor-wrapper {
+      .CodeMirror, 
+      .editor-toolbar {
+        padding: 0 25% !important;
+      }
+      .editor-toolbar {
+        padding-left: calc(25% + 46px) !important;
+      }
+    }
+  }
 `
 
 export const EditPage = withProvider<RouteComponentProps>({
@@ -50,14 +72,12 @@ export const EditPage = withProvider<RouteComponentProps>({
         <EditPageHeader/>
       </Header>
       <Main>
-        <Box>
+        <Box className={!editPageStore.showPreview && "closed"}>
           <Editor onUpload={() => {}} contentEmpty={false}/>
         </Box>
-        {editPageStore.showPreview && (
-          <Box style={{width: '600px', flex: 'none'}}>
-            <Previewer/>
-          </Box>
-        )}
+        <Box style={{width: '600px', flex: 'none'}} className={!editPageStore.showPreview && "closed"}>
+          <Previewer/>
+        </Box>
       </Main>
     </Container>
   )
