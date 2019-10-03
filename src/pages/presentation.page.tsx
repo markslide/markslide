@@ -178,19 +178,20 @@ export const PresentationPage: FC<Props> = (props) => {
   return (
     <>
       <Style/>
+      {pausing && (
+        <PauseLayer/>
+      )}
       <Container scale={scale} filmSize={filmSize}>
-        {pausing && (
-          <PauseLayer/>
-        )}
-
         <Background mouseMoving={mouseMoving}>
           {Object.keys(SlideMode).map((mode, index) => {
-            const text = slideTexts[page + index - 1]
+            const pageIndex = page + index - 1
+            const text = slideTexts[pageIndex]
             return text && (
               <Slide
                 transit={transit}
                 markdown={text}
                 mode={mode as SlideMode}
+                pageIndex={pageIndex}
                 key={mode}
               />
             )

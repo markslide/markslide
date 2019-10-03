@@ -6,6 +6,7 @@ export function EditPageStore() {
   const slideStore = useStore(SlideStore)
 
   const [selectedPreview, setSelectedPreview] = useState<number>(0)
+  const [showPreview, setShowPreview] = useState(true)
 
   const slideElementsRef = useRef<HTMLDivElement[]>([])
 
@@ -31,5 +32,7 @@ export function EditPageStore() {
     setSelectedPreview,
     highlightLines,
     slideElementsRef,
+    showPreview,
+    setShowPreview,
   }
 }

@@ -29,7 +29,7 @@ const rotateLeftSideFirstKeyframes = keyframes`
   100% { transform: scale(0.8) translateZ(-200px); opacity:0; }
 `
 
-const Markdown = styled.div<{
+const Container = styled.div<{
   preview: boolean
   filmSize: Size
 }>`
@@ -117,6 +117,7 @@ interface Props {
   mode?: SlideMode
   markdown: string
   preview?: boolean
+  pageIndex: number
 }
 
 export const Slide = memo<Props>((props) => {
@@ -124,23 +125,26 @@ export const Slide = memo<Props>((props) => {
   const classNames = useMemo(() => getMarkdownClassNames(props.markdown), [props.markdown])
   const {filmSize} = useStore(SlideStore)
   const themeStore = useStore(ThemeStore)
-  
+
   const scrollBoxRef = useRef<HTMLDivElement>()
-  
+
   useLayoutEffect(() => {
     if (props.transit === null && scrollBoxRef.current && props.mode === SlideMode.current) {
       scrollBoxRef.current.scrollTop = 0
     }
   }, [props.transit])
-  
+
   return (
-    <Markdown
-      className={'markdown' + ' ' + `theme-${themeStore.theme}` + ' ' + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
+    <Container
+      className={'slide' + ' ' + `theme-${themeStore.theme}` + ' ' + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
       preview={props.preview}
       filmSize={filmSize}
       ref={scrollBoxRef}
     >
       <Content dangerouslySetInnerHTML={{__html: html}}/>
-    </Markdown>
+      <div className='page-number'>
+        {props.pageIndex + 1}
+      </div>
+    </Container>
   )
 })

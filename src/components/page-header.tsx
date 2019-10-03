@@ -91,7 +91,7 @@ export const PageHeader = memo<Props>((props) => {
       )}
       <FixedSpace/>
       <IconButton src={questionIcon} onClick={viewHelp}/>
-      <UserInfoButton>gb hao</UserInfoButton>
+      {/*<UserInfoButton>gb hao</UserInfoButton>*/}
     </Container>
   )
 })

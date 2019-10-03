@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 
 
 export function ThemeStore() {
-  const [theme, setTheme] = useState<string>('citrine')
+  const [theme, setTheme] = useState<string>('one-dark')
   
   return {
     theme,

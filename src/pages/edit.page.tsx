@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {Editor} from '@/components/editor'
 import {Previewer} from '@/components/previewer'
 import {EditPageHeader} from '@/components/edit-page-header'
-import {withProvider} from 'reto'
+import {useStore, withProvider} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
 
 const layoutBorder = `solid 1px #F3F3F3`
@@ -43,7 +43,7 @@ const Box = styled.div`
 export const EditPage = withProvider<RouteComponentProps>({
   of: EditPageStore
 })(() => {
-  
+  const editPageStore = useStore(EditPageStore)
   return (
     <Container>
       <Header>
@@ -53,9 +53,11 @@ export const EditPage = withProvider<RouteComponentProps>({
         <Box>
           <Editor onUpload={() => {}} contentEmpty={false}/>
         </Box>
-        <Box style={{width: '600px', flex: 'none'}}>
-          <Previewer/>
-        </Box>
+        {editPageStore.showPreview && (
+          <Box style={{width: '600px', flex: 'none'}}>
+            <Previewer/>
+          </Box>
+        )}
       </Main>
     </Container>
   )

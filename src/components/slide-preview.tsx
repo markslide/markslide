@@ -5,6 +5,20 @@ import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import {EditPageStore} from '@/stores/edit-page.store'
 
+const PageNumber = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 3px 6px;
+  font-size: 12px;
+  background: #000000;
+  border-radius: 3px;
+  opacity: 0;
+  color: #ffffff;
+  transition: opacity ease 0.2s;
+  user-select: none;
+`
+
 const hoverCss = css<{
   selected: boolean
 }>`
@@ -21,10 +35,15 @@ const Container = styled.div<{
   selected: boolean
   interactive: boolean
 }>`
+  overflow: hidden;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
   margin: 24px 0;
   transition: all 0.2s ease;
   box-sizing: content-box;
+  position: relative;
+  :hover ${PageNumber} {
+    opacity: 0.6;
+  }
   
   ${props => props.interactive && hoverCss};
 `
@@ -43,6 +62,7 @@ interface Props {
   selected?: boolean
   onClick?: () => void
   refIndex?: number
+  pageIndex: number
 }
 
 export const SlidePreview = memo<Props>((props) => {
@@ -67,8 +87,11 @@ export const SlidePreview = memo<Props>((props) => {
       interactive={interactive}
     >
       <Scale scale={props.scale} ref={setRef}>
-        <Slide markdown={props.markdown} preview={true}/>
+        <Slide markdown={props.markdown} preview={true} pageIndex={props.pageIndex}/>
       </Scale>
+      <PageNumber>
+        {props.pageIndex + 1}
+      </PageNumber>
     </Container>
   )
 })

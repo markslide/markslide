@@ -7,7 +7,7 @@ import previewIcon from '@/assets/icon/preview.svg'
 import shareIcon from '@/assets/icon/share.svg'
 import themeIcon from '@/assets/icon/theme.svg'
 import {RouteComponentProps, withRouter} from 'react-router'
-import {FixedSpace, IconButton, PageHeader} from '@/components/page-header'
+import {FixedSpace, FlexSpace, IconButton, PageHeader} from '@/components/page-header'
 import {useStore} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
 
@@ -32,19 +32,23 @@ const SearchInput = styled.input`
 
 export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
   const editPageStore = useStore(EditPageStore)
+  function togglePreview() {
+    editPageStore.setShowPreview(!editPageStore.showPreview)
+  }
+  
   return (
     <PageHeader>
-      <IconButton src={searchIcon}/>
-      <SearchInput placeholder='Search every document...' spellCheck={false}/>
-      <FixedSpace/>
-      <IconButton src={previewIcon}/>
+      {/*<IconButton src={searchIcon}/>*/}
+      {/*<SearchInput placeholder='Search every document...' spellCheck={false}/>*/}
+      {/*<FixedSpace/>*/}
+      <FlexSpace/>
+      <IconButton src={previewIcon} onClick={togglePreview}/>
       <FixedSpace/>
       <IconButton src={themeIcon}  onClick={() => {props.history.push('/theme')}}/>
       <IconButton src={playIcon} onClick={() => {props.history.push('/presentation/0')}}/>
-      <FixedSpace/>
-      <IconButton src={exportIcon} onClick={() => {
-        console.log(editPageStore.slideElementsRef.current)}}/>
-      <IconButton src={shareIcon}/>
+      {/*<FixedSpace/>*/}
+      {/*<IconButton src={exportIcon} onClick={() => {console.log(editPageStore.slideElementsRef.current)}}/>*/}
+      {/*<IconButton src={shareIcon}/>*/}
     </PageHeader>
   )
 }))
