@@ -43,7 +43,7 @@ export const Previewer: FC = () => {
         {slideTexts[editorStore.selectedPreview] && (
           <SlidePreview
             markdown={slideTexts[editorStore.selectedPreview]}
-            scale={0.5}
+            scale={0.6}
             pageIndex={editorStore.selectedPreview}
           />
         )}

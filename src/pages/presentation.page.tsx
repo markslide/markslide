@@ -9,6 +9,7 @@ import {Slide, SlideMode} from '@/components/slide'
 import {PauseLayer} from '@/components/pause-layer'
 import {useWindowSize} from '@/utils/use-window-size'
 import {ThemeStore} from '@/stores/theme.store'
+import {SlideBackground} from '@/components/slide-background'
 
 const Style = createGlobalStyle`
   body {
@@ -16,20 +17,13 @@ const Style = createGlobalStyle`
   }
 `
 
-const Container = styled.div`
+const Container = styled.div<{
+  mouseMoving: boolean
+}>`
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-`
-
-const Background = styled.div<{
-  mouseMoving: boolean
-}>`
-  width: 100vw;
-  height: 100vh;
   cursor: ${props => props.mouseMoving ? 'default' : 'none'};
-  user-select: none;
-  background: #fff;
 `
 
 type Props = RouteComponentProps<{
@@ -37,7 +31,7 @@ type Props = RouteComponentProps<{
 }>
 
 export const PresentationPage: FC<Props> = (props) => {
-  const {slideTexts, filmSize} = useStore(SlideStore)
+  const {slideTexts} = useStore(SlideStore)
   const themeStore = useStore(ThemeStore)
   
   const page = parseInt(props.match.params.page)
@@ -162,11 +156,11 @@ export const PresentationPage: FC<Props> = (props) => {
     }
   }
   
-  const windowSize = useWindowSize()
-  const scale = useMemo(() => Math.min(
-    windowSize.height / filmSize.height,
-    windowSize.width / filmSize.width,
-  ), [windowSize, filmSize])
+  // const windowSize = useWindowSize()
+  // const scale = useMemo(() => Math.min(
+  //   windowSize.height / filmSize.height,
+  //   windowSize.width / filmSize.width,
+  // ), [windowSize, filmSize])
   
   return (
     <>
@@ -174,8 +168,8 @@ export const PresentationPage: FC<Props> = (props) => {
       {pausing && (
         <PauseLayer/>
       )}
-      <Container className={`theme-${themeStore.theme}`}>
-        <Background mouseMoving={mouseMoving} className='slide-background'>
+      <Container mouseMoving={mouseMoving} className={`theme-${themeStore.theme}`}>
+        <SlideBackground>
           {Object.keys(SlideMode).map((mode, index) => {
             const pageIndex = page + index - 1
             const text = slideTexts[pageIndex]
@@ -189,7 +183,7 @@ export const PresentationPage: FC<Props> = (props) => {
               />
             )
           })}
-        </Background>
+        </SlideBackground>
       </Container>
     </>
   )
