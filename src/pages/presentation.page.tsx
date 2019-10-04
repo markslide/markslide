@@ -7,8 +7,8 @@ import {SlideStore} from '@/stores/slide.store'
 import * as mousetrap from 'mousetrap'
 import {Slide, SlideMode} from '@/components/slide/slide'
 import {PauseLayer} from '@/components/pause-layer'
-import {ThemeStore} from '@/stores/theme.store'
 import {SlideBackground} from '@/components/slide/slide-background'
+import {ThemeContainer} from '@/components/theme-container'
 
 const Style = createGlobalStyle`
   body {
@@ -31,7 +31,6 @@ type Props = RouteComponentProps<{
 
 export const PresentationPage: FC<Props> = (props) => {
   const {slideTexts} = useStore(SlideStore)
-  const themeStore = useStore(ThemeStore)
   
   const page = parseInt(props.match.params.page)
   function changePage(val: number) {
@@ -156,12 +155,12 @@ export const PresentationPage: FC<Props> = (props) => {
   }
   
   return (
-    <>
+    <ThemeContainer>
       <Style/>
       {pausing && (
         <PauseLayer/>
       )}
-      <Container mouseMoving={mouseMoving} className={`theme-${themeStore.theme}`}>
+      <Container mouseMoving={mouseMoving}>
         <SlideBackground>
           {Object.keys(SlideMode).map((mode, index) => {
             const pageIndex = page + index - 1
@@ -178,6 +177,6 @@ export const PresentationPage: FC<Props> = (props) => {
           })}
         </SlideBackground>
       </Container>
-    </>
+    </ThemeContainer>
   )
 }

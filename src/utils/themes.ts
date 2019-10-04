@@ -4,7 +4,7 @@ export const themes: Theme[] = [{
   id: 'one-dark',
   name: 'One Dark',
   schemes: [{
-    id: '',
+    id: 'default',
     name: 'Default',
   }],
 }, {
