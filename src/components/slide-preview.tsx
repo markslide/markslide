@@ -4,6 +4,7 @@ import styled, {css} from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import {EditPageStore} from '@/stores/edit-page.store'
+import {Scale} from '@/components/scale'
 
 const PageNumber = styled.div`
   position: absolute;
@@ -46,14 +47,6 @@ const Container = styled.div<{
   }
   
   ${props => props.interactive && hoverCss};
-`
-
-const Scale = styled.div<{
-  scale: number
-}>`
-  transform-origin: left top;
-  transform: scale(${props => props.scale});
-  position: relative;
 `
 
 interface Props {

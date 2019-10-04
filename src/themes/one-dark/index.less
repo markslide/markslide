@@ -4,11 +4,15 @@
 @text-color: #c0c7d6;
 
 .theme-one-dark {
-  &.slide, .slide {
+  .slide-background {
     background: #282C34;
+  }
+  .slide {
     font-size: 34px;
-    color: @text-color;
     font-family: 'Lantinghei SC', -apple-system, serif;
+    .content {
+      color: @text-color;
+    }
 
     .page-number {
       color: @primary-color;

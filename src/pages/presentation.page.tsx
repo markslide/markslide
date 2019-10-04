@@ -8,7 +8,7 @@ import * as mousetrap from 'mousetrap'
 import {Slide, SlideMode} from '@/components/slide'
 import {PauseLayer} from '@/components/pause-layer'
 import {useWindowSize} from '@/utils/use-window-size'
-import {Size} from '@/classes/size'
+import {ThemeStore} from '@/stores/theme.store'
 
 const Style = createGlobalStyle`
   body {
@@ -16,28 +16,20 @@ const Style = createGlobalStyle`
   }
 `
 
-const Container = styled.div<{
-  scale: number
-  filmSize: Size
-}>`
-  width: ${props => props.filmSize.width}px;
-  height: ${props => props.filmSize.height}px;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%) scale(${props => props.scale});
-  transform-origin: center center;
+const Container = styled.div`
   overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 `
 
 const Background = styled.div<{
   mouseMoving: boolean
 }>`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   cursor: ${props => props.mouseMoving ? 'default' : 'none'};
   user-select: none;
-  background: #000000;
+  background: #fff;
 `
 
 type Props = RouteComponentProps<{
@@ -46,14 +38,15 @@ type Props = RouteComponentProps<{
 
 export const PresentationPage: FC<Props> = (props) => {
   const {slideTexts, filmSize} = useStore(SlideStore)
-
+  const themeStore = useStore(ThemeStore)
+  
   const page = parseInt(props.match.params.page)
   function changePage(val: number) {
     props.history.replace(`./${val}`)
   }
-
+  
   const [pausing ,setPausing] = useState(false)
-
+  
   const [mouseMoving, setMouseMoving] = useState(true)
   useEffect(() => {
     let count = 0
@@ -82,9 +75,9 @@ export const PresentationPage: FC<Props> = (props) => {
       clearInterval(interval)
     }
   }, [])
-
+  
   const [transit, setTransit] = useState<'previous'| 'next'>(null)
-
+  
   function nextPage() {
     if (transit) return
     if (pausing) return
@@ -95,7 +88,7 @@ export const PresentationPage: FC<Props> = (props) => {
       setTransit(null)
     },800 + 20)
   }
-
+  
   function previousPage() {
     if (transit) return
     if (pausing) return
@@ -106,11 +99,11 @@ export const PresentationPage: FC<Props> = (props) => {
       setTransit(null)
     },800 + 20)
   }
-
+  
   function togglePausing() {
     setPausing(!pausing)
   }
-
+  
   useEffect(() => {
     mousetrap.bind('space',()=>{
       nextPage()
@@ -141,7 +134,7 @@ export const PresentationPage: FC<Props> = (props) => {
       Mousetrap.reset()
     }
   })
-
+  
   function enterFullscreen() {
     const body = document.body as any
     if (body.requestFullscreen) {
@@ -168,21 +161,21 @@ export const PresentationPage: FC<Props> = (props) => {
       enterFullscreen()
     }
   }
-
+  
   const windowSize = useWindowSize()
   const scale = useMemo(() => Math.min(
     windowSize.height / filmSize.height,
     windowSize.width / filmSize.width,
   ), [windowSize, filmSize])
-
+  
   return (
     <>
       <Style/>
       {pausing && (
         <PauseLayer/>
       )}
-      <Container scale={scale} filmSize={filmSize}>
-        <Background mouseMoving={mouseMoving}>
+      <Container className={`theme-${themeStore.theme}`}>
+        <Background mouseMoving={mouseMoving} className='slide-background'>
           {Object.keys(SlideMode).map((mode, index) => {
             const pageIndex = page + index - 1
             const text = slideTexts[pageIndex]
