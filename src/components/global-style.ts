@@ -2,7 +2,7 @@ import {createGlobalStyle} from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
 
-  // >> Prevent over-scrolling, DO NOT DELETE
+  // Prevent over-scrolling
   html {
       overflow: hidden;
       height: 100%;
@@ -11,7 +11,6 @@ export const GlobalStyle = createGlobalStyle`
       height: 100%;
       overflow: auto;
   }
-  // << Prevent over-scrolling, DO NOT DELETE
 
   * :focus {
     outline: none;

@@ -3,8 +3,8 @@ import styled, {css} from 'styled-components'
 import {useStore} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
 import {Scale} from '@/components/scale'
-import {SlideBackground} from '@/components/slide-background'
-import {SlideContent} from '@/components/slide-content'
+import {SlideBackground} from '@/components/slide/slide-background'
+import {SlideContent} from '@/components/slide/slide-content'
 import {filmSize} from '@/utils/film-size'
 
 const PageNumber = styled.div`

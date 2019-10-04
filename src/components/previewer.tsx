@@ -3,7 +3,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {useStore} from "reto";
 import {SlideStore} from "@/stores/slide.store";
-import {SlidePreview} from '@/components/slide-preview'
+import {SlidePreview} from '@/components/slide/slide-preview'
 import {EditPageStore} from '@/stores/edit-page.store'
 import {Box} from '@/components/box'
 import {customScrollbar} from '@/utils/custom-scrollbar'

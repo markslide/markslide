@@ -5,10 +5,10 @@ import styled, {createGlobalStyle} from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import * as mousetrap from 'mousetrap'
-import {Slide, SlideMode} from '@/components/slide'
+import {Slide, SlideMode} from '@/components/slide/slide'
 import {PauseLayer} from '@/components/pause-layer'
 import {ThemeStore} from '@/stores/theme.store'
-import {SlideBackground} from '@/components/slide-background'
+import {SlideBackground} from '@/components/slide/slide-background'
 
 const Style = createGlobalStyle`
   body {
