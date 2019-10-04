@@ -1,7 +1,9 @@
 import styled, {keyframes} from 'styled-components'
-import React, {memo} from 'react'
+import React, {memo, useMemo} from 'react'
 import '@/themes/citrine/_schemes/color-1.dark.less'
 import {SlideContent} from '@/components/slide-content'
+import {useWindowSize} from '@/utils/use-window-size'
+import {filmSize} from '@/utils/film-size'
 
 
 const moveFromRightKeyframes = keyframes`
@@ -89,12 +91,18 @@ interface Props {
 }
 
 export const Slide = memo<Props>((props) => {
+  const windowSize = useWindowSize()
+  const scale = useMemo(() => Math.min(
+    windowSize.height / filmSize.height,
+    windowSize.width / filmSize.width,
+  ), [windowSize])
+  
   return (
     <Container
       className={(props.mode || '') + ' ' + `transit-${props.transit}` + ' '}
       preview={props.preview}
     >
-      <Wrapper scale={window.innerWidth / 800}>
+      <Wrapper scale={scale}>
         <SlideContent markdown={props.markdown} pageIndex={props.pageIndex}/>
       </Wrapper>
     </Container>
