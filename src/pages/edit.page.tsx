@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { RouteComponentProps, Route} from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
@@ -41,7 +41,7 @@ const Box = styled.div`
   height: 100%;
 `
 
-export const EditPage = withProvider<RouteComponentProps>({
+export const EditPage = memo(withProvider<RouteComponentProps>({
   of: EditPageStore
 })((props) => {
   const editPageStore = useStore(EditPageStore)
@@ -52,7 +52,7 @@ export const EditPage = withProvider<RouteComponentProps>({
       </Header>
       <Main>
         <Box>
-          <Editor onUpload={() => {}} contentEmpty={false}/>
+          <Editor/>
         </Box>
         {editPageStore.showPreview && (
           <Box style={{width: '600px', flex: 'none'}}>
@@ -63,4 +63,4 @@ export const EditPage = withProvider<RouteComponentProps>({
       </Main>
     </Container>
   )
-})
+}))
