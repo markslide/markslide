@@ -6,6 +6,7 @@ import {Scale} from '@/components/scale'
 import {SlideBackground} from '@/components/slide/slide-background'
 import {SlideContent} from '@/components/slide/slide-content'
 import {filmSize} from '@/utils/film-size'
+import {ThemeContainer} from '@/components/theme-container'
 
 const PageNumber = styled.div`
   position: absolute;
@@ -75,19 +76,20 @@ export const SlidePreview = memo<Props>((props) => {
         height: filmSize.height * props.scale,
         width: filmSize.width * props.scale,
       }}
-      className='theme-one-dark'
       selected={props.selected}
       onClick={props.onClick}
       interactive={interactive}
     >
-      <SlideBackground>
-        <Scale scale={props.scale} ref={setRef}>
-          <SlideContent markdown={props.markdown} pageIndex={props.pageIndex}/>
-        </Scale>
-        <PageNumber>
-          {props.pageIndex + 1}
-        </PageNumber>
-      </SlideBackground>
+      <ThemeContainer>
+        <SlideBackground>
+          <Scale scale={props.scale} ref={setRef}>
+            <SlideContent markdown={props.markdown} pageIndex={props.pageIndex}/>
+          </Scale>
+          <PageNumber>
+            {props.pageIndex + 1}
+          </PageNumber>
+        </SlideBackground>
+      </ThemeContainer>
     </Container>
   )
 })

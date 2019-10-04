@@ -1,6 +1,5 @@
 import styled, {keyframes} from 'styled-components'
 import React, {memo, useMemo} from 'react'
-import '@/themes/citrine/_schemes/color-1.dark.less'
 import {SlideContent} from '@/components/slide/slide-content'
 import {useWindowSize} from '@/utils/use-window-size'
 import {filmSize} from '@/utils/film-size'

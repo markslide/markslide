@@ -1,11 +1,12 @@
 import React from 'react'
-import { RouteComponentProps} from 'react-router'
+import { RouteComponentProps, Route} from 'react-router'
 import styled from 'styled-components'
 import {Editor} from '@/components/editor'
 import {Previewer} from '@/components/previewer'
 import {EditPageHeader} from '@/components/edit-page-header'
 import {useStore, withProvider} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
+import {ThemeModal} from '@/components/theme-modal'
 
 const layoutBorder = `solid 1px #F3F3F3`
 
@@ -42,7 +43,7 @@ const Box = styled.div`
 
 export const EditPage = withProvider<RouteComponentProps>({
   of: EditPageStore
-})(() => {
+})((props) => {
   const editPageStore = useStore(EditPageStore)
   return (
     <Container>
@@ -58,6 +59,7 @@ export const EditPage = withProvider<RouteComponentProps>({
             <Previewer/>
           </Box>
         )}
+        <Route path={props.match.url + '/theme'} component={ThemeModal}/>
       </Main>
     </Container>
   )

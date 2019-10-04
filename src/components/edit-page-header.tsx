@@ -1,10 +1,7 @@
 import React, {memo} from 'react'
 import styled from 'styled-components'
 import playIcon from '@/assets/icon/play.svg'
-import searchIcon from '@/assets/icon/search.svg'
-import exportIcon from '@/assets/icon/export.svg'
 import previewIcon from '@/assets/icon/preview.svg'
-import shareIcon from '@/assets/icon/share.svg'
 import themeIcon from '@/assets/icon/theme.svg'
 import {RouteComponentProps, withRouter} from 'react-router'
 import {FixedSpace, FlexSpace, IconButton, PageHeader} from '@/components/page-header'
@@ -44,7 +41,7 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <FlexSpace/>
       <IconButton src={previewIcon} onClick={togglePreview}/>
       <FixedSpace/>
-      <IconButton src={themeIcon}  onClick={() => {props.history.push('/theme')}}/>
+      <IconButton src={themeIcon}  onClick={() => {props.history.push('./edit/theme')}}/>
       <IconButton src={playIcon} onClick={() => {props.history.push('/presentation/0')}}/>
       {/*<FixedSpace/>*/}
       {/*<IconButton src={exportIcon} onClick={() => {console.log(editPageStore.slideElementsRef.current)}}/>*/}
