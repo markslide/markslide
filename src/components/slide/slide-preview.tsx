@@ -6,6 +6,7 @@ import {Scale} from '@/components/scale'
 import {SlideBackground} from '@/components/slide/slide-background'
 import {SlideContent} from '@/components/slide/slide-content'
 import {filmSize} from '@/utils/film-size'
+import {ThemeStore} from '@/stores/theme.store'
 
 const PageNumber = styled.div`
   position: absolute;
@@ -61,6 +62,7 @@ interface Props {
 
 export const SlidePreview = memo<Props>((props) => {
   const editPageStore = useStore(EditPageStore)
+  const themeStore = useStore(ThemeStore)
   
   function setRef(element: HTMLDivElement) {
     if (props.refIndex === undefined) return
@@ -75,7 +77,7 @@ export const SlidePreview = memo<Props>((props) => {
         height: filmSize.height * props.scale,
         width: filmSize.width * props.scale,
       }}
-      className='theme-one-dark'
+      className={`theme-${themeStore.theme}`}
       selected={props.selected}
       onClick={props.onClick}
       interactive={interactive}

@@ -1,8 +1,7 @@
-import {useState} from 'react'
-
+import {useStorageState} from '@/utils/use-storage-state'
 
 export function ThemeStore() {
-  const [theme, setTheme] = useState<string>('one-dark') // one-dark
+  const [theme, setTheme] = useStorageState<string>('theme', 'one-dark') // one-dark
   
   return {
     theme,
