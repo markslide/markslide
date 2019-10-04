@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {FC, useEffect, useMemo, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {RouteComponentProps} from 'react-router'
 import styled, {createGlobalStyle} from 'styled-components'
 import {useStore} from 'reto'
@@ -7,7 +7,6 @@ import {SlideStore} from '@/stores/slide.store'
 import * as mousetrap from 'mousetrap'
 import {Slide, SlideMode} from '@/components/slide'
 import {PauseLayer} from '@/components/pause-layer'
-import {useWindowSize} from '@/utils/use-window-size'
 import {ThemeStore} from '@/stores/theme.store'
 import {SlideBackground} from '@/components/slide-background'
 
@@ -155,12 +154,6 @@ export const PresentationPage: FC<Props> = (props) => {
       enterFullscreen()
     }
   }
-  
-  // const windowSize = useWindowSize()
-  // const scale = useMemo(() => Math.min(
-  //   windowSize.height / filmSize.height,
-  //   windowSize.width / filmSize.width,
-  // ), [windowSize, filmSize])
   
   return (
     <>

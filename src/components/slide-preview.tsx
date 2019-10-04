@@ -1,7 +1,6 @@
 import React, {memo} from 'react'
 import styled, {css} from 'styled-components'
 import {useStore} from 'reto'
-import {SlideStore} from '@/stores/slide.store'
 import {EditPageStore} from '@/stores/edit-page.store'
 import {Scale} from '@/components/scale'
 import {SlideBackground} from '@/components/slide-background'

@@ -17,14 +17,6 @@ const Container = styled.div`
   position: relative;
 `
 
-const Content = styled.div.attrs(() => ({
-  className: 'content'
-}))`
-  table {
-    width: 100%;
-  }
-`
-
 interface Props {
   markdown: string
   pageIndex: number
@@ -36,7 +28,7 @@ export const SlideContent = memo<Props>((props) => {
   
   return (
     <Container className={'slide' + ' ' + classNames.join(' ')}>
-      <Content dangerouslySetInnerHTML={{__html: html}}/>
+      <div className='content' dangerouslySetInnerHTML={{__html: html}}/>
       <div className='page-number'>
         {props.pageIndex + 1}
       </div>
