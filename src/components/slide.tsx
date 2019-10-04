@@ -1,12 +1,7 @@
 import styled, {keyframes} from 'styled-components'
-import React, {memo, useLayoutEffect, useMemo, useRef} from 'react'
-import {markdownToHtml} from '@/utils/markdown-to-html'
-import {useStore} from 'reto'
-import {SlideStore} from '@/stores/slide.store'
-import {Size} from '@/classes/size'
-import {getMarkdownClassNames} from '@/utils/get-markdown-class-names'
-import {ThemeStore} from '@/stores/theme.store'
+import React, {memo} from 'react'
 import '@/themes/citrine/_schemes/color-1.dark.less'
+import {SlideContent} from '@/components/slide-content'
 
 
 const moveFromRightKeyframes = keyframes`
@@ -31,24 +26,17 @@ const rotateLeftSideFirstKeyframes = keyframes`
 
 const Container = styled.div<{
   preview: boolean
-  filmSize: Size
 }>`
-  overflow-x: hidden;
-  overflow-y: ${props => props.preview ? 'hidden' : 'scroll'};
   position: absolute;
   top: 0;
   left: 0;
-  width: ${props => props.filmSize.width}px;
-  height: ${props => props.filmSize.height}px;
-  padding: 60px 80px;
+  width: 100vw;
+  height: 100vh;
   box-sizing: border-box;
-  user-select: none;
-  background: #fff;
-  white-space: pre-wrap;
-  word-break: break-all;
+  
   &.previous {
     z-index: 6;
-    left: -${props => props.filmSize.width}px;
+    left: -100vw;
     &.transit-previous {
       animation: ${moveFromLeftKeyframes} .6s ease both;
       animation-delay: .2s;
@@ -68,7 +56,7 @@ const Container = styled.div<{
   }
   &.next {
     z-index: 7;
-    left: ${props => props.filmSize.width}px;
+    left: 100vw;
     &.transit-next {
       animation: ${moveFromRightKeyframes} .6s ease both;
       animation-delay: .2s;
@@ -76,34 +64,14 @@ const Container = styled.div<{
   }
 `
 
-const Content = styled.div.attrs(() => ({
-  className: 'content'
-}))`
-  //@media all{
-  //  font-size: 12px;
-  //}
-  //@media all and (min-width: 200px) {
-  //  font-size: 16px;
-  //}
-  //@media all and (min-width: 400px) {
-  //  font-size: 20px;
-  //}
-  //@media all and (min-width: 600px) {
-  //  font-size: 24px;
-  //}
-  //@media all and (min-width: 800px) {
-  //  font-size: 28px;
-  //}
-  //@media all and (min-width: 1000px) {
-  //  font-size: 32px;
-  //}
-  //@media all and (min-width: 1200px){
-  //  font-size: 36px;
-  //}
-  
-  table {
-    width: 100%;
-  }
+const Wrapper = styled.div<{
+  scale: number
+}>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scale(${props => props.scale});
 `
 
 export enum SlideMode {
@@ -121,30 +89,14 @@ interface Props {
 }
 
 export const Slide = memo<Props>((props) => {
-  const html = useMemo(() => markdownToHtml(props.markdown), [props.markdown])
-  const classNames = useMemo(() => getMarkdownClassNames(props.markdown), [props.markdown])
-  const {filmSize} = useStore(SlideStore)
-  const themeStore = useStore(ThemeStore)
-
-  const scrollBoxRef = useRef<HTMLDivElement>()
-
-  useLayoutEffect(() => {
-    if (props.transit === null && scrollBoxRef.current && props.mode === SlideMode.current) {
-      scrollBoxRef.current.scrollTop = 0
-    }
-  }, [props.transit])
-
   return (
     <Container
-      className={'slide' + ' ' + `theme-${themeStore.theme}` + ' ' + (props.mode || '') + ' ' + `transit-${props.transit}` + ' ' + classNames.join(' ')}
+      className={(props.mode || '') + ' ' + `transit-${props.transit}` + ' '}
       preview={props.preview}
-      filmSize={filmSize}
-      ref={scrollBoxRef}
     >
-      <Content dangerouslySetInnerHTML={{__html: html}}/>
-      <div className='page-number'>
-        {props.pageIndex + 1}
-      </div>
+      <Wrapper scale={window.innerWidth / 800}>
+        <SlideContent markdown={props.markdown} pageIndex={props.pageIndex}/>
+      </Wrapper>
     </Container>
   )
 })

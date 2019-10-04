@@ -1,9 +1,12 @@
-import {Slide} from '@/components/slide'
-import React, {FC, memo} from 'react'
+import React, {memo} from 'react'
 import styled, {css} from 'styled-components'
 import {useStore} from 'reto'
 import {SlideStore} from '@/stores/slide.store'
 import {EditPageStore} from '@/stores/edit-page.store'
+import {Scale} from '@/components/scale'
+import {SlideBackground} from '@/components/slide-background'
+import {SlideContent} from '@/components/slide-content'
+import {filmSize} from '@/utils/film-size'
 
 const PageNumber = styled.div`
   position: absolute;
@@ -48,14 +51,6 @@ const Container = styled.div<{
   ${props => props.interactive && hoverCss};
 `
 
-const Scale = styled.div<{
-  scale: number
-}>`
-  transform-origin: left top;
-  transform: scale(${props => props.scale});
-  position: relative;
-`
-
 interface Props {
   markdown: string
   scale: number
@@ -66,32 +61,34 @@ interface Props {
 }
 
 export const SlidePreview = memo<Props>((props) => {
-  const {filmSize} = useStore(SlideStore)
   const editPageStore = useStore(EditPageStore)
-
+  
   function setRef(element: HTMLDivElement) {
     if (props.refIndex === undefined) return
     editPageStore.slideElementsRef.current[props.refIndex] = element
   }
-
+  
   const interactive = !!props.onClick
-
+  
   return (
     <Container
       style={{
         height: filmSize.height * props.scale,
         width: filmSize.width * props.scale,
       }}
+      className='theme-one-dark'
       selected={props.selected}
       onClick={props.onClick}
       interactive={interactive}
     >
-      <Scale scale={props.scale} ref={setRef}>
-        <Slide markdown={props.markdown} preview={true} pageIndex={props.pageIndex}/>
-      </Scale>
-      <PageNumber>
-        {props.pageIndex + 1}
-      </PageNumber>
+      <SlideBackground>
+        <Scale scale={props.scale} ref={setRef}>
+          <SlideContent markdown={props.markdown} pageIndex={props.pageIndex}/>
+        </Scale>
+        <PageNumber>
+          {props.pageIndex + 1}
+        </PageNumber>
+      </SlideBackground>
     </Container>
   )
 })
