@@ -52,7 +52,7 @@ export const ThemeModal = withRouter(memo<RouteComponentProps>((props) => {
             <a onClick={() => {
               themeStore.setTheme(theme.id)
               themeStore.setScheme(theme.schemes[0].id)
-              themeStore.setMode(theme.modes.length ? theme.modes[0].id : '')
+              themeStore.setMode(theme.modes ? theme.modes[0].id : '')
             }}>Use</a>
           )}
         </P>
