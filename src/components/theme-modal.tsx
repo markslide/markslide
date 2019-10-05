@@ -18,6 +18,7 @@ const P = styled.div`
 
 const Colors = styled.div`
   > div {
+    margin: 0;
     display: inline-block;
   }
   

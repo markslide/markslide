@@ -71,10 +71,8 @@
 }
 
 .text-and-bg-color(@primary-color) {
-  &.theme-light {
-    .light(@primary-color)
-  }
-  &.theme-dark {
+  .light(@primary-color);
+  &.theme-mode-dark {
     .dark(@primary-color)
   }
 }
