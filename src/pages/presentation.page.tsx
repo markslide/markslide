@@ -9,6 +9,7 @@ import {Slide, SlideMode} from '@/components/slide/slide'
 import {PauseLayer} from '@/components/pause-layer'
 import {SlideBackground} from '@/components/slide/slide-background'
 import {ThemeContainer} from '@/components/theme-container'
+import {ControlLayer} from '@/components/control-layer'
 
 const Style = createGlobalStyle`
   body {
@@ -177,6 +178,9 @@ export const PresentationPage: FC<Props> = (props) => {
           })}
         </SlideBackground>
       </Container>
+      {mouseMoving && (
+        <ControlLayer previousPage={previousPage} nextPage={nextPage} toggleFullscreen={toggleFullscreen}/>
+      )}
     </ThemeContainer>
   )
 }
