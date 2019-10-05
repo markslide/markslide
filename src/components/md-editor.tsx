@@ -54,7 +54,7 @@ export const MDEditor: FC<Props> = (props) => {
 
   return (
     <div id={`${props.id}-wrapper`} ref={editorWrapperRef}>
-      <textarea id={props.id} ref={textareaRef}/>
+      <textarea id={props.id} ref={textareaRef} style={{display: 'none'}}/>
     </div>
   )
 }

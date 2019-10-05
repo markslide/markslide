@@ -52,39 +52,44 @@ export const ThemeModal = withRouter(memo<RouteComponentProps>((props) => {
             <a onClick={() => {
               themeStore.setTheme(theme.id)
               themeStore.setScheme(theme.schemes[0].id)
+              themeStore.setMode(theme.modes.length ? theme.modes[0].id : '')
             }}>Use</a>
           )}
         </P>
       ))}
       <hr/>
       <h3>Schemes</h3>
-      {selectedTheme &&
-      (<Colors>
-        {
-          selectedTheme.schemes.map(scheme => (
-            <P key={scheme.id}>
-              {scheme.hex && (
-                <Color color={'#' + scheme.hex} theme={{title: scheme.name, open: themeStore.scheme === scheme.id}}
-                       onClick={() => {
-                         themeStore.setScheme(scheme.id)
-                       }}/>)}
+      <Colors>
+        {selectedTheme.schemes.map(scheme => (
+          <P key={scheme.id}>
+            {scheme.hex && (
+              <Color
+                color={scheme.hex}
+                theme={{title: scheme.name, open: themeStore.scheme === scheme.id}}
+                onClick={() => {themeStore.setScheme(scheme.id)}}
+              />
+            )}
+          </P>
+        ))}
+      </Colors>
+      {selectedTheme.modes && (
+        <>
+          <hr/>
+          <h3>Dark Mode</h3>
+          {selectedTheme.modes.map(mode => (
+            <P key={mode.id}>
+              <span>{mode.name}</span>
+              {themeStore.mode === mode.id ? (
+                <span><b>Using</b></span>
+              ) : (
+                <a onClick={() => {
+                  themeStore.setMode(mode.id)
+                }}>Use</a>
+              )}
             </P>
-          ))
-        }
-      </Colors>)
-      }
-      <hr/>
-      <h3>Dark Mode</h3>
-      {
-        selectedTheme && (<>
-          <a onClick={() => {
-            themeStore.setDark('dark')
-          }}>Dark</a> |
-          <a onClick={() => {
-            themeStore.setDark('light')
-          }}> Light</a>
-        </>)
-      }
+          ))}
+        </>
+      )}
     </Modal>
   )
 }))
