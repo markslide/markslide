@@ -4,5 +4,10 @@ export interface Theme {
   schemes: {
     id: string
     name: string
+    hex: string
+  }[]
+  modes?: {
+    id: string
+    name: string
   }[]
 }

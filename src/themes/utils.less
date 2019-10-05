@@ -1,0 +1,40 @@
+.img(@size) when (@size = 'large') {
+  max-height: 350px;
+  max-width: 600px;
+}
+
+.img(@size) when (@size = 'medium') {
+  max-height: 280px;
+  max-width: 480px;
+}
+
+.img(@size) when (@size = 'small') {
+  max-height: 210px;
+  max-width: 350px;
+}
+
+.recolored-svg(@svg, @color) {
+  @plugin 'inline-svg.less.js';
+  @svg-url: inline-svg(@svg, @color);
+  background-image: url("@{svg-url}");
+}
+
+.recolored-bg(@data-uri, @color) {
+  @svg: data-uri(@data-uri);
+  .recolored-svg(@svg, @color);
+  background-size: cover;
+}
+
+.align-center() {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.align-left() {
+  text-align: left;
+}
+
+.align-right() {
+  text-align: right;
+}
