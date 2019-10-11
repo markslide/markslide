@@ -10,7 +10,7 @@ import {PauseLayer} from '@/components/pause-layer'
 import {SlideBackground} from '@/components/slide/slide-background'
 import {ThemeContainer} from '@/components/theme-container'
 import {ControlPanel} from '@/components/control-panel'
-import {isFullscreen} from '@/utils/is-fullscreen'
+import {exitFullscreen, toggleFullscreen} from '@/utils/fullscreen'
 
 const Style = createGlobalStyle`
   body {
@@ -128,32 +128,6 @@ export const PresentationPage: FC<Props> = (props) => {
       Mousetrap.reset()
     }
   })
-  
-  function enterFullscreen() {
-    const body = document.body as any
-    if (body.requestFullscreen) {
-      body.requestFullscreen()
-    } else if (body.webkitRequestFullscreen) {
-      body.webkitRequestFullscreen()
-    } else if (body.webkitRequestFullScreen) {
-      body.webkitRequestFullScreen()
-    }
-  }
-  function exitFullscreen() {
-    const d = document as any
-    if (d.exitFullscreen) {
-      d.exitFullscreen()
-    } else if (d.webkitExitFullscreen) {
-      d.webkitExitFullscreen()
-    }
-  }
-  function toggleFullscreen() {
-    if (isFullscreen()) {
-      exitFullscreen()
-    } else {
-      enterFullscreen()
-    }
-  }
   
   return (
     <ThemeContainer>

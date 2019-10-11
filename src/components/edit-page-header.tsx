@@ -7,6 +7,7 @@ import {RouteComponentProps, withRouter} from 'react-router'
 import {FixedSpace, FlexSpace, IconButton, PageHeader} from '@/components/page-header'
 import {useStore} from 'reto'
 import {EditPageStore} from '@/stores/edit-page.store'
+import {enterFullscreen} from '@/utils/fullscreen'
 
 
 const SearchInput = styled.input`
@@ -33,6 +34,11 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
     editPageStore.setShowPreview(!editPageStore.showPreview)
   }
   
+  function startPresentation() {
+    props.history.push('/presentation/0')
+    enterFullscreen()
+  }
+  
   return (
     <PageHeader>
       {/*<IconButton src={searchIcon}/>*/}
@@ -42,7 +48,7 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
       <IconButton src={previewIcon} onClick={togglePreview}/>
       <FixedSpace/>
       <IconButton src={themeIcon}  onClick={() => {props.history.push('./edit/theme')}}/>
-      <IconButton src={playIcon} onClick={() => {props.history.push('/presentation/0')}}/>
+      <IconButton src={playIcon} onClick={startPresentation}/>
       {/*<FixedSpace/>*/}
       {/*<IconButton src={exportIcon} onClick={() => {console.log(editPageStore.slideElementsRef.current)}}/>*/}
       {/*<IconButton src={shareIcon}/>*/}
