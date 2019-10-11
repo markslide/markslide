@@ -152,8 +152,7 @@ export const PresentationPage: FC<Props> = (props) => {
           })}
         </SlideBackground>
       </Container>
-      {/*{mouseMoving && (*/}
-      {(
+      {mouseMoving && (
         <ControlPanel previousPage={previousPage} nextPage={nextPage} toggleFullscreen={toggleFullscreen}/>
       )}
     </ThemeContainer>
