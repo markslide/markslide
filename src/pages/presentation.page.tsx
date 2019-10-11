@@ -9,7 +9,8 @@ import {Slide, SlideMode} from '@/components/slide/slide'
 import {PauseLayer} from '@/components/pause-layer'
 import {SlideBackground} from '@/components/slide/slide-background'
 import {ThemeContainer} from '@/components/theme-container'
-import {ControlLayer} from '@/components/control-layer'
+import {ControlPanel} from '@/components/control-panel'
+import {isFullscreen} from '@/utils/is-fullscreen'
 
 const Style = createGlobalStyle`
   body {
@@ -147,8 +148,7 @@ export const PresentationPage: FC<Props> = (props) => {
     }
   }
   function toggleFullscreen() {
-    const d = document as any
-    if (d.fullscreenElement || d.webkitFullscreenElement) {
+    if (isFullscreen()) {
       exitFullscreen()
     } else {
       enterFullscreen()
@@ -178,8 +178,9 @@ export const PresentationPage: FC<Props> = (props) => {
           })}
         </SlideBackground>
       </Container>
-      {mouseMoving && (
-        <ControlLayer previousPage={previousPage} nextPage={nextPage} toggleFullscreen={toggleFullscreen}/>
+      {/*{mouseMoving && (*/}
+      {(
+        <ControlPanel previousPage={previousPage} nextPage={nextPage} toggleFullscreen={toggleFullscreen}/>
       )}
     </ThemeContainer>
   )
