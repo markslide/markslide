@@ -36,7 +36,6 @@ export const EditPageHeader = withRouter(memo<RouteComponentProps>((props) => {
   
   function startPresentation() {
     props.history.push('/presentation/0')
-    enterFullscreen()
   }
   
   return (
