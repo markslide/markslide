@@ -7,6 +7,19 @@ export const themes: Theme[] = [{
     id: 'default',
     name: 'Default',
     hex: '#98c379',
+  },
+    {
+      id: 'blue',
+      name: 'Blue',
+      hex: '#5b98ff',
+    }
+  ],
+  modes: [{
+    id: 'dark',
+    name: 'Dark',
+  }, {
+    id: 'light',
+    name: 'Light',
   }],
 }, {
   id: 'citrine',

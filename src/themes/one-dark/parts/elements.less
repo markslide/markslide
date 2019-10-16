@@ -1,0 +1,79 @@
+.slide-background {
+  background: @bg-color;
+}
+
+.slide {
+
+  background-color: @bg-color;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: #98c379;
+  }
+
+  h1, h2, h3, h4 {
+    color: @primary-color;
+  }
+
+  h1 {
+    font-size: 80px;
+  }
+
+  h2 {
+    font-size: 60px;
+  }
+
+  h3 {
+    font-size: 48px;
+  }
+
+  h4 {
+    font-size: 36px;
+  }
+
+  // h5 and h6 will NOT be supported
+  //h5 {
+  //  font-size: 36px;
+  //}
+  //h6 {
+  //  font-size: 24px;
+  //}
+
+  pre {
+    .align-center();
+
+    margin: 20px 0;
+    display: block;
+    width: 70%;
+    background-color: @code-color;
+    padding: 30px 50px;
+    font-size: 18px;
+    border-radius: 6px;
+    box-shadow: @shadow;
+  }
+
+  ul {
+    li + li {
+      margin-top: 10px;
+    }
+  }
+
+  .page-number {
+    color: @primary-color;
+    font-size: 16px;
+    position: absolute;
+    bottom: 28px;
+    right: 36px;
+
+    &::before {
+      content: "< "
+    }
+
+    &::after {
+      content: " >"
+    }
+  }
+}

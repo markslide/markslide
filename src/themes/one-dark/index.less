@@ -1,67 +1,15 @@
+@theme-name: one-dark;
+@import "../style";
 @import "../_code-hl/color-1";
 
-@primary-color: #98c379;
-@text-color: #c0c7d6;
+
+@scheme: default #98c379,
+blue #5b98ff,;
+.generate(@scheme);
 
 .theme-one-dark {
-  .slide-background {
-    background: #282C34;
-  }
   .slide {
-    font-size: 28px;
-    font-family: 'Lantinghei SC', -apple-system, serif;
-    .content {
-      color: @text-color;
-    }
-
-    .page-number {
-      color: @primary-color;
-      font-size: 16px;
-      position: absolute;
-      bottom: 28px;
-      right: 36px;
-
-      &::before {
-        content: "< "
-      }
-
-      &::after {
-        content: " >"
-      }
-    }
-
-    h1, h2, h3, h4 {
-      color: @primary-color;
-    }
-
-    h1 {
-      font-size: 80px;
-    }
-    h2 {
-      font-size: 60px;
-    }
-    h3 {
-      font-size: 48px;
-    }
-    h4 {
-      font-size: 36px;
-    }
-
-    // h5 and h6 will NOT be supported
-    //h5 {
-    //  font-size: 36px;
-    //}
-    //h6 {
-    //  font-size: 24px;
-    //}
-
-    p {
-      margin: 0;
-    }
-
-    a {
-      color: #98c379;
-    }
+    font-size: 20px;
 
     &.cover, &.section {
       text-align: center;
