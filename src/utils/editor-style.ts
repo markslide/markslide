@@ -36,7 +36,19 @@ export const editorStyle = css`
     }
     .CodeMirror-code {
       pre:nth-child(1) {
-        margin-top: 15px;
+        margin-top: 30px;
+      }
+      pre:last-child {
+        margin-bottom: 70px;
+        
+        ::after{
+          content: "End of document";
+          text-transform: uppercase;
+          position: absolute;
+          display: block;
+          margin-top: 30px;
+          color: #ddd;
+        }
       }
     }
     .CodeMirror-scroll {

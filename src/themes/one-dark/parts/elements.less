@@ -19,23 +19,30 @@
   h1, h2, h3, h4 {
     word-break: keep-all;
     color: @primary-color;
+    line-height: 1.2;
   }
 
   h1 {
     font-size: 60px;
+    margin-top: 0;
   }
 
   h2 {
     font-size: 45px;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 
   h3 {
     font-size: 30px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+
   }
 
   h4 {
-    //font-size: 36px;
     font-weight: bold;
+    margin-bottom: 20px;
   }
 
   // h5 and h6 will NOT be supported
@@ -67,12 +74,14 @@
     &::before {
       content: '“';
       position: absolute;
+      transform: translateY(-10px);
     }
 
     &::after {
       content: '”';
       text-align: right;
-      transform: translateY(-50%);
+      height: 0;
+      line-height: 10px;
     }
   }
 
@@ -87,15 +96,19 @@
     font-size: 18px;
     border-radius: 6px;
     //box-shadow: @shadow;
+    overflow: scroll;
+
+    //.show-scrollbar();
   }
 
   table {
     @static-bg: hsla(hsl(@text-color), 0.1);
     @hover-bg: @static-bg;
-    @table-element: hsla(hsl(@text-color), 0.8);
+    @table-element: hsla(hsl(@text-color), 0.6);
 
     word-break: break-word;
-    border-bottom: 3px solid @table-element;
+    //border-bottom: 3px solid @table-element;
+    border-radius: 4px;
 
     tbody tr {
       font-size: 18px;
@@ -106,6 +119,20 @@
 
       &:nth-child(even) {
         background-color: @static-bg;
+      }
+
+      &:last-child td {
+        &::after {
+          background-color: @table-element;
+          position: relative;
+          display: block;
+          bottom: -15px;
+          border-radius: 4px;
+          margin-left: -20px;
+          content: " ";
+          height: 4px;
+          width: calc(100% + 40px);
+        }
       }
     }
 
@@ -118,6 +145,7 @@
       background-color: @table-element;
       color: @bg-color;
       font-weight: bolder;
+      border-radius: 4px;
     }
   }
 

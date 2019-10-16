@@ -2,7 +2,7 @@
 
 .style(@primary-color, @text-color, @bg-color) {
 
-  @code-bg-color: hsla(hsl(@text-color), 0.2);
+  @code-bg-color: hsla(hsl(@text-color), 0.08);
   //@shadow: #dddddd66 10px 10px 10px;
   font-size: 24px;
 
@@ -40,7 +40,7 @@
       }
 
       blockquote {
-        .align-center();
+        //.align-center();
         background: #bbbbbb33;
         display: inline-block;
 
@@ -60,18 +60,42 @@
         }
       }
 
-      ol {
+      ul {
+        li::before {
+          content: "—"; /* \2022=bullet */
+        }
+      }
+
+      ol, ul {
+        @bullet-max-width: 20px;
+        @space-after-bullet: 20px;
+
+        margin-block-start: 0;
+        margin-block-end: 0;
+        padding-left: 5px;
         list-style: none;
+
+        li {
+          display: flex;
+          margin-top: 15px;
+
+          &::before {
+            color: @primary-color;
+            font-weight: bold;
+            max-width: @bullet-max-width;
+            margin-right: @space-after-bullet;
+          }
+        }
+      }
+
+      ol {
         counter-reset: counter;
-        padding-inline-start: 0;
 
         li {
           counter-increment: counter;
 
           &::before {
-            content: counter(counter) ".  ";
-            color: @primary-color;
-            font-weight: bold;
+            content: counter(counter) ".";
           }
         }
       }

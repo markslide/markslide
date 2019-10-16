@@ -7,11 +7,22 @@
       font-size: 26px;
     }
 
+    h2 + p, h2 + ul, h2 + ol {
+      margin-top: 40px;
+    }
+
     ul {
-      font-size: 28px;
       font-weight: bold;
-      list-style-type: none;
       padding-inline-start: 0;
+      font-size: 26px;
+
+      li {
+        display: block;
+
+        &::before {
+          display: none;
+        }
+      }
     }
   }
 }
