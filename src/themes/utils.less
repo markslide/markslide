@@ -1,16 +1,19 @@
-.img(@size) when (@size = 'large') {
-  max-height: 350px;
-  max-width: 600px;
-}
+.img(@max-width, @max-height) {
+  // default = large
+  img, img[alt='large'] {
+    max-height: @max-height;
+    max-width: @max-width;
+  }
 
-.img(@size) when (@size = 'medium') {
-  max-height: 280px;
-  max-width: 480px;
-}
+  img[alt='medium'] {
+    max-height: @max-height * 0.7;
+    max-width: @max-width * 0.7;
+  }
 
-.img(@size) when (@size = 'small') {
-  max-height: 210px;
-  max-width: 350px;
+  img[alt='small'] {
+    max-height: @max-height * 0.4;
+    max-width: @max-width * 0.4;
+  }
 }
 
 .recolored-svg(@svg, @color) {
@@ -23,6 +26,18 @@
   @svg: data-uri(@data-uri);
   .recolored-svg(@svg, @color);
   background-size: cover;
+}
+
+.flex-align-middle() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.align-middle() {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .align-center() {
