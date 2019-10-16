@@ -112,13 +112,12 @@
   }
 }
 
-.generate(@scheme, @i:1) when (@i <= length(@scheme)) {
-  @name: extract(extract(@scheme, @i), 1);
-  @color: extract(extract(@scheme, @i), 2);
-  .theme-scheme-@{name} {
-    .text-and-bg-color(
-      @primary-color: @color
-    )
-  }
-  .generate(@scheme, @i + 1);
+.generate(@scheme) {
+  each(@scheme, {
+    .theme-scheme-@{key} {
+      .text-and-bg-color(
+        @primary-color: @value
+      )
+    }
+  });
 }
