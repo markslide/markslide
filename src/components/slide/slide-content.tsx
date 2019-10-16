@@ -7,7 +7,6 @@ import {getMarkdownClassNames} from '@/utils/get-markdown-class-names'
 const Container = styled.div`
   width: ${filmSize.width}px;
   height: ${filmSize.height}px;
-  white-space: pre-wrap;
   word-break: break-all;
   padding: 60px 80px;
   overflow-x: hidden;
