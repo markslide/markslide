@@ -129,6 +129,10 @@ export const PresentationPage: FC<Props> = (props) => {
     }
   })
   
+  function exitPresentation() {
+    props.history.push('/edit')
+  }
+  
   return (
     <ThemeContainer>
       <Style/>
@@ -153,7 +157,12 @@ export const PresentationPage: FC<Props> = (props) => {
         </SlideBackground>
       </Container>
       {mouseMoving && (
-        <ControlPanel previousPage={previousPage} nextPage={nextPage} toggleFullscreen={toggleFullscreen}/>
+        <ControlPanel
+          previousPage={previousPage}
+          nextPage={nextPage}
+          toggleFullscreen={toggleFullscreen}
+          exitPresentation={exitPresentation}
+        />
       )}
     </ThemeContainer>
   )
